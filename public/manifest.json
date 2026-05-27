@@ -1,0 +1,13 @@
+{
+  "name": "YardProfit",
+  "short_name": "YardProfit",
+  "description": "Know what every junkyard part is worth before you pull it",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#06060f",
+  "theme_color": "#00FF88",
+  "orientation": "portrait-primary",
+  "icons": [
+    { "src": "/icon.svg", "sizes": "any", "type": "image/svg+xml", "purpose": "any maskable" }
+  ]
+}
