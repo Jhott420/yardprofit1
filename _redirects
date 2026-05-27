@@ -1,0 +1,5 @@
+# Force HTTPS
+http://yardprofit.netlify.app/* https://yardprofit.netlify.app/:splat 301!
+
+# SPA routing - serve index.html for all routes
+/*    /index.html   200
