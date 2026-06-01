@@ -1,11 +1,31 @@
 import React from 'react'
 import ReactDOM from 'react-dom/client'
+import * as Sentry from '@sentry/react'
 import App from './App.jsx'
 
-// Simple error boundary
+// Initialize Sentry error monitoring
+Sentry.init({
+  dsn: "https://9552599c0d87067e0b86b942f82eede0@o4511331211476992.ingest.us.sentry.io/4511488007208960",
+  environment: "production",
+  integrations: [
+    Sentry.browserTracingIntegration(),
+    Sentry.replayIntegration({
+      maskAllText: false,
+      blockAllMedia: false,
+    }),
+  ],
+  tracesSampleRate: 0.2,
+  replaysSessionSampleRate: 0.1,
+  replaysOnErrorSampleRate: 1.0,
+})
+
+// Error boundary
 class EB extends React.Component {
   constructor(p){super(p);this.state={err:null};}
   static getDerivedStateFromError(e){return{err:e};}
+  componentDidCatch(error, errorInfo) {
+    Sentry.captureException(error, { extra: errorInfo })
+  }
   render(){
     if(this.state.err)return React.createElement('div',{style:{minHeight:'100vh',background:'#06060f',color:'#e0e0f0',fontFamily:'monospace',display:'flex',alignItems:'center',justifyContent:'center',textAlign:'center',padding:20}},
       React.createElement('div',null,
