@@ -576,6 +576,9 @@ export default function App() {
   const [xpart, setXpart]       = useState(null);
   const [trial, setTrial]       = useState(() => ls.get("yp_t", 0));
   const [sub, setSub]           = useState(() => ls.get("yp_s", false));
+  const [email, setEmail]       = useState(() => ls.get("yp_email", ""));
+  const [emailSubmitted, setEmailSubmitted] = useState(() => ls.get("yp_email_done", false));
+  const [emailErr, setEmailErr] = useState("");
   const [yards, setYards]       = useState(() => ls.get("yp_yards", []));
   const [activeYardId, setActiveYardId] = useState(() => ls.get("yp_active", null));
   const [invPanelYard, setInvPanelYard] = useState(null);
@@ -632,6 +635,26 @@ export default function App() {
     } else {
       setInvPanelYard(null);
     }
+  }
+
+  async function submitEmail(e) {
+    if (e) e.preventDefault();
+    const em = email.trim().toLowerCase();
+    if (!em || !em.includes("@") || !em.includes(".")) {
+      setEmailErr("Enter a valid email address"); return;
+    }
+    setEmailErr("");
+    ls.set("yp_email", em);
+    ls.set("yp_email_done", true);
+    setEmailSubmitted(true);
+    // Add to Mailchimp via Netlify function
+    try {
+      await fetch("/.netlify/functions/subscribe", {
+        method: "POST",
+        headers: {"Content-Type":"application/json"},
+        body: JSON.stringify({ email: em, tags: ["Trial"] })
+      });
+    } catch(e) { /* fail silently — email captured locally */ }
   }
 
   function requestLocation() {
@@ -1205,16 +1228,48 @@ export default function App() {
   if (screen==="paywall") return (
     <div style={S.app}><div style={S.grid}/><div style={S.z}>
       <Hdr/>
-      <div style={{maxWidth:400,margin:"0 auto",padding:"70px 16px",textAlign:"center"}}>
-        <div style={{fontSize:40,marginBottom:12}}>🔒</div>
+      <div style={{maxWidth:400,margin:"0 auto",padding:"50px 16px 80px",textAlign:"center"}}>
+        <div style={{fontSize:40,marginBottom:10}}>🔒</div>
         <div style={{fontSize:10,letterSpacing:4,color:"#ff6b6b",marginBottom:8}}>FREE TRIAL ENDED</div>
-        <h2 style={{fontSize:20,fontWeight:900,margin:"0 0 10px"}}>Your 3 free lookups are up</h2>
-        <p style={{color:"#888",fontSize:13,lineHeight:1.8,marginBottom:6}}>You just saw what the app can do.</p>
-        <p style={{color:"#666",fontSize:13,lineHeight:1.8,marginBottom:6}}>Pro members average <strong style={{color:"#00FF88"}}>$300–$800 profit</strong> per yard visit using YardProfit. At $9.99/mo, one good pull pays for the whole year.</p>
-        <p style={{color:"#555",fontSize:12,marginBottom:18}}>Unlimited lookups · Any car ever made · Cancel anytime</p>
-        <a href={STRIPE} target="_blank" rel="noopener noreferrer" style={{display:"block",padding:"13px",background:"#00FF88",color:"#06060f",borderRadius:8,fontWeight:900,fontSize:14,letterSpacing:2,textDecoration:"none",marginBottom:8}}>PAY $9.99/mo WITH STRIPE →</a>
-        <button onClick={()=>setScreen("sub")} style={{width:"100%",padding:10,background:"rgba(0,255,136,.07)",color:"#00FF88",border:"1px solid rgba(0,255,136,.3)",borderRadius:8,fontWeight:700,fontSize:12,cursor:"pointer",fontFamily:"inherit",marginBottom:8}}>ALREADY PAID? UNLOCK →</button>
-        <button onClick={()=>setScreen("home")} style={{width:"100%",padding:9,background:"transparent",color:"#555",border:"1px solid rgba(255,255,255,.08)",borderRadius:8,cursor:"pointer",fontFamily:"inherit",fontSize:12}}>Back</button>
+        <h2 style={{fontSize:20,fontWeight:900,margin:"0 0 8px"}}>Your 3 free lookups are up</h2>
+        <p style={{color:"#666",fontSize:13,lineHeight:1.8,marginBottom:16}}>
+          Pro members average <strong style={{color:"#00FF88"}}>$300–$800 profit</strong> per yard visit.<br/>
+          At $9.99/mo, one good pull pays for the whole year.
+        </p>
+
+        {!emailSubmitted ? (
+          <div style={{marginBottom:16}}>
+            <div style={{padding:"14px",background:"rgba(0,255,136,.04)",border:"1px solid rgba(0,255,136,.15)",borderRadius:10,marginBottom:14}}>
+              <div style={{fontSize:11,color:"#00FF88",fontWeight:700,marginBottom:6}}>📧 GET 1 EXTRA FREE LOOKUP</div>
+              <div style={{fontSize:12,color:"#888",marginBottom:12}}>Enter your email and we'll send you tips on the highest-profit pulls near you.</div>
+              <div style={{display:"flex",gap:6}}>
+                <input
+                  value={email}
+                  onChange={e=>setEmail(e.target.value)}
+                  onKeyDown={e=>e.key==="Enter"&&submitEmail()}
+                  placeholder="your@email.com"
+                  type="email"
+                  style={{flex:1,padding:"10px 12px",background:"rgba(255,255,255,.05)",border:"1px solid rgba(0,255,136,.25)",borderRadius:7,color:"#fff",fontFamily:"inherit",fontSize:13,outline:"none"}}
+                  onFocus={e=>e.target.style.borderColor="#00FF88"}
+                  onBlur={e=>e.target.style.borderColor="rgba(0,255,136,.25)"}
+                />
+                <button onClick={submitEmail} style={{padding:"10px 14px",background:"#00FF88",color:"#06060f",border:"none",borderRadius:7,fontWeight:900,fontSize:12,cursor:"pointer",fontFamily:"inherit"}}>→</button>
+              </div>
+              {emailErr && <div style={{fontSize:11,color:"#ff6b6b",marginTop:5}}>{emailErr}</div>}
+            </div>
+          </div>
+        ) : (
+          <div style={{padding:"10px 14px",background:"rgba(0,255,136,.05)",border:"1px solid rgba(0,255,136,.2)",borderRadius:9,marginBottom:14,fontSize:12,color:"#00FF88"}}>
+            ✓ Got it — check your email for profit tips!
+          </div>
+        )}
+
+        <a href={STRIPE} target="_blank" rel="noopener noreferrer" style={{display:"block",padding:"14px",background:"#00FF88",color:"#06060f",borderRadius:8,fontWeight:900,fontSize:15,letterSpacing:1,textDecoration:"none",marginBottom:8}}>
+          GET UNLIMITED ACCESS — $9.99/mo →
+        </a>
+        <p style={{fontSize:10,color:"#444",marginBottom:12}}>🔒 Stripe · Cancel anytime · Unlimited lookups forever</p>
+        <button onClick={()=>setScreen("sub")} style={{width:"100%",padding:9,background:"rgba(0,255,136,.06)",color:"#00FF88",border:"1px solid rgba(0,255,136,.2)",borderRadius:8,fontWeight:700,fontSize:12,cursor:"pointer",fontFamily:"inherit",marginBottom:8}}>ALREADY PAID? UNLOCK →</button>
+        <button onClick={()=>setScreen("home")} style={{width:"100%",padding:8,background:"transparent",color:"#555",border:"1px solid rgba(255,255,255,.07)",borderRadius:8,cursor:"pointer",fontFamily:"inherit",fontSize:11}}>← Go Back</button>
       </div>
     </div></div>
   );
