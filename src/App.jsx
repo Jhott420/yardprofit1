@@ -608,8 +608,24 @@ export default function App() {
     if (params.get("paid")==="1" || params.get("success")==="true" || params.get("unlocked")==="1") {
       ls.set("yp_s", true);
       setSub(true);
-      // Clean the URL
       window.history.replaceState({}, "", window.location.pathname);
+    }
+    // Auto-request location on load (silent — no alert if denied)
+    if (!ls.get("yp_loc_asked", false)) {
+      ls.set("yp_loc_asked", true);
+      if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(
+          pos => {
+            const { latitude: lat, longitude: lng } = pos.coords;
+            setUserLocation({ lat, lng, label: lat.toFixed(3)+", "+lng.toFixed(3) });
+          },
+          () => {} // silent fail — user can still tap Near Me manually
+        );
+      }
+    } else if (ls.get("yp_loc", null)) {
+      // Restore saved location from previous session
+      const saved = ls.get("yp_loc", null);
+      if (saved) setUserLocation(saved);
     }
   }, []);
   useEffect(() => { qRef.current = q; }, [q]);
@@ -663,7 +679,9 @@ export default function App() {
     navigator.geolocation.getCurrentPosition(
       pos => {
         const { latitude: lat, longitude: lng } = pos.coords;
-        setUserLocation({ lat, lng, label: lat.toFixed(3)+", "+lng.toFixed(3) });
+        const loc = { lat, lng, label: lat.toFixed(3)+", "+lng.toFixed(3) };
+        setUserLocation(loc);
+        ls.set("yp_loc", loc);
         setLocLoading(false);
         // Auto-search once location is granted
         doNearbySearch(lat, lng, yardSearch);
