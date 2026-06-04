@@ -1,7 +1,7 @@
 import { useState, useEffect, useMemo, useRef } from "react";
 
 const STRIPE = "https://buy.stripe.com/fZu7sNd6e7cbeoq2oz5wI00";
-const TRIAL_MAX = 3;
+const TRIAL_MAX = 1;
 
 // ─── storage ─────────────────────────────────────────────────────────────────
 const ls = {
@@ -1231,7 +1231,7 @@ export default function App() {
       <div style={{maxWidth:400,margin:"0 auto",padding:"50px 16px 80px",textAlign:"center"}}>
         <div style={{fontSize:40,marginBottom:10}}>🔒</div>
         <div style={{fontSize:10,letterSpacing:4,color:"#ff6b6b",marginBottom:8}}>FREE TRIAL ENDED</div>
-        <h2 style={{fontSize:20,fontWeight:900,margin:"0 0 8px"}}>Your 3 free lookups are up</h2>
+        <h2 style={{fontSize:20,fontWeight:900,margin:"0 0 8px"}}>Your 1 free lookup are up</h2>
         <p style={{color:"#666",fontSize:13,lineHeight:1.8,marginBottom:16}}>
           Pro members average <strong style={{color:"#00FF88"}}>$300–$800 profit</strong> per yard visit.<br/>
           At $9.99/mo, one good pull pays for the whole year.
