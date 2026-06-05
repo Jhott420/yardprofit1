@@ -583,6 +583,9 @@ export default function App() {
   const [sort, setSort]         = useState("profit");
   const [filter, setFilter]     = useState("All");
   const [xpart, setXpart]       = useState(null);
+  const [lookupPart, setLookupPart]   = useState(null);
+  const [lookupData, setLookupData]   = useState(null);
+  const [lookupLoading, setLookupLoading] = useState(false);
   const [trial, setTrial]       = useState(() => ls.get("yp_t", 0));
   const [sub, setSub]           = useState(() => ls.get("yp_s", false));
   const [email, setEmail]       = useState(() => ls.get("yp_email", ""));
@@ -665,6 +668,51 @@ export default function App() {
     } else {
       setInvPanelYard(null);
     }
+  }
+
+  async function fetchPartLookup(part, vehicle) {
+    setLookupPart(part);
+    setLookupData(null);
+    setLookupLoading(true);
+    setScreen("partlookup");
+    try {
+      const prompt = `You are an expert junkyard parts flipper. Give me a detailed lookup guide for pulling "${part.name}" from a "${vehicle}".
+
+Return ONLY a JSON object (no markdown, no explanation) with this exact structure:
+{
+  "what_to_check": ["item1", "item2", "item3", "item4"],
+  "red_flags": ["flag1", "flag2", "flag3"],
+  "pull_tips": ["tip1", "tip2", "tip3"],
+  "tools_needed": ["tool1", "tool2", "tool3"],
+  "ebay_search_terms": ["term1", "term2", "term3"],
+  "price_range": {"low": 0, "high": 0, "sweet_spot": 0},
+  "vin_match_required": true,
+  "compatible_years": "e.g. 2015-2019",
+  "weight_lbs": 0,
+  "shipping_tip": "brief tip",
+  "profit_verdict": "HIGH/MEDIUM/LOW",
+  "verdict_reason": "one sentence why"
+}`;
+
+      const res = await fetch("https://api.anthropic.com/v1/messages", {
+        method: "POST",
+        headers: {"Content-Type":"application/json"},
+        body: JSON.stringify({
+          model: "claude-sonnet-4-20250514",
+          max_tokens: 1000,
+          messages: [{ role: "user", content: prompt }]
+        })
+      });
+      const data = await res.json();
+      const text = (data.content||[]).filter(b=>b.type==="text").map(b=>b.text).join("");
+      const clean = text.replace(/```json|```/g,"").trim();
+      const parsed = JSON.parse(clean);
+      setLookupData(parsed);
+      track('part_looked_up', { part: part.name, vehicle });
+    } catch(e) {
+      setLookupData({ error: "Could not load part data. Check eBay directly." });
+    }
+    setLookupLoading(false);
   }
 
   async function submitLeadMagnet() {
@@ -1264,6 +1312,7 @@ export default function App() {
                         <a href={"https://www.amazon.com/s?k="+encodeURIComponent(part.search||part.name)} target="_blank" rel="noopener noreferrer" onClick={e=>e.stopPropagation()} style={{padding:"6px 12px",background:"rgba(255,153,0,.1)",border:"1px solid rgba(255,153,0,.35)",borderRadius:8,color:"#FF9500",fontFamily:"inherit",fontSize:11,fontWeight:700,textDecoration:"none"}}>🛒 Amazon ↗</a>
                         {activeYard?.inventory && <a href={activeYard.inventory} target="_blank" rel="noopener noreferrer" onClick={e=>e.stopPropagation()} style={{padding:"6px 12px",background:"rgba(0,170,255,.07)",border:"1px solid rgba(0,170,255,.18)",borderRadius:8,color:"#00aaff",fontFamily:"inherit",fontSize:11,fontWeight:700,textDecoration:"none"}}>📋 Yard Inv ↗</a>}
                         <button onClick={e=>{e.stopPropagation();setXpart(part);setScreen("xref");}} style={{padding:"6px 12px",background:"rgba(255,215,0,.08)",border:"1px solid rgba(255,215,0,.25)",borderRadius:8,color:"#FFD700",cursor:"pointer",fontFamily:"inherit",fontSize:11,fontWeight:700}}>🔀 CROSS-REF →</button>
+                        <button onClick={e=>{e.stopPropagation();fetchPartLookup(part, result.key);}} style={{padding:"6px 12px",background:"rgba(0,255,136,.1)",border:"1px solid rgba(0,255,136,.3)",borderRadius:8,color:"#00FF88",cursor:"pointer",fontFamily:"inherit",fontSize:11,fontWeight:700}}>🔍 LOOK UP →</button>
                       </div>
                     </div>
                   )}
@@ -1307,6 +1356,145 @@ export default function App() {
       </div>
     </div></div>
   );
+
+  // ── PART LOOKUP ──────────────────────────────────────────────────────────────
+  if (screen==="partlookup" && lookupPart) {
+    const ebayUrl = "https://www.ebay.com/sch/i.html?_nkw="+encodeURIComponent(lookupPart.search||lookupPart.name)+"&LH_Sold=1&LH_Complete=1&_sop=13";
+    const d = lookupData;
+    return (
+      <div style={S.app}><div style={S.grid}/><div style={S.z}>
+        <Hdr/>
+        <div style={{maxWidth:700,margin:"0 auto",padding:"12px 14px 80px"}}>
+          <button onClick={()=>setScreen("results")} style={{background:"none",border:"none",color:"#00FF88",cursor:"pointer",fontSize:13,padding:"0 0 10px",fontFamily:"inherit"}}>← BACK</button>
+
+          {/* Part header */}
+          <div style={{background:"rgba(0,255,136,.04)",border:"1px solid rgba(0,255,136,.15)",borderRadius:12,padding:"13px 15px",marginBottom:12}}>
+            <div style={{fontSize:9,letterSpacing:3,color:"#00FF88",marginBottom:3}}>🔍 PART LOOKUP</div>
+            <div style={{fontSize:18,fontWeight:900}}>{lookupPart.name}</div>
+            <div style={{fontSize:12,color:"#666",marginTop:2}}>from {result?.key}</div>
+            <div style={{display:"flex",gap:12,marginTop:8,flexWrap:"wrap"}}>
+              <span style={{fontSize:12}}><span style={{color:"#555"}}>eBay avg </span><span style={{color:"#00aaff",fontWeight:700}}>${lookupPart.ebay}</span></span>
+              <span style={{fontSize:12}}><span style={{color:"#555"}}>Yard cost </span><span style={{color:"#ff6b6b",fontWeight:700}}>${lookupPart.yard}</span></span>
+              <span style={{fontSize:12}}><span style={{color:"#555"}}>Profit </span><span style={{color:"#00FF88",fontWeight:900}}>+${lookupPart.profit}</span></span>
+            </div>
+          </div>
+
+          {/* Quick eBay links */}
+          <div style={{display:"flex",gap:6,marginBottom:12,flexWrap:"wrap"}}>
+            <a href={ebayUrl} target="_blank" rel="noopener noreferrer" style={{padding:"8px 13px",background:"rgba(0,170,255,.1)",border:"1px solid rgba(0,170,255,.3)",borderRadius:8,color:"#00aaff",textDecoration:"none",fontSize:12,fontWeight:700}}>📦 eBay SOLD ↗</a>
+            <a href={"https://www.ebay.com/sch/i.html?_nkw="+encodeURIComponent(lookupPart.search||lookupPart.name)+"&_sop=13"} target="_blank" rel="noopener noreferrer" style={{padding:"8px 13px",background:"rgba(0,170,255,.06)",border:"1px solid rgba(0,170,255,.15)",borderRadius:8,color:"#00aaff",textDecoration:"none",fontSize:12,fontWeight:700}}>📦 eBay ACTIVE ↗</a>
+            <a href={"https://www.amazon.com/s?k="+encodeURIComponent(lookupPart.search||lookupPart.name)} target="_blank" rel="noopener noreferrer" style={{padding:"8px 13px",background:"rgba(255,153,0,.1)",border:"1px solid rgba(255,153,0,.3)",borderRadius:8,color:"#FF9500",textDecoration:"none",fontSize:12,fontWeight:700}}>🛒 Amazon ↗</a>
+            <a href={"https://www.car-part.com/cgi-bin/search.cgi?n="+encodeURIComponent(lookupPart.name)} target="_blank" rel="noopener noreferrer" style={{padding:"8px 13px",background:"rgba(255,136,0,.08)",border:"1px solid rgba(255,136,0,.2)",borderRadius:8,color:"#FF8800",textDecoration:"none",fontSize:12,fontWeight:700}}>🔍 Car-Part ↗</a>
+          </div>
+
+          {/* Loading state */}
+          {lookupLoading && (
+            <div style={{padding:"30px",textAlign:"center",background:"rgba(0,255,136,.03)",border:"1px solid rgba(0,255,136,.1)",borderRadius:12}}>
+              <div style={{fontSize:28,marginBottom:10}}>🔍</div>
+              <div style={{fontSize:14,color:"#00FF88",fontWeight:700}}>Looking up {lookupPart.name}...</div>
+              <div style={{fontSize:11,color:"#555",marginTop:6}}>Checking pull tips, red flags, and current prices</div>
+            </div>
+          )}
+
+          {/* Lookup data */}
+          {!lookupLoading && d && !d.error && (
+            <div style={{display:"flex",flexDirection:"column",gap:10}}>
+
+              {/* Verdict banner */}
+              <div style={{padding:"11px 14px",background:d.profit_verdict==="HIGH"?"rgba(0,255,136,.07)":d.profit_verdict==="MEDIUM"?"rgba(255,215,0,.07)":"rgba(255,107,107,.07)",border:`1px solid ${d.profit_verdict==="HIGH"?"rgba(0,255,136,.25)":d.profit_verdict==="MEDIUM"?"rgba(255,215,0,.25)":"rgba(255,107,107,.25)"}`,borderRadius:10,display:"flex",justifyContent:"space-between",alignItems:"center",gap:8}}>
+                <div>
+                  <div style={{fontSize:9,letterSpacing:2,color:"#555",marginBottom:2}}>PULL VERDICT</div>
+                  <div style={{fontSize:14,fontWeight:900,color:d.profit_verdict==="HIGH"?"#00FF88":d.profit_verdict==="MEDIUM"?"#FFD700":"#ff6b6b"}}>{d.profit_verdict} VALUE PULL</div>
+                  <div style={{fontSize:11,color:"#888",marginTop:2}}>{d.verdict_reason}</div>
+                </div>
+                <div style={{textAlign:"right",flexShrink:0}}>
+                  {d.price_range && <div style={{fontSize:22,fontWeight:900,color:"#00FF88"}}>${d.price_range.sweet_spot}</div>}
+                  {d.price_range && <div style={{fontSize:9,color:"#555"}}>SWEET SPOT</div>}
+                </div>
+              </div>
+
+              {/* What to check */}
+              {d.what_to_check?.length > 0 && (
+                <div style={{padding:"11px 14px",background:"rgba(0,170,255,.04)",border:"1px solid rgba(0,170,255,.15)",borderRadius:10}}>
+                  <div style={{fontSize:9,letterSpacing:2,color:"#00aaff",marginBottom:8}}>✓ WHAT TO CHECK BEFORE PULLING</div>
+                  {d.what_to_check.map((item,i)=>(
+                    <div key={i} style={{fontSize:12,color:"#bbb",marginBottom:5,display:"flex",gap:8}}>
+                      <span style={{color:"#00FF88",flexShrink:0}}>✓</span>{item}
+                    </div>
+                  ))}
+                </div>
+              )}
+
+              {/* Red flags */}
+              {d.red_flags?.length > 0 && (
+                <div style={{padding:"11px 14px",background:"rgba(255,107,107,.04)",border:"1px solid rgba(255,107,107,.15)",borderRadius:10}}>
+                  <div style={{fontSize:9,letterSpacing:2,color:"#ff6b6b",marginBottom:8}}>⚠ RED FLAGS — SKIP IF YOU SEE THESE</div>
+                  {d.red_flags.map((flag,i)=>(
+                    <div key={i} style={{fontSize:12,color:"#bbb",marginBottom:5,display:"flex",gap:8}}>
+                      <span style={{color:"#ff6b6b",flexShrink:0}}>✗</span>{flag}
+                    </div>
+                  ))}
+                </div>
+              )}
+
+              {/* Pull tips + Tools */}
+              <div style={{display:"grid",gridTemplateColumns:"1fr 1fr",gap:10}}>
+                {d.pull_tips?.length > 0 && (
+                  <div style={{padding:"11px 14px",background:"rgba(255,215,0,.04)",border:"1px solid rgba(255,215,0,.15)",borderRadius:10}}>
+                    <div style={{fontSize:9,letterSpacing:2,color:"#FFD700",marginBottom:8}}>💡 PULL TIPS</div>
+                    {d.pull_tips.map((tip,i)=>(
+                      <div key={i} style={{fontSize:11,color:"#bbb",marginBottom:5,display:"flex",gap:6}}>
+                        <span style={{color:"#FFD700",flexShrink:0}}>→</span>{tip}
+                      </div>
+                    ))}
+                  </div>
+                )}
+                {d.tools_needed?.length > 0 && (
+                  <div style={{padding:"11px 14px",background:"rgba(255,255,255,.02)",border:"1px solid rgba(255,255,255,.07)",borderRadius:10}}>
+                    <div style={{fontSize:9,letterSpacing:2,color:"#888",marginBottom:8}}>🔧 TOOLS NEEDED</div>
+                    {d.tools_needed.map((tool,i)=>(
+                      <div key={i} style={{fontSize:11,color:"#bbb",marginBottom:5,display:"flex",gap:6}}>
+                        <span style={{color:"#888",flexShrink:0}}>·</span>{tool}
+                      </div>
+                    ))}
+                  </div>
+                )}
+              </div>
+
+              {/* eBay search terms */}
+              {d.ebay_search_terms?.length > 0 && (
+                <div style={{padding:"11px 14px",background:"rgba(0,170,255,.04)",border:"1px solid rgba(0,170,255,.13)",borderRadius:10}}>
+                  <div style={{fontSize:9,letterSpacing:2,color:"#00aaff",marginBottom:8}}>🔍 BEST eBay SEARCH TERMS</div>
+                  <div style={{display:"flex",flexWrap:"wrap",gap:5}}>
+                    {d.ebay_search_terms.map((term,i)=>(
+                      <a key={i} href={"https://www.ebay.com/sch/i.html?_nkw="+encodeURIComponent(term)+"&LH_Sold=1&LH_Complete=1"} target="_blank" rel="noopener noreferrer"
+                        style={{padding:"5px 10px",background:"rgba(0,170,255,.08)",border:"1px solid rgba(0,170,255,.2)",borderRadius:6,color:"#00aaff",fontSize:11,textDecoration:"none"}}>
+                        {term} ↗
+                      </a>
+                    ))}
+                  </div>
+                </div>
+              )}
+
+              {/* Compatibility + Shipping */}
+              <div style={{padding:"11px 14px",background:"rgba(255,255,255,.02)",border:"1px solid rgba(255,255,255,.06)",borderRadius:10}}>
+                <div style={{display:"flex",gap:20,flexWrap:"wrap"}}>
+                  {d.compatible_years && <div><div style={{fontSize:9,color:"#555",letterSpacing:1}}>COMPATIBLE YEARS</div><div style={{fontSize:12,color:"#ccc",marginTop:2}}>{d.compatible_years}</div></div>}
+                  {d.weight_lbs > 0 && <div><div style={{fontSize:9,color:"#555",letterSpacing:1}}>WEIGHT</div><div style={{fontSize:12,color:"#ccc",marginTop:2}}>~{d.weight_lbs} lbs</div></div>}
+                  {d.vin_match_required !== undefined && <div><div style={{fontSize:9,color:"#555",letterSpacing:1}}>VIN MATCH</div><div style={{fontSize:12,color:d.vin_match_required?"#ff6b6b":"#00FF88",marginTop:2}}>{d.vin_match_required?"Required":"Not required"}</div></div>}
+                </div>
+                {d.shipping_tip && <div style={{fontSize:11,color:"#888",marginTop:8}}>📦 {d.shipping_tip}</div>}
+              </div>
+            </div>
+          )}
+
+          {!lookupLoading && d?.error && (
+            <div style={{padding:"14px",background:"rgba(255,107,107,.06)",border:"1px solid rgba(255,107,107,.2)",borderRadius:10,fontSize:12,color:"#ff6b6b"}}>{d.error}</div>
+          )}
+        </div>
+      </div></div>
+    );
+  }
 
   // ── PAYWALL ──────────────────────────────────────────────────────────────────
   if (screen==="paywall") return (
