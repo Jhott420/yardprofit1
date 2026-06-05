@@ -9,6 +9,15 @@ const ls = {
   set:(k,v)=>{ try{sessionStorage.setItem(k,JSON.stringify(v));}catch{} },
 };
 
+// GA4 event tracking
+function track(event, params={}) {
+  try {
+    if (typeof window.gtag === 'function') {
+      window.gtag('event', event, params);
+    }
+  } catch(e) {}
+}
+
 // ─── auto multiplier ─────────────────────────────────────────────────────────
 function detectMulti(name) {
   const q = (name||"").toLowerCase();
@@ -633,12 +642,16 @@ export default function App() {
   function go(v) {
     const term = (v !== undefined ? v : qRef.current).trim();
     if (!term) return;
-    if (trialDone) { setScreen("paywall"); return; }
+    if (trialDone) {
+      track('paywall_shown', { trial_count: trial });
+      setScreen("paywall"); return;
+    }
     let r;
     try { r = getResult(term, yardMult); } catch(e) { alert("Error: "+e.message); return; }
     if (!r) return;
     setResult(r); setQ(r.key); setExpanded(null); setFilter("All"); setSort("profit");
     const n = trial + 1; setTrial(n); ls.set("yp_t", n);
+    track('car_searched', { vehicle: r.key, total_profit: r.totalProfit, lookup_number: n });
     setScreen("results");
   }
 
@@ -663,6 +676,7 @@ export default function App() {
     ls.set("yp_email", em);
     ls.set("yp_email_done", true);
     setEmailSubmitted(true);
+    track('email_captured', { source: 'paywall' });
     // Add to Mailchimp via Netlify function
     try {
       await fetch("/.netlify/functions/subscribe", {
@@ -1296,11 +1310,13 @@ export default function App() {
           </div>
         )}
 
-        <a href={STRIPE} target="_blank" rel="noopener noreferrer" style={{display:"block",padding:"14px",background:"#00FF88",color:"#06060f",borderRadius:8,fontWeight:900,fontSize:15,letterSpacing:1,textDecoration:"none",marginBottom:8}}>
+        <a href={STRIPE} target="_blank" rel="noopener noreferrer"
+          onClick={()=>track('stripe_click', {location:'paywall'})}
+          style={{display:"block",padding:"14px",background:"#00FF88",color:"#06060f",borderRadius:8,fontWeight:900,fontSize:15,letterSpacing:1,textDecoration:"none",marginBottom:8}}>
           GET UNLIMITED ACCESS — $9.99/mo →
         </a>
         <p style={{fontSize:10,color:"#444",marginBottom:12}}>🔒 Stripe · Cancel anytime · Unlimited lookups forever</p>
-        <button onClick={()=>setScreen("sub")} style={{width:"100%",padding:9,background:"rgba(0,255,136,.06)",color:"#00FF88",border:"1px solid rgba(0,255,136,.2)",borderRadius:8,fontWeight:700,fontSize:12,cursor:"pointer",fontFamily:"inherit",marginBottom:8}}>ALREADY PAID? UNLOCK →</button>
+        <button onClick={()=>{track('already_paid_click');setScreen("sub");}} style={{width:"100%",padding:9,background:"rgba(0,255,136,.06)",color:"#00FF88",border:"1px solid rgba(0,255,136,.2)",borderRadius:8,fontWeight:700,fontSize:12,cursor:"pointer",fontFamily:"inherit",marginBottom:8}}>ALREADY PAID? UNLOCK →</button>
         <button onClick={()=>setScreen("home")} style={{width:"100%",padding:8,background:"transparent",color:"#555",border:"1px solid rgba(255,255,255,.07)",borderRadius:8,cursor:"pointer",fontFamily:"inherit",fontSize:11}}>← Go Back</button>
       </div>
     </div></div>
