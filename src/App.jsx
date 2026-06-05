@@ -588,6 +588,7 @@ export default function App() {
   const [email, setEmail]       = useState(() => ls.get("yp_email", ""));
   const [emailSubmitted, setEmailSubmitted] = useState(() => ls.get("yp_email_done", false));
   const [emailErr, setEmailErr] = useState("");
+  const [leadDone, setLeadDone] = useState(() => ls.get("yp_lead_done", false));
   const [yards, setYards]       = useState(() => ls.get("yp_yards", []));
   const [activeYardId, setActiveYardId] = useState(() => ls.get("yp_active", null));
   const [invPanelYard, setInvPanelYard] = useState(null);
@@ -664,6 +665,30 @@ export default function App() {
     } else {
       setInvPanelYard(null);
     }
+  }
+
+  async function submitLeadMagnet() {
+    const em = email.trim().toLowerCase();
+    if (!em || !em.includes("@") || !em.includes(".")) {
+      setEmailErr("Enter a valid email address"); return;
+    }
+    setEmailErr("");
+    ls.set("yp_email", em);
+    ls.set("yp_lead_done", true);
+    setLeadDone(true);
+    track('lead_magnet_submit', { email_domain: em.split('@')[1] });
+    // Add to Mailchimp with Lead-Magnet-Subscriber tag
+    try {
+      await fetch("/.netlify/functions/subscribe", {
+        method: "POST",
+        headers: {"Content-Type":"application/json"},
+        body: JSON.stringify({
+          email: em,
+          tags: ["Lead-Magnet-Subscriber"],
+          source: "lead_magnet"
+        })
+      });
+    } catch(e) {}
   }
 
   async function submitEmail(e) {
@@ -819,6 +844,33 @@ export default function App() {
           <div style={{background:"rgba(255,215,0,.04)",border:"1px solid rgba(255,215,0,.15)",borderRadius:10,padding:"10px 14px",marginBottom:18,display:"flex",justifyContent:"space-between",alignItems:"center",gap:8,flexWrap:"wrap"}}>
             <div style={{fontSize:11,color:"#cca500"}}>🏭 No yard selected — using national average prices</div>
             <button onClick={()=>setScreen("yards")} style={{padding:"5px 11px",background:"rgba(255,215,0,.1)",border:"1px solid rgba(255,215,0,.3)",borderRadius:6,color:"#FFD700",cursor:"pointer",fontFamily:"inherit",fontSize:10,fontWeight:700}}>SELECT YARD →</button>
+          </div>
+        )}
+
+        {/* Lead Magnet Banner */}
+        {!leadDone && !sub && (
+          <div style={{background:"rgba(0,170,255,.05)",border:"1px solid rgba(0,170,255,.2)",borderRadius:10,padding:"12px 14px",marginBottom:18}}>
+            <div style={{fontSize:9,letterSpacing:3,color:"#00aaff",marginBottom:4}}>🎁 FREE AUTO PROFIT DASHBOARD</div>
+            <div style={{fontSize:12,color:"#ccc",marginBottom:10}}>Get your free junkyard profit dashboard — eBay price alerts, top pulls near you, and weekly yard intel.</div>
+            <div style={{display:"flex",gap:6}}>
+              <input
+                value={email}
+                onChange={e=>setEmail(e.target.value)}
+                onKeyDown={e=>e.key==="Enter"&&submitLeadMagnet()}
+                placeholder="your@email.com"
+                type="email"
+                style={{flex:1,padding:"9px 12px",background:"rgba(255,255,255,.05)",border:"1px solid rgba(0,170,255,.25)",borderRadius:7,color:"#fff",fontFamily:"inherit",fontSize:12,outline:"none"}}
+                onFocus={e=>e.target.style.borderColor="#00aaff"}
+                onBlur={e=>e.target.style.borderColor="rgba(0,170,255,.25)"}
+              />
+              <button onClick={submitLeadMagnet} style={{padding:"9px 14px",background:"#00aaff",color:"#fff",border:"none",borderRadius:7,fontWeight:900,fontSize:12,cursor:"pointer",fontFamily:"inherit"}}>GET IT</button>
+            </div>
+            {emailErr && <div style={{fontSize:11,color:"#ff6b6b",marginTop:5}}>{emailErr}</div>}
+          </div>
+        )}
+        {leadDone && !sub && (
+          <div style={{background:"rgba(0,170,255,.04)",border:"1px solid rgba(0,170,255,.15)",borderRadius:10,padding:"10px 14px",marginBottom:18,fontSize:11,color:"#00aaff"}}>
+            ✓ Dashboard sent to your email! Share your referral link to unlock more free lookups.
           </div>
         )}
         <div style={{textAlign:"center",marginBottom:24}}>
