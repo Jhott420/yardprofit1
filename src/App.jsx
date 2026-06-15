@@ -112,7 +112,7 @@ async function fetchInventory(yard, onStatus) {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify({
-      model: "claude-sonnet-4-20250514",
+      model: "claude-sonnet-4-6",
       max_tokens: 2000,
       tools: [{ type: "web_search_20250305", name: "web_search" }],
       messages: [{ role: "user", content: prompt }],
@@ -150,14 +150,17 @@ Return 5-10 results. Only real businesses, no made-up names.`;
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify({
-      model: "claude-sonnet-4-20250514",
+      model: "claude-sonnet-4-6",
       max_tokens: 1500,
       tools: [{ type: "web_search_20250305", name: "web_search" }],
       messages: [{ role: "user", content: prompt }],
     }),
   });
 
-  if (!res.ok) throw new Error("Search failed: " + res.status);
+  if (!res.ok) {
+    const errText = await res.text().catch(()=>"");
+    throw new Error("Search failed: " + res.status + " " + errText.slice(0,100));
+  }
   const data = await res.json();
   onStatus("Parsing results...");
 
@@ -698,7 +701,7 @@ Return ONLY a JSON object (no markdown, no explanation) with this exact structur
         method: "POST",
         headers: {"Content-Type":"application/json"},
         body: JSON.stringify({
-          model: "claude-sonnet-4-20250514",
+          model: "claude-sonnet-4-6",
           max_tokens: 1000,
           messages: [{ role: "user", content: prompt }]
         })
