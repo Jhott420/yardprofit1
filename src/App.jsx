@@ -624,6 +624,7 @@ export default function App() {
     if (params.get("paid")==="1" || params.get("success")==="true" || params.get("unlocked")==="1") {
       ls.set("yp_s", true);
       setSub(true);
+      track('payment_confirmed', { source: 'stripe_redirect' });
       window.history.replaceState({}, "", window.location.pathname);
     }
     // Auto-request location on load (silent — no alert if denied)
@@ -1553,12 +1554,12 @@ Return ONLY a JSON object (no markdown, no explanation) with this exact structur
           </div>
         )}
 
-        <a href={STRIPE} target="_blank" rel="noopener noreferrer"
-          onClick={()=>track('stripe_click', {location:'paywall'})}
-          style={{display:"block",padding:"14px",background:"#00FF88",color:"#06060f",borderRadius:8,fontWeight:900,fontSize:15,letterSpacing:1,textDecoration:"none",marginBottom:8}}>
+        <button
+          onClick={()=>{ track('stripe_click', {location:'paywall', email_captured:!!email}); window.location.href = STRIPE + (email ? "?prefilled_email="+encodeURIComponent(email) : ""); }}
+          style={{display:"block",width:"100%",padding:"14px",background:"#00FF88",color:"#06060f",border:"none",borderRadius:8,fontWeight:900,fontSize:15,letterSpacing:1,cursor:"pointer",fontFamily:"'Courier New',monospace",marginBottom:8}}>
           GET UNLIMITED ACCESS — $9.99/mo →
-        </a>
-        <p style={{fontSize:10,color:"#444",marginBottom:12}}>🔒 Stripe · Cancel anytime · Unlimited lookups forever</p>
+        </button>
+        <p style={{fontSize:10,color:"#444",marginBottom:12}}>🔒 Stripe · Cancel anytime · You'll be redirected back automatically after payment</p>
         <button onClick={()=>{track('already_paid_click');setScreen("sub");}} style={{width:"100%",padding:9,background:"rgba(0,255,136,.06)",color:"#00FF88",border:"1px solid rgba(0,255,136,.2)",borderRadius:8,fontWeight:700,fontSize:12,cursor:"pointer",fontFamily:"inherit",marginBottom:8}}>ALREADY PAID? UNLOCK →</button>
         <button onClick={()=>setScreen("home")} style={{width:"100%",padding:8,background:"transparent",color:"#555",border:"1px solid rgba(255,255,255,.07)",borderRadius:8,cursor:"pointer",fontFamily:"inherit",fontSize:11}}>← Go Back</button>
       </div>
@@ -1585,8 +1586,8 @@ Return ONLY a JSON object (no markdown, no explanation) with this exact structur
         </div>
         <div style={{marginBottom:11}}>
           <div style={{fontSize:9,letterSpacing:3,color:"#555",marginBottom:6}}>STEP 1 — PAY</div>
-          <a href={STRIPE} target="_blank" rel="noopener noreferrer" style={{display:"block",padding:"13px",background:"#00FF88",color:"#06060f",borderRadius:10,fontWeight:900,fontSize:15,textAlign:"center",textDecoration:"none",letterSpacing:1,boxSizing:"border-box"}}>PAY $9.99/mo WITH STRIPE →</a>
-          <p style={{textAlign:"center",fontSize:10,color:"#444",marginTop:5}}>🔒 Stripe · SSL · Cancel anytime</p>
+          <button onClick={()=>{ track('stripe_click', {location:'sub', email_captured:!!email}); window.location.href = STRIPE + (email ? "?prefilled_email="+encodeURIComponent(email) : ""); }} style={{display:"block",width:"100%",padding:"13px",background:"#00FF88",color:"#06060f",border:"none",borderRadius:10,fontWeight:900,fontSize:15,textAlign:"center",cursor:"pointer",fontFamily:"'Courier New',monospace",letterSpacing:1,boxSizing:"border-box"}}>PAY $9.99/mo WITH STRIPE →</button>
+          <p style={{textAlign:"center",fontSize:10,color:"#444",marginTop:5}}>🔒 Stripe · SSL · Cancel anytime · You'll be redirected back automatically</p>
         </div>
         <div style={{padding:"11px 13px",background:"rgba(255,215,0,.04)",border:"1px solid rgba(255,215,0,.15)",borderRadius:9,marginBottom:11}}>
           <div style={{fontSize:9,letterSpacing:3,color:"#FFD700",marginBottom:6}}>STEP 2 — UNLOCK AFTER PAYMENT</div>
