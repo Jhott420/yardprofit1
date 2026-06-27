@@ -32,9 +32,9 @@ describe('App — home screen', () => {
     expect(screen.getByText(/3 free lookup/i)).toBeInTheDocument();
   });
 
-  it('shows "3 LEFT" in nav when no trials used', () => {
+  it('shows "3 free left" in nav when no trials used', () => {
     render(<App />);
-    expect(screen.getByText('3 LEFT')).toBeInTheDocument();
+    expect(screen.getByText('3 free left')).toBeInTheDocument();
   });
 });
 
@@ -69,8 +69,8 @@ describe('App — vehicle search and results', () => {
     const input = screen.getByPlaceholderText(/any car/i);
     fireEvent.change(input, { target: { value: '2018 Honda Civic' } });
     fireEvent.click(screen.getByRole('button', { name: 'GO' }));
-    await waitFor(() => screen.getByText(/2 LEFT/i));
-    expect(screen.getByText('2 LEFT')).toBeInTheDocument();
+    await waitFor(() => screen.getByText(/2 free left/i));
+    expect(screen.getByText('2 free left')).toBeInTheDocument();
   });
 
   it('clicking quick-try button navigates to results', async () => {
@@ -137,14 +137,14 @@ describe('App — trial gate', () => {
 describe('App — subscription unlock screen', () => {
   it('shows sub screen with PRO pricing when navigated via header button', async () => {
     render(<App />);
-    // Click "3 LEFT" button to go to sub screen
-    fireEvent.click(screen.getByText('3 LEFT'));
+    // Click "3 free left" button to go to sub screen
+    fireEvent.click(screen.getByText('3 free left'));
     await waitFor(() => expect(screen.getByText(/Go Pro/i)).toBeInTheDocument());
   });
 
   it('"I\'VE PAID" button unlocks pro access', async () => {
     render(<App />);
-    fireEvent.click(screen.getByText('3 LEFT'));
+    fireEvent.click(screen.getByText('3 free left'));
     await waitFor(() => screen.getByText(/I'VE PAID/i));
     fireEvent.click(screen.getByText(/I'VE PAID/i));
     await waitFor(() => expect(screen.getByText('✓ PRO')).toBeInTheDocument());

@@ -735,8 +735,8 @@ export default function App() {
           <button onClick={()=>setScreen("yards")} style={{padding:"4px 9px",background:"rgba(255,215,0,.07)",border:"1px solid rgba(255,215,0,.2)",borderRadius:6,color:"#FFD700",cursor:"pointer",fontFamily:"inherit",fontSize:10}}>🏭 YARDS</button>
           {sub
             ? <span style={{padding:"4px 9px",background:"rgba(0,255,136,.1)",border:"1px solid #00FF88",borderRadius:6,color:"#00FF88",fontSize:10,fontWeight:800}}>✓ PRO</span>
-            : <button onClick={()=>setScreen(trialDone?"paywall":"sub")} style={{padding:"4px 9px",background:trialDone?"rgba(255,107,107,.1)":"rgba(0,255,136,.07)",border:`1px solid ${trialDone?"#ff6b6b":"rgba(0,255,136,.3)"}`,borderRadius:6,color:trialDone?"#ff6b6b":"#00FF88",cursor:"pointer",fontFamily:"inherit",fontSize:10,fontWeight:800}}>
-                {trialDone ? "⚠ UPGRADE" : trialLeft+" LEFT"}
+            : <button onClick={()=>setScreen(trialDone?"paywall":"sub")} style={{padding:"5px 10px",background:trialDone?"rgba(255,107,107,.1)":"rgba(0,255,136,.07)",border:`1px solid ${trialDone?"#ff6b6b":"rgba(0,255,136,.3)"}`,borderRadius:6,color:trialDone?"#ff6b6b":"#00FF88",cursor:"pointer",fontFamily:"inherit",fontSize:11,fontWeight:800}}>
+                {trialDone ? "⚠ UPGRADE" : trialLeft+" free left"}
               </button>
           }
         </div>
@@ -778,20 +778,29 @@ export default function App() {
               </div>
             ))}
           </div>
-          {!sub && <div style={{display:"inline-block",padding:"4px 14px",background:"rgba(0,255,136,.08)",border:"1px solid rgba(0,255,136,.2)",borderRadius:20,fontSize:11,color:"#00FF88",marginTop:4}}>✓ {trialLeft} free lookup{trialLeft!==1?"s":""} — no signup needed</div>}
+          {!sub && <div style={{display:"inline-block",padding:"5px 16px",background:"rgba(0,255,136,.08)",border:"1px solid rgba(0,255,136,.2)",borderRadius:20,fontSize:12,color:"#00FF88",marginTop:6}}>✓ {trialLeft} free lookup{trialLeft!==1?"s":""} remaining — no signup needed</div>}
+        </div>
+        <div style={{display:"flex",gap:0,marginBottom:20,borderRadius:10,overflow:"hidden",border:"1px solid rgba(255,255,255,.07)"}}>
+          {[["1️⃣","Type any car","any year, make & model"],["2️⃣","See every part","real eBay sold prices"],["3️⃣","Know before you pull","pick the profitable cars"]].map(([icon,h,sub],i,arr)=>(
+            <div key={i} style={{flex:1,padding:"10px 8px",textAlign:"center",background:"rgba(255,255,255,.02)",borderRight:i<arr.length-1?"1px solid rgba(255,255,255,.06)":"none"}}>
+              <div style={{fontSize:18,marginBottom:3}}>{icon}</div>
+              <div style={{fontSize:11,fontWeight:800,color:"#ccc",marginBottom:2}}>{h}</div>
+              <div style={{fontSize:10,color:"#666"}}>{sub}</div>
+            </div>
+          ))}
         </div>
         <div style={{marginBottom:20}}>
           <div style={{display:"flex",gap:8,marginBottom:6}}>
-            <input value={q} onChange={e=>setQ(e.target.value)} onKeyDown={e=>e.key==="Enter"&&go(q)} placeholder="Any car — 1998 Supra · 2015 Hellcat · 1969 Camaro · 2022 Tundra..." style={{...S.inp,flex:1}} onFocus={e=>e.target.style.borderColor="#00FF88"} onBlur={e=>e.target.style.borderColor="rgba(0,255,136,.25)"}/>
+            <input value={q} onChange={e=>setQ(e.target.value)} onKeyDown={e=>e.key==="Enter"&&go(q)} placeholder="Any car — 1998 Supra · 2015 Hellcat · 1969 Camaro · 2022 Tundra..." style={{...S.inp,flex:1,fontSize:15}} onFocus={e=>e.target.style.borderColor="#00FF88"} onBlur={e=>e.target.style.borderColor="rgba(0,255,136,.25)"}/>
             <button onClick={()=>go(q)} style={S.btn}>GO</button>
           </div>
-          <p style={{color:"#555",fontSize:11,margin:"3px 0 0 2px"}}>Every year, make, model — domestic, import, classic, exotic, diesel, hybrid</p>
+          <p style={{color:"#666",fontSize:12,margin:"3px 0 0 2px"}}>Every year, make, model — domestic, import, classic, exotic, diesel, hybrid</p>
         </div>
         <div style={{marginBottom:20}}>
-          <div style={{fontSize:9,letterSpacing:3,color:"#444",marginBottom:9}}>👇 TAP ANY CAR TO TRY IT FREE</div>
-          <div style={{display:"flex",flexWrap:"wrap",gap:6}}>
+          <div style={{fontSize:11,color:"#555",marginBottom:9,letterSpacing:1}}>👇 Try one — tap any car below</div>
+          <div style={{display:"flex",flexWrap:"wrap",gap:7}}>
             {["1998 Supra TT","2015 Hellcat","2006 BMW M3","2003 Evo IX","1969 Camaro Z28","2018 F-150 Platinum","2002 Honda S2000","2022 Tundra TRD","2019 Ram Cummins","2016 GT-R","2005 STI","2001 NSX"].map(v=>(
-              <button key={v} onClick={()=>go(v)} style={{padding:"5px 10px",background:"rgba(255,255,255,.03)",border:"1px solid rgba(255,255,255,.07)",borderRadius:6,color:"#777",cursor:"pointer",fontFamily:"inherit",fontSize:11}} onMouseEnter={e=>{e.target.style.borderColor="rgba(0,255,136,.4)";e.target.style.color="#00FF88";}} onMouseLeave={e=>{e.target.style.borderColor="rgba(255,255,255,.07)";e.target.style.color="#777";}}>{v}</button>
+              <button key={v} onClick={()=>go(v)} style={{padding:"7px 12px",background:"rgba(255,255,255,.04)",border:"1px solid rgba(255,255,255,.1)",borderRadius:8,color:"#888",cursor:"pointer",fontFamily:"inherit",fontSize:12}} onMouseEnter={e=>{e.target.style.borderColor="rgba(0,255,136,.4)";e.target.style.color="#00FF88";e.target.style.background="rgba(0,255,136,.05)";}} onMouseLeave={e=>{e.target.style.borderColor="rgba(255,255,255,.1)";e.target.style.color="#888";e.target.style.background="rgba(255,255,255,.04)";}}>{v}</button>
             ))}
           </div>
         </div>
@@ -1078,8 +1087,8 @@ export default function App() {
           <div style={{background:"rgba(0,255,136,.04)",border:"1px solid rgba(0,255,136,.15)",borderRadius:12,padding:"12px 15px",marginBottom:9,display:"flex",justifyContent:"space-between",flexWrap:"wrap",gap:8}}>
             <div style={{flex:1,minWidth:0}}>
               <div style={{fontSize:17,fontWeight:900,wordBreak:"break-word"}}>{result.key}</div>
-              <div style={{fontSize:11,color:"#666",marginTop:2}}>{result.engine} · <strong style={{color:"#00FF88"}}>{result.parts.length} parts</strong></div>
-              {result.tip && <div style={{fontSize:11,color:"#00FF88",marginTop:4}}>💡 {result.tip}</div>}
+              <div style={{fontSize:12,color:"#666",marginTop:2}}>{result.engine} · <strong style={{color:"#00FF88"}}>{result.parts.length} parts analyzed</strong></div>
+              {result.tip && <div style={{fontSize:12,color:"#00FF88",marginTop:5}}>💡 {result.tip}</div>}
             </div>
             <div style={{textAlign:"right",flexShrink:0}}>
               <div style={{fontSize:22,fontWeight:900,color:"#00FF88"}}>${result.totalProfit.toLocaleString()}</div>
@@ -1089,65 +1098,66 @@ export default function App() {
           </div>
 
           <div style={{display:"flex",gap:8,marginBottom:9}}>
-            <input value={q} onChange={e=>setQ(e.target.value)} onKeyDown={e=>e.key==="Enter"&&go(q)} placeholder="Search any other vehicle…" style={{...S.inp,flex:1,padding:"9px 13px",fontSize:12,border:"1px solid rgba(0,255,136,.2)"}} onFocus={e=>e.target.style.borderColor="#00FF88"} onBlur={e=>e.target.style.borderColor="rgba(0,255,136,.2)"}/>
+            <input value={q} onChange={e=>setQ(e.target.value)} onKeyDown={e=>e.key==="Enter"&&go(q)} placeholder="Search any other vehicle…" style={{...S.inp,flex:1,padding:"9px 13px",fontSize:15,border:"1px solid rgba(0,255,136,.2)"}} onFocus={e=>e.target.style.borderColor="#00FF88"} onBlur={e=>e.target.style.borderColor="rgba(0,255,136,.2)"}/>
             <button onClick={()=>go(q)} style={{...S.btn,padding:"9px 20px",fontSize:15}}>GO</button>
           </div>
 
           {sorted.filter(p=>p.profit>400).length>0&&(
-            <div style={{padding:"8px 12px",background:"rgba(0,255,136,.04)",border:"1px solid rgba(0,255,136,.12)",borderRadius:9,marginBottom:8}}>
-              <div style={{fontSize:9,letterSpacing:2,color:"#00FF88",marginBottom:5}}>🎯 TOP PULLS ON THIS CAR</div>
-              <div style={{display:"flex",flexWrap:"wrap",gap:5}}>
+            <div style={{padding:"10px 13px",background:"rgba(0,255,136,.04)",border:"1px solid rgba(0,255,136,.15)",borderRadius:10,marginBottom:9}}>
+              <div style={{fontSize:11,fontWeight:700,color:"#00FF88",marginBottom:7}}>🎯 Best pulls on this car</div>
+              <div style={{display:"flex",flexWrap:"wrap",gap:6}}>
                 {sorted.filter(p=>p.profit>400).slice(0,6).map((p,i)=>(
-                  <div key={i} style={{padding:"3px 9px",background:"rgba(0,255,136,.08)",border:"1px solid rgba(0,255,136,.15)",borderRadius:6,fontSize:11}}>
+                  <div key={i} style={{padding:"5px 10px",background:"rgba(0,255,136,.08)",border:"1px solid rgba(0,255,136,.18)",borderRadius:7,fontSize:12}}>
                     <span style={{color:"#aaffcc"}}>{p.name.split(" ").slice(0,3).join(" ")}</span>
-                    <span style={{color:"#00FF88",fontWeight:900,marginLeft:5}}>+${p.profit.toLocaleString()}</span>
+                    <span style={{color:"#00FF88",fontWeight:900,marginLeft:6}}>+${p.profit.toLocaleString()}</span>
                   </div>
                 ))}
               </div>
             </div>
           )}
 
-          <div style={{display:"flex",flexWrap:"wrap",gap:4,marginBottom:7}}>
+          <div style={{display:"flex",flexWrap:"wrap",gap:5,marginBottom:8}}>
             {cats.map(c=>(
-              <button key={c} onClick={()=>setFilter(c)} style={{padding:"3px 8px",borderRadius:20,fontFamily:"inherit",fontSize:10,cursor:"pointer",background:filter===c?"rgba(0,255,136,.12)":"rgba(255,255,255,.03)",color:filter===c?"#00FF88":"#666",border:filter===c?"1px solid rgba(0,255,136,.3)":"1px solid rgba(255,255,255,.06)"}}>
+              <button key={c} onClick={()=>setFilter(c)} style={{padding:"5px 10px",borderRadius:20,fontFamily:"inherit",fontSize:11,cursor:"pointer",background:filter===c?"rgba(0,255,136,.12)":"rgba(255,255,255,.03)",color:filter===c?"#00FF88":"#666",border:filter===c?"1px solid rgba(0,255,136,.3)":"1px solid rgba(255,255,255,.07)"}}>
                 {CI[c]||"📦"} {c}{c!=="All"?` (${catCounts[c]||0})`:""}
               </button>
             ))}
           </div>
 
-          <div style={{display:"flex",gap:4,marginBottom:8,alignItems:"center"}}>
-            <span style={{fontSize:9,color:"#444",letterSpacing:2}}>SORT:</span>
+          <div style={{display:"flex",gap:5,marginBottom:8,alignItems:"center"}}>
+            <span style={{fontSize:11,color:"#555",letterSpacing:1}}>Sort:</span>
             {["profit","ebay","demand","name"].map(s=>(
-              <button key={s} onClick={()=>setSort(s)} style={{padding:"3px 8px",borderRadius:5,fontFamily:"inherit",fontSize:9,cursor:"pointer",textTransform:"uppercase",background:sort===s?"rgba(255,215,0,.1)":"transparent",color:sort===s?"#FFD700":"#555",border:sort===s?"1px solid rgba(255,215,0,.3)":"1px solid rgba(255,255,255,.06)"}}>{s}</button>
+              <button key={s} onClick={()=>setSort(s)} style={{padding:"5px 10px",borderRadius:6,fontFamily:"inherit",fontSize:11,cursor:"pointer",textTransform:"uppercase",background:sort===s?"rgba(255,215,0,.12)":"rgba(255,255,255,.03)",color:sort===s?"#FFD700":"#666",border:sort===s?"1px solid rgba(255,215,0,.35)":"1px solid rgba(255,255,255,.08)"}}>{s}</button>
             ))}
-            <span style={{marginLeft:"auto",fontSize:10,color:"#555"}}>{sorted.length} parts</span>
+            <span style={{marginLeft:"auto",fontSize:11,color:"#555"}}>{sorted.length} parts</span>
           </div>
 
+          <div style={{fontSize:11,color:"#555",marginBottom:5,textAlign:"center"}}>Tap any part to see eBay prices and selling tips</div>
           <div style={{display:"flex",flexDirection:"column",gap:5}}>
             {sorted.map((part,i)=>{
               const open = expanded===i;
               const ebayUrl = "https://www.ebay.com/sch/i.html?_nkw="+encodeURIComponent(part.search||part.name)+"&LH_Sold=1&LH_Complete=1&_sop=13";
               return (
-                <div key={i} className="row" style={{animationDelay:Math.min(i,30)*.018+"s",background:"rgba(255,255,255,.02)",border:`1px solid ${open?"rgba(0,255,136,.25)":"rgba(255,255,255,.06)"}`,borderRadius:9,padding:"9px 12px",cursor:"pointer",transition:"border-color .2s"}} onClick={()=>setExpanded(open?null:i)}>
+                <div key={i} className="row" style={{animationDelay:Math.min(i,30)*.018+"s",background:open?"rgba(0,255,136,.03)":"rgba(255,255,255,.02)",border:`1px solid ${open?"rgba(0,255,136,.3)":"rgba(255,255,255,.07)"}`,borderRadius:9,padding:"11px 13px",cursor:"pointer",transition:"all .15s"}} onClick={()=>setExpanded(open?null:i)}>
                   <div style={{display:"flex",justifyContent:"space-between",gap:8}}>
                     <div style={{flex:1,minWidth:0}}>
-                      <div style={{display:"flex",alignItems:"center",gap:5,marginBottom:3,flexWrap:"wrap"}}>
+                      <div style={{display:"flex",alignItems:"center",gap:6,marginBottom:4,flexWrap:"wrap"}}>
                         <span>{CI[part.cat]||"📦"}</span>
-                        <span style={{fontWeight:700,fontSize:12}}>{part.name}</span>
-                        <span style={{padding:"1px 5px",borderRadius:8,fontSize:8,fontWeight:800,background:`rgba(${part.demand==="High"?"0,255,136":part.demand==="Medium"?"255,215,0":"255,107,107"},.1)`,border:`1px solid ${DC[part.demand]}`,color:DC[part.demand]}}>{part.demand}</span>
-                        <span style={{fontSize:9,color:"#444"}}>{part.cat}</span>
+                        <span style={{fontWeight:700,fontSize:13}}>{part.name}</span>
+                        <span style={{padding:"2px 6px",borderRadius:8,fontSize:10,fontWeight:800,background:`rgba(${part.demand==="High"?"0,255,136":part.demand==="Medium"?"255,215,0":"255,107,107"},.1)`,border:`1px solid ${DC[part.demand]}`,color:DC[part.demand]}}>{part.demand}</span>
+                        <span style={{fontSize:11,color:"#555"}}>{part.cat}</span>
                       </div>
                       <ProfitBar profit={part.profit}/>
                     </div>
                     <div style={{textAlign:"right",flexShrink:0}}>
-                      <div style={{fontSize:15,fontWeight:900,color:part.profit>800?"#00FF88":part.profit>250?"#FFD700":"#FF9500"}}>+${part.profit.toLocaleString()}</div>
+                      <div style={{fontSize:16,fontWeight:900,color:part.profit>800?"#00FF88":part.profit>250?"#FFD700":"#FF9500"}}>+${part.profit.toLocaleString()}</div>
                     </div>
                   </div>
-                  <div style={{display:"flex",gap:10,marginTop:4,flexWrap:"wrap",alignItems:"center"}}>
-                    <span style={{fontSize:10}}><span style={{color:"#555"}}>YARD </span><span style={{color:"#ff6b6b",fontWeight:700}}>${part.yard}</span></span>
-                    <span style={{fontSize:10}}><span style={{color:"#555"}}>eBay </span><span style={{color:"#00aaff",fontWeight:700}}>${part.ebay}</span></span>
-                    <span style={{fontSize:9,color:"#444"}}>{part.weight==="Heavy"?"⚠ Heavy":part.weight==="Medium"?"↕ Med":"✓ Light"}</span>
-                    <span style={{fontSize:9,color:"#555",marginLeft:"auto"}}>{open?"▲":"▼"}</span>
+                  <div style={{display:"flex",gap:10,marginTop:5,flexWrap:"wrap",alignItems:"center"}}>
+                    <span style={{fontSize:11}}><span style={{color:"#777"}}>Yard </span><span style={{color:"#ff6b6b",fontWeight:700}}>${part.yard}</span></span>
+                    <span style={{fontSize:11}}><span style={{color:"#777"}}>eBay </span><span style={{color:"#00aaff",fontWeight:700}}>${part.ebay}</span></span>
+                    <span style={{fontSize:11,color:"#555"}}>{part.weight==="Heavy"?"⚠ Heavy":part.weight==="Medium"?"↕ Medium":"✓ Light"}</span>
+                    <span style={{fontSize:11,color:open?"#00FF88":"#555",marginLeft:"auto",fontWeight:700}}>{open?"▲ less":"▼ details"}</span>
                   </div>
                   {open && (
                     <div style={{marginTop:9,paddingTop:9,borderTop:"1px solid rgba(255,255,255,.05)"}}>
