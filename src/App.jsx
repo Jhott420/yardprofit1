@@ -1,12 +1,13 @@
 import { useState, useEffect, useMemo, useRef } from "react";
 
 const STRIPE = "https://buy.stripe.com/fZu7sNd6e7cbeoq2oz5wI00";
-const TRIAL_MAX = 2;
+const TRIAL_MAX = 3;
 
 // ─── storage ─────────────────────────────────────────────────────────────────
+// Use localStorage so trial count persists across sessions/tabs/browser restarts
 const ls = {
-  get:(k,d)=>{ try{const v=sessionStorage.getItem(k);return v!=null?JSON.parse(v):d;}catch{return d;} },
-  set:(k,v)=>{ try{sessionStorage.setItem(k,JSON.stringify(v));}catch{} },
+  get:(k,d)=>{ try{const v=localStorage.getItem(k);return v!=null?JSON.parse(v):d;}catch{return d;} },
+  set:(k,v)=>{ try{localStorage.setItem(k,JSON.stringify(v));}catch{} },
 };
 
 // GA4 event tracking
@@ -649,6 +650,10 @@ export default function App() {
   function go(v) {
     const term = (v !== undefined ? v : qRef.current).trim();
     if (!term) return;
+    // Gate: require email before first search
+    if (!emailSubmitted && trial === 0) {
+      setScreen("emailgate"); return;
+    }
     if (trialDone) {
       track('paywall_shown', { trial_count: trial });
       setScreen("paywall"); return;
@@ -742,6 +747,32 @@ Return ONLY a JSON object (no markdown, no explanation) with this exact structur
     } catch(e) {}
   }
 
+  async function submitEmailGate() {
+    const em = email.trim().toLowerCase();
+    if (!em || !em.includes("@") || !em.includes(".")) {
+      setEmailErr("Enter a valid email address"); return;
+    }
+    setEmailErr("");
+    ls.set("yp_email", em);
+    ls.set("yp_email_done", true);
+    ls.set("yp_lead_done", true);
+    setEmailSubmitted(true);
+    setLeadDone(true);
+    track('email_gate_submit', { email_domain: em.split('@')[1] });
+    // Add to Mailchimp
+    try {
+      await fetch("/.netlify/functions/subscribe", {
+        method: "POST",
+        headers: {"Content-Type":"application/json"},
+        body: JSON.stringify({ email: em, tags: ["Trial"], source: "email_gate" })
+      });
+    } catch(e) {}
+    // Go back to home — trial count is still 0, they now get their 3 free lookups
+    setScreen("home");
+    // Small delay then trigger the search they were trying to do
+    setTimeout(() => go(qRef.current), 100);
+  }
+
   async function submitEmail(e) {
     if (e) e.preventDefault();
     const em = email.trim().toLowerCase();
@@ -752,6 +783,9 @@ Return ONLY a JSON object (no markdown, no explanation) with this exact structur
     ls.set("yp_email", em);
     ls.set("yp_email_done", true);
     setEmailSubmitted(true);
+    // Grant +1 real lookup for giving email
+    const newTrial = Math.max(0, trial - 1); // rewind by 1 = effectively +1 search
+    setTrial(newTrial); ls.set("yp_t", newTrial);
     track('email_captured', { source: 'paywall' });
     // Add to Mailchimp via Netlify function
     try {
@@ -761,6 +795,8 @@ Return ONLY a JSON object (no markdown, no explanation) with this exact structur
         body: JSON.stringify({ email: em, tags: ["Trial"] })
       });
     } catch(e) { /* fail silently — email captured locally */ }
+    // Go back to home to use their bonus lookup
+    setScreen("home");
   }
 
   function requestLocation() {
@@ -866,8 +902,8 @@ Return ONLY a JSON object (no markdown, no explanation) with this exact structur
           <button onClick={()=>setScreen("yards")} style={{padding:"4px 9px",background:"rgba(255,215,0,.07)",border:"1px solid rgba(255,215,0,.2)",borderRadius:6,color:"#FFD700",cursor:"pointer",fontFamily:"inherit",fontSize:10}}>🏭 YARDS</button>
           {sub
             ? <span style={{padding:"4px 9px",background:"rgba(0,255,136,.1)",border:"1px solid #00FF88",borderRadius:6,color:"#00FF88",fontSize:10,fontWeight:800}}>✓ PRO</span>
-            : <button onClick={()=>setScreen(trialDone?"paywall":"sub")} style={{padding:"4px 9px",background:trialDone?"rgba(255,107,107,.1)":"rgba(0,255,136,.07)",border:`1px solid ${trialDone?"#ff6b6b":"rgba(0,255,136,.3)"}`,borderRadius:6,color:trialDone?"#ff6b6b":"#00FF88",cursor:"pointer",fontFamily:"inherit",fontSize:10,fontWeight:800}}>
-                {trialDone ? "⚠ UPGRADE" : trialLeft+" LEFT"}
+            : <button onClick={()=>setScreen(trialDone?"paywall":emailSubmitted?"sub":"emailgate")} style={{padding:"4px 9px",background:trialDone?"rgba(255,107,107,.1)":"rgba(0,255,136,.07)",border:`1px solid ${trialDone?"#ff6b6b":"rgba(0,255,136,.3)"}`,borderRadius:6,color:trialDone?"#ff6b6b":"#00FF88",cursor:"pointer",fontFamily:"inherit",fontSize:10,fontWeight:800}}>
+                {trialDone ? "⚠ UPGRADE" : emailSubmitted ? trialLeft+" LEFT" : "FREE →"}
               </button>
           }
         </div>
@@ -936,7 +972,7 @@ Return ONLY a JSON object (no markdown, no explanation) with this exact structur
               </div>
             ))}
           </div>
-          {!sub && <div style={{display:"inline-block",padding:"4px 14px",background:"rgba(0,255,136,.08)",border:"1px solid rgba(0,255,136,.2)",borderRadius:20,fontSize:11,color:"#00FF88",marginTop:4}}>✓ {trialLeft} free lookup{trialLeft!==1?"s":""} — no signup needed</div>}
+          {!sub && <div style={{display:"inline-block",padding:"4px 14px",background:"rgba(0,255,136,.08)",border:"1px solid rgba(0,255,136,.2)",borderRadius:20,fontSize:11,color:"#00FF88",marginTop:4}}>✓ {emailSubmitted ? `${trialLeft} free lookup${trialLeft!==1?"s":""} remaining` : "Free — enter email to start"}</div>}
         </div>
         <div style={{marginBottom:20}}>
           <div style={{display:"flex",gap:8,marginBottom:6}}>
@@ -1499,6 +1535,43 @@ Return ONLY a JSON object (no markdown, no explanation) with this exact structur
     );
   }
 
+  // ── EMAIL GATE (shown before first search) ───────────────────────────────────
+  if (screen==="emailgate") return (
+    <div style={S.app}><div style={S.grid}/><div style={S.z}>
+      <Hdr/>
+      <div style={{maxWidth:400,margin:"0 auto",padding:"50px 16px 80px",textAlign:"center"}}>
+        <div style={{fontSize:44,marginBottom:12}}>⚙</div>
+        <div style={{fontSize:10,letterSpacing:4,color:"#00FF88",marginBottom:8}}>FREE ACCESS</div>
+        <h2 style={{fontSize:22,fontWeight:900,margin:"0 0 8px",lineHeight:1.2}}>Where should we send<br/>your profit reports?</h2>
+        <p style={{color:"#666",fontSize:13,lineHeight:1.8,marginBottom:20}}>
+          Enter your email to unlock <strong style={{color:"#00FF88"}}>3 free lookups</strong>.<br/>
+          We'll send you the highest-profit pulls near you every week — free.
+        </p>
+        <div style={{background:"rgba(0,255,136,.04)",border:"1px solid rgba(0,255,136,.15)",borderRadius:12,padding:"16px",marginBottom:16,textAlign:"left"}}>
+          {["3 free part lookups — any vehicle","Weekly high-profit pull alerts","Top eBay sold prices for your region","No credit card needed"].map(f=>(
+            <div key={f} style={{fontSize:12,color:"#bbb",marginBottom:7,display:"flex",gap:8}}><span style={{color:"#00FF88",flexShrink:0}}>✓</span>{f}</div>
+          ))}
+        </div>
+        <div style={{display:"flex",gap:6,marginBottom:8}}>
+          <input
+            value={email}
+            onChange={e=>setEmail(e.target.value)}
+            onKeyDown={async e=>{ if(e.key==="Enter") { await submitEmailGate(); }}}
+            placeholder="your@email.com"
+            type="email"
+            autoFocus
+            style={{flex:1,padding:"12px 14px",background:"rgba(255,255,255,.05)",border:"1px solid rgba(0,255,136,.3)",borderRadius:8,color:"#fff",fontFamily:"inherit",fontSize:14,outline:"none"}}
+            onFocus={e=>e.target.style.borderColor="#00FF88"}
+            onBlur={e=>e.target.style.borderColor="rgba(0,255,136,.3)"}
+          />
+          <button onClick={submitEmailGate} style={{padding:"12px 18px",background:"#00FF88",color:"#06060f",border:"none",borderRadius:8,fontWeight:900,fontSize:14,cursor:"pointer",fontFamily:"inherit"}}>→</button>
+        </div>
+        {emailErr && <div style={{fontSize:11,color:"#ff6b6b",marginBottom:8}}>{emailErr}</div>}
+        <p style={{fontSize:10,color:"#333",marginTop:8}}>No spam. Unsubscribe anytime.</p>
+      </div>
+    </div></div>
+  );
+
   // ── PAYWALL ──────────────────────────────────────────────────────────────────
   if (screen==="paywall") return (
     <div style={S.app}><div style={S.grid}/><div style={S.z}>
@@ -1590,7 +1663,7 @@ Return ONLY a JSON object (no markdown, no explanation) with this exact structur
         </div>
         <div style={{padding:"11px 13px",background:"rgba(255,215,0,.04)",border:"1px solid rgba(255,215,0,.15)",borderRadius:9,marginBottom:11}}>
           <div style={{fontSize:9,letterSpacing:3,color:"#FFD700",marginBottom:6}}>STEP 2 — UNLOCK AFTER PAYMENT</div>
-          <button onClick={()=>{ls.set("yp_s",true);setSub(true);setScreen(result?"results":"home");}} style={{width:"100%",padding:"10px",background:"rgba(255,215,0,.1)",color:"#FFD700",border:"2px solid rgba(255,215,0,.35)",borderRadius:8,fontWeight:900,fontSize:12,cursor:"pointer",fontFamily:"inherit",letterSpacing:1}}>✓ I'VE PAID — UNLOCK</button>
+          <div style={{fontSize:11,color:"#888",marginBottom:8,lineHeight:1.6}}>After paying, Stripe will redirect you back here automatically. Your account will unlock instantly. If it doesn't, email <span style={{color:"#FFD700"}}>support@yardprofit.autos</span> with your receipt.</div>
         </div>
         <button onClick={()=>setScreen(result?"results":"home")} style={{display:"block",width:"100%",padding:8,background:"transparent",color:"#555",border:"1px solid rgba(255,255,255,.07)",borderRadius:8,cursor:"pointer",fontFamily:"inherit",fontSize:11,textAlign:"center"}}>← Go Back</button>
       </div>
