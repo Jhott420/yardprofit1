@@ -108,7 +108,7 @@ async function fetchInventory(yard, onStatus) {
   const invUrl = yard.inventory || yard.row52 || yard.website || "";
   const prompt = `Search for current vehicle inventory at the junkyard named "${yard.name}"${yard.city ? " in " + yard.city + (yard.state ? ", " + yard.state : "") : ""}. ${invUrl ? "Their inventory URL is: " + invUrl + ". " : ""}Return ONLY a plain list of vehicles currently available, one per line, format: YEAR MAKE MODEL. No explanations, no headers, just the list.`;
 
-  const res = await fetch("https://api.anthropic.com/v1/messages", {
+  const res = await fetch("/.netlify/functions/ai", {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify({
@@ -146,7 +146,7 @@ NAME | ADDRESS | PHONE | WEBSITE | TYPE
 Where TYPE is one of: u-pull, full-service, auction, private, dealer
 Return 5-10 results. Only real businesses, no made-up names.`;
 
-  const res = await fetch("https://api.anthropic.com/v1/messages", {
+  const res = await fetch("/.netlify/functions/ai", {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify({
@@ -479,9 +479,6 @@ function InventoryPanel({ yard, onClose, onAnalyze }) {
     onClose();
   }
 
-  function getYardInventory(yId) { return ls.get("yp_inv_"+yId, []); }
-  function saveYardInventory(yId, inv) { ls.set("yp_inv_"+yId, inv); }
-
   const carsToShow = fetchedCars.length > 0 ? fetchedCars : savedInv.map(c=>c.raw);
 
   return (
@@ -698,7 +695,7 @@ Return ONLY a JSON object (no markdown, no explanation) with this exact structur
   "verdict_reason": "one sentence why"
 }`;
 
-      const res = await fetch("https://api.anthropic.com/v1/messages", {
+      const res = await fetch("/.netlify/functions/ai", {
         method: "POST",
         headers: {"Content-Type":"application/json"},
         body: JSON.stringify({
