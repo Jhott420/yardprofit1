@@ -6,7 +6,7 @@ Hands-off daily pipeline for [youtube-automation-agent](https://github.com/darkz
 
 1. **Picks a topic** with Gemini, following the channel's content pillars and copyright rules, and skipping topics it has already covered (`state/history.json`).
 2. **Generates** the script, title, description, tags and narration through the agent.
-3. **Fixes narration**: re-voices any scene the free tier dropped. When a voice model runs out of its daily quota, it switches to the next model in `TTS_MODELS`.
+3. **Fixes narration**: re-voices any scene the free tier dropped, or whose audio came back cut short. Gemini sometimes truncates the voiceover for long scripts. When a voice model runs out of its daily quota, it switches to the next model in `TTS_MODELS`.
 4. **Animates every scene**: original motion graphics (word-by-word headlines, checklist reveals, drifting backgrounds, progress bar), rendered frame by frame with Playwright and FFmpeg. There's no stock footage and no third-party media.
 5. **Makes a thumbnail** in the same style.
 6. **Rebuilds** the final 1080p MP4, then **auto-approves** it. Factual claims are recorded as "waived — owner's hands-off policy".
@@ -22,6 +22,7 @@ The autopilot pauses the agent's own built-in daily generator, so the two don't 
 AGENT_DIR=/path/to/youtube-automation-agent node autopilot.js                 # pick a topic, publish
 AGENT_DIR=/path/to/youtube-automation-agent node autopilot.js --topic "How do magnets work?"
 AGENT_DIR=/path/to/youtube-automation-agent node autopilot.js --no-publish    # build + approve only
+AGENT_DIR=/path/to/youtube-automation-agent node autopilot.js --production prod_123   # resume a failed video
 ```
 
 The agent must already be set up, with `config/credentials.json`, `config/tokens.json` and `.env` in place. If the agent isn't running, the autopilot starts it.

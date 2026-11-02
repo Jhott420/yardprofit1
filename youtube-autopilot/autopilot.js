@@ -168,10 +168,29 @@ async function rotateTtsModel() {
   await startAgent();
 }
 
+function audioSeconds(file) {
+  if (!file || !fs.existsSync(file)) return 0;
+  const ffmpegPath = require(path.join(AGENT_DIR, 'node_modules', 'ffmpeg-static'));
+  let output = '';
+  try { execFileSync(ffmpegPath, ['-hide_banner', '-i', file], { encoding: 'utf8', stdio: 'pipe' }); } catch (error) { output = String(error.stderr || ''); }
+  if (/Invalid data|Error opening/i.test(output)) return 0;
+  const match = output.match(/Duration: (\d+):(\d+):([\d.]+)/);
+  return match ? Number(match[1]) * 3600 + Number(match[2]) * 60 + Number(match[3]) : 0;
+}
+
+// The agent splits one long narration by *estimated* scene lengths. Gemini sometimes returns
+// truncated audio for long scripts, which leaves later scenes short, silent or unreadable.
+function needsNarration(scene) {
+  if (scene.narrationStatus === 'intentional_silence') return false;
+  if (scene.narrationStatus !== 'current') return true;
+  const seconds = audioSeconds(scene.audioPath);
+  return seconds < 1 || seconds < Number(scene.duration) * 0.6;
+}
+
 async function ensureNarration(productionId) {
   for (let pass = 0; pass < TTS_MODELS.length + 2; pass++) {
     const scenes = (await api('GET', `/api/content/${productionId}`)).scenes;
-    const pending = scenes.filter(scene => !['current', 'intentional_silence'].includes(scene.narrationStatus));
+    const pending = scenes.filter(needsNarration);
     if (!pending.length) return;
     log(`${pending.length} scene(s) need narration`);
     for (const scene of pending) {
@@ -245,17 +264,26 @@ async function main() {
   // The autopilot replaces the agent's own daily generation, which would spend the same free quota.
   await api('POST', '/api/automation/pause').catch(error => log(`could not pause built-in automation: ${error.message}`));
 
-  const topic = argValue('--topic') || await pickTopic();
-  log(`topic: ${topic}`);
-  let job;
-  for (;;) {
-    try { job = await api('POST', '/generate', { topic, style: 'explainer', length: 'short' }); break; } catch (error) {
-      if (!/busy/i.test(error.message)) throw error;
-      log('agent is busy; waiting'); await sleep(60000);
+  // --production resumes an earlier video that failed after generation, without spending a new script.
+  let productionId = argValue('--production');
+  let topic;
+  if (productionId) {
+    const bundle = await api('GET', `/api/content/${productionId}`);
+    topic = bundle.strategy?.topic || bundle.editorData?.title;
+    log(`resuming production ${productionId}: ${topic}`);
+  } else {
+    topic = argValue('--topic') || await pickTopic();
+    log(`topic: ${topic}`);
+    let job;
+    for (;;) {
+      try { job = await api('POST', '/generate', { topic, style: 'explainer', length: 'short' }); break; } catch (error) {
+        if (!/busy/i.test(error.message)) throw error;
+        log('agent is busy; waiting'); await sleep(60000);
+      }
     }
+    productionId = (await waitForJob(job.id)).production_id;
+    log(`production ${productionId}`);
   }
-  const productionId = (await waitForJob(job.id)).production_id;
-  log(`production ${productionId}`);
 
   await ensureNarration(productionId);
   const workDir = path.join(STATE_DIR, 'renders', productionId);
