@@ -230,6 +230,17 @@ async function animateScenes(productionId, bundle, workDir) {
   return { title, thumbnailPath };
 }
 
+// The agent locks scene edits once content is approved or scheduled. With its own
+// auto-approval on, new videos arrive locked, so release them before re-voicing/animating.
+async function unlockForEditing(productionId) {
+  const bundle = await api('GET', `/api/content/${productionId}`);
+  if (bundle.schedule?.status === 'published') throw new Error('This video is already published');
+  if (!bundle.schedule && bundle.review_status !== 'approved') return;
+  log('video was auto-approved by the agent; unlocking it for scene edits');
+  if (bundle.schedule) await api('DELETE', `/api/content/${productionId}/schedule`);
+  await api('POST', `/api/content/${productionId}/reject`, { notes: 'Unlocked by autopilot for scene repair; re-approved after rebuild' });
+}
+
 async function approve(productionId) {
   const bundle = await api('GET', `/api/content/${productionId}`);
   const provenance = bundle.provenance || {};
@@ -263,6 +274,9 @@ async function main() {
   if (!(await healthy())) { log('agent is not running; starting it'); await startAgent(); }
   // The autopilot replaces the agent's own daily generation, which would spend the same free quota.
   await api('POST', '/api/automation/pause').catch(error => log(`could not pause built-in automation: ${error.message}`));
+  // Keep the agent's own approval gate on: the autopilot approves at the end, and an
+  // agent-approved video is locked against the scene edits the autopilot needs to make.
+  await api('PUT', '/api/settings', { approval_required: true });
 
   // --production resumes an earlier video that failed after generation, without spending a new script.
   let productionId = argValue('--production');
@@ -285,6 +299,7 @@ async function main() {
     log(`production ${productionId}`);
   }
 
+  await unlockForEditing(productionId);
   await ensureNarration(productionId);
   const workDir = path.join(STATE_DIR, 'renders', productionId);
   fs.mkdirSync(workDir, { recursive: true });
