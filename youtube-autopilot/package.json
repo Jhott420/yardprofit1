@@ -1,0 +1,6 @@
+{
+  "name": "youtube-autopilot",
+  "private": true,
+  "type": "commonjs",
+  "description": "Hands-off animated video pipeline for youtube-automation-agent"
+}
