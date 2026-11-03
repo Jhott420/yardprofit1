@@ -5,6 +5,8 @@ const { spawn } = require('child_process');
 
 const WIDTH = 1280;
 const HEIGHT = 720;
+// Shorts are rendered at 720x1280 and upscaled; text is sized for a phone held upright.
+const VERTICAL = { width: 720, height: 1280 };
 const FPS = 24;
 
 const PALETTES = [
@@ -26,10 +28,13 @@ function escapeHtml(text) {
   return String(text || '').replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
 }
 
-function sceneHtml(card, { duration, index, total, palette, channel }) {
+function sceneHtml(card, { duration, index, total, palette, channel, width = WIDTH, height = HEIGHT }) {
+  const vertical = height > width;
   const [c1, c2, c3, accent] = palette;
   const words = escapeHtml(card.headline).split(/\s+/).filter(Boolean);
-  const headlineSize = card.headline.length > 48 ? 54 : card.headline.length > 30 ? 64 : 76;
+  const headlineSize = vertical
+    ? (card.headline.length > 40 ? 60 : card.headline.length > 24 ? 70 : 84)
+    : (card.headline.length > 48 ? 54 : card.headline.length > 30 ? 64 : 76);
   const points = (card.points || []).slice(0, 3);
   // Spread bullet reveals across the scene so they land while the narrator talks about them.
   const firstPointAt = Math.min(2.2, duration * 0.3);
@@ -37,7 +42,7 @@ function sceneHtml(card, { duration, index, total, palette, channel }) {
 
   return `<!doctype html><html><head><meta charset="utf-8"><style>
   * { box-sizing: border-box; margin: 0; }
-  body { width: ${WIDTH}px; height: ${HEIGHT}px; overflow: hidden; font-family: 'DejaVu Sans', Arial, sans-serif; color: #fff;
+  body { width: ${width}px; height: ${height}px; overflow: hidden; font-family: 'DejaVu Sans', Arial, sans-serif; color: #fff;
     background: linear-gradient(135deg, ${c1}, ${c2}); }
   .blob { position: absolute; border-radius: 50%; filter: blur(60px); opacity: .55; }
   .b1 { width: 520px; height: 520px; background: ${c3}; left: -120px; top: -160px; animation: drift1 14s ease-in-out infinite alternate; }
@@ -45,16 +50,16 @@ function sceneHtml(card, { duration, index, total, palette, channel }) {
   .b3 { width: 300px; height: 300px; background: ${c2}; left: 55%; top: 30%; opacity: .5; animation: drift1 11s ease-in-out infinite alternate-reverse; }
   .dots { position: absolute; inset: -40px; background-image: radial-gradient(rgba(255,255,255,.12) 2px, transparent 2px);
     background-size: 40px 40px; animation: pan 20s linear infinite; }
-  .stage { position: absolute; inset: 0; padding: 0 96px; display: flex; flex-direction: column; justify-content: center;
+  .stage { position: absolute; inset: 0; padding: 0 ${vertical ? 56 : 96}px; display: flex; flex-direction: column; justify-content: center;
     animation: zoom ${duration}s linear forwards; }
   .kicker { align-self: flex-start; background: ${accent}; color: ${c1}; font-weight: 800; font-size: 22px; letter-spacing: 3px;
     padding: 8px 18px; border-radius: 10px; margin-bottom: 26px; text-transform: uppercase; opacity: 0;
     animation: slideIn .6s cubic-bezier(.2,.8,.2,1) .15s forwards; }
-  h1 { font-size: ${headlineSize}px; line-height: 1.1; font-weight: 900; max-width: 1080px; text-shadow: 0 6px 24px rgba(0,0,0,.35); }
+  h1 { font-size: ${headlineSize}px; line-height: 1.1; font-weight: 900; max-width: ${width - (vertical ? 112 : 200)}px; text-shadow: 0 6px 24px rgba(0,0,0,.35); }
   h1 span { display: inline-block; opacity: 0; transform: translateY(30px) scale(.9); margin-right: .25em;
     animation: pop .55s cubic-bezier(.2,.9,.3,1.3) forwards; }
   ul { list-style: none; margin-top: 34px; }
-  li { display: flex; align-items: center; gap: 18px; font-size: 30px; font-weight: 600; margin: 14px 0; opacity: 0;
+  li { display: flex; align-items: center; gap: 18px; font-size: ${vertical ? 36 : 30}px; font-weight: 600; margin: 14px 0; opacity: 0;
     transform: translateX(-24px); animation: fadeRight .6s ease-out forwards; }
   li i { flex: none; width: 34px; height: 34px; border-radius: 50%; background: ${accent}; position: relative; }
   li i::after { content: ''; position: absolute; left: 12px; top: 6px; width: 8px; height: 16px; border: solid ${c1};
@@ -115,17 +120,18 @@ async function writeFrame(stream, buffer) {
 }
 
 // cards: [{ kicker, headline, points }], durations: seconds per scene (same order).
-async function renderSceneClips({ agentDir, cards, durations, outDir, seed, channel }) {
+async function renderSceneClips({ agentDir, cards, durations, outDir, seed, channel, vertical = false }) {
+  const size = vertical ? VERTICAL : { width: WIDTH, height: HEIGHT };
   const { chromium } = require(path.join(agentDir, 'node_modules', 'playwright'));
   const ffmpegPath = require(path.join(agentDir, 'node_modules', 'ffmpeg-static'));
   const palette = paletteFor(seed);
   const browser = await chromium.launch();
   const outputs = [];
   try {
-    const page = await browser.newPage({ viewport: { width: WIDTH, height: HEIGHT } });
+    const page = await browser.newPage({ viewport: size });
     for (const [index, card] of cards.entries()) {
       const duration = Math.max(2, Number(durations[index]) || 6);
-      await page.setContent(sceneHtml(card, { duration, index, total: cards.length, palette, channel }));
+      await page.setContent(sceneHtml(card, { duration, index, total: cards.length, palette, channel, ...size }));
       const outputPath = path.join(outDir, `scene_${String(index).padStart(2, '0')}.mp4`);
       const { encoder, done } = startEncoder(ffmpegPath, outputPath);
       const frames = Math.ceil(duration * FPS);

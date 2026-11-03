@@ -11,6 +11,13 @@ Hands-off daily pipeline for [youtube-automation-agent](https://github.com/darkz
 5. **Makes a thumbnail** in the same style.
 6. **Rebuilds** the final 1080p MP4, then **auto-approves** it. Factual claims are recorded as "waived — owner's hands-off policy".
 7. **Publishes now** and sets the custom thumbnail directly, which works around the agent's thumbnail upload bug.
+8. **Growth steps** (`growth.js`), after publishing:
+   - **Rewrites the title**: an honest curiosity hook of up to 60 characters in Title Case, with the agent's "…: Complete Guide" style suffixes removed.
+   - **Cleans up the description**: adds 3 hashtags and removes the agent's false "background music" credit.
+   - **Adds the video** to the public **Explained Simply** playlist, so viewers keep watching.
+   - **Makes a vertical animated Short** (≤58 s) with its own hook, narration and title, linking back to the full video. For new channels, Shorts are the main way YouTube finds viewers.
+
+   These steps are best effort: if one fails, the main video stays published.
 
 If any step fails, the run stops and **nothing is published**. The reason is written to `state/last-run.json`.
 
@@ -23,6 +30,8 @@ AGENT_DIR=/path/to/youtube-automation-agent node autopilot.js                 # 
 AGENT_DIR=/path/to/youtube-automation-agent node autopilot.js --topic "How do magnets work?"
 AGENT_DIR=/path/to/youtube-automation-agent node autopilot.js --no-publish    # build + approve only
 AGENT_DIR=/path/to/youtube-automation-agent node autopilot.js --production prod_123   # resume a failed video
+AGENT_DIR=/path/to/youtube-automation-agent node autopilot.js --no-short      # skip the Short
+AGENT_DIR=/path/to/youtube-automation-agent node growth.js --video <youtubeId> --production prod_123   # growth steps for an existing video
 ```
 
 The agent must already be set up, with `config/credentials.json`, `config/tokens.json` and `.env` in place. If the agent isn't running, the autopilot starts it.

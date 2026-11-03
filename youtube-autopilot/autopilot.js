@@ -9,6 +9,7 @@ const fs = require('fs');
 const path = require('path');
 const { spawn, execFileSync } = require('child_process');
 const { renderSceneClips, renderThumbnail } = require('./animate');
+const { polishVideo, makeShort, narrationOf } = require('./growth');
 
 const AGENT_DIR = path.resolve(process.env.AGENT_DIR || path.join(__dirname, '..', 'youtube-automation-agent'));
 const AGENT_URL = process.env.AGENT_URL || 'http://127.0.0.1:3456';
@@ -139,6 +140,7 @@ For each scene below, return a card in the same order:
 - headline: the key idea, max 9 words, plain words
 - points: 0-3 short supporting bullets (max 6 words each) that the narration actually says; use [] for intro/outro/calls to action
 Also return a thumbnail: {"tag": "1-2 word topic label", "hook": "curiosity hook, max 7 words, no clickbait lies"}.
+Every headline and bullet must state a specific, concrete fact or claim from the narration (names, numbers, mechanisms); never vague filler like \"fascinating science\", \"core components\" or \"key concepts\".
 Only use facts stated in the narration. Return JSON: {"cards":[{"kicker":"","headline":"","points":[]}], "thumbnail":{"tag":"","hook":""}}
 Scenes: ${JSON.stringify(scenes.map(s => ({ label: s.label, narration: s.scriptText || s.script_text })))}`);
   if (!Array.isArray(result.cards) || result.cards.length !== scenes.length) throw new Error('Scene card count does not match scenes');
@@ -315,6 +317,21 @@ async function main() {
     await setThumbnail(published.youtubeId, thumbnailPath).catch(error => log(`thumbnail upload failed: ${error.message}`));
     Object.assign(record, { youtubeId: published.youtubeId, url: published.youtubeUrl });
     log(`PUBLISHED: ${published.youtubeUrl}`);
+    // Growth steps are best effort: the main video is already live if they fail.
+    const narration = narrationOf((await api('GET', `/api/content/${productionId}`)).scenes);
+    try {
+      const polished = await polishVideo({ agentDir: AGENT_DIR, videoId: published.youtubeId, narration });
+      record.title = polished.title;
+    } catch (error) { log(`title/playlist step failed: ${error.message}`); }
+    if (!args.includes('--no-short')) {
+      try {
+        const short = await makeShort({
+          agentDir: AGENT_DIR, mainVideoId: published.youtubeId, mainTitle: record.title, narration,
+          workDir: path.join(workDir, 'short'), channel: CHANNEL, seed: record.title
+        });
+        Object.assign(record, { shortId: short.id, shortUrl: short.url });
+      } catch (error) { log(`Short step failed: ${error.message}`); }
+    }
   } else {
     log('--no-publish: approved but not uploaded');
   }
