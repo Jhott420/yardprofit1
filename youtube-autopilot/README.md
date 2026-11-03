@@ -12,10 +12,15 @@ Hands-off daily pipeline for [youtube-automation-agent](https://github.com/darkz
 6. **Rebuilds** the final 1080p MP4, then **auto-approves** it. Factual claims are recorded as "waived — owner's hands-off policy".
 7. **Publishes now** and sets the custom thumbnail directly, which works around the agent's thumbnail upload bug.
 8. **Growth steps** (`growth.js`), after publishing:
-   - **Rewrites the title**: an honest curiosity hook of up to 60 characters in Title Case, with the agent's "…: Complete Guide" style suffixes removed.
-   - **Cleans up the description**: adds 3 hashtags and removes the agent's false "background music" credit.
-   - **Adds the video** to the public **Explained Simply** playlist, so viewers keep watching.
-   - **Makes a vertical animated Short** (≤58 s) with its own hook, narration and title, linking back to the full video. For new channels, Shorts are the main way YouTube finds viewers.
+   - **Title**: an honest curiosity hook of up to 60 characters in Title Case, with the keyword near the start. It drops the agent's "…: Complete Guide" suffixes and bans exaggerations like "destroys" or "shocking" that the video can't back up.
+   - **Bold thumbnail**: 2–4 huge words that add to the title, one accent word in colour, and a giant background "?" or "!".
+   - **Description**: a keyword-rich hook, real chapters timed from the scenes, the agent's text with its unreliable timestamps and false music credit removed, a playlist line and 3 hashtags.
+   - **Tags**: 12–15 search phrases, cleaned and kept within YouTube's 500-character limit.
+   - **A question comment** on the video, to start a conversation.
+   - **The "Explained Simply" playlist**, so viewers keep watching.
+   - **A vertical animated Short** (≤58 s) with a hook-first script and its own title and hashtags, linking back to the full video.
+
+   Voices: main videos use the agent's `GEMINI_TTS_VOICE` (set to **Charon**, a documentary narrator). Shorts use `SHORT_TTS_VOICE` (default **Fenrir**, energetic) with a storyteller direction. Only Gemini 2.5 TTS models follow that direction; the 3.x models read it aloud. So every Short's voiceover is transcribed, and it's redone without the direction if the direction was spoken.
 
    These steps are best effort: if one fails, the main video stays published.
 

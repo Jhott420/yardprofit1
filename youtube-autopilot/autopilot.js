@@ -9,7 +9,7 @@ const fs = require('fs');
 const path = require('path');
 const { spawn, execFileSync } = require('child_process');
 const { renderSceneClips, renderThumbnail } = require('./animate');
-const { polishVideo, makeShort, narrationOf } = require('./growth');
+const { polishVideo, makeShort } = require('./growth');
 
 const AGENT_DIR = path.resolve(process.env.AGENT_DIR || path.join(__dirname, '..', 'youtube-automation-agent'));
 const AGENT_URL = process.env.AGENT_URL || 'http://127.0.0.1:3456';
@@ -318,15 +318,15 @@ async function main() {
     Object.assign(record, { youtubeId: published.youtubeId, url: published.youtubeUrl });
     log(`PUBLISHED: ${published.youtubeUrl}`);
     // Growth steps are best effort: the main video is already live if they fail.
-    const narration = narrationOf((await api('GET', `/api/content/${productionId}`)).scenes);
+    const { scenes } = await api('GET', `/api/content/${productionId}`);
     try {
-      const polished = await polishVideo({ agentDir: AGENT_DIR, videoId: published.youtubeId, narration });
+      const polished = await polishVideo({ agentDir: AGENT_DIR, videoId: published.youtubeId, scenes, workDir });
       record.title = polished.title;
-    } catch (error) { log(`title/playlist step failed: ${error.message}`); }
+    } catch (error) { log(`title/thumbnail/playlist step failed: ${error.message}`); }
     if (!args.includes('--no-short')) {
       try {
         const short = await makeShort({
-          agentDir: AGENT_DIR, mainVideoId: published.youtubeId, mainTitle: record.title, narration,
+          agentDir: AGENT_DIR, mainVideoId: published.youtubeId, mainTitle: record.title, scenes,
           workDir: path.join(workDir, 'short'), channel: CHANNEL, seed: record.title
         });
         Object.assign(record, { shortId: short.id, shortUrl: short.url });

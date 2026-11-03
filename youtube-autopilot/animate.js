@@ -89,17 +89,29 @@ function sceneHtml(card, { duration, index, total, palette, channel, width = WID
   </body></html>`;
 }
 
+// High-contrast thumbnail: 2-4 huge words with one accent word in colour, a giant
+// background glyph for shape contrast, and a dark vignette so text pops at phone size.
 function thumbnailHtml(thumb, palette) {
   const [c1, c2, c3, accent] = palette;
-  const size = thumb.hook.length > 34 ? 88 : 104;
+  const words = escapeHtml(thumb.hook).split(/\s+/).filter(Boolean);
+  const accentWord = String(thumb.accent || '').toLowerCase().replace(/[^\w']/g, '');
+  const size = words.length > 4 || thumb.hook.length > 26 ? 118 : 148;
+  const glyph = escapeHtml(thumb.glyph || '?').slice(0, 2);
   return `<!doctype html><html><head><meta charset="utf-8"><style>
   * { box-sizing: border-box; margin: 0; }
-  body { width: ${WIDTH}px; height: ${HEIGHT}px; overflow: hidden; font-family: 'DejaVu Sans', Arial, sans-serif; color: #fff;
-    background: linear-gradient(135deg, ${c1}, ${c2} 55%, ${c3}); display: flex; flex-direction: column; justify-content: center; padding: 0 80px; }
-  .tag { align-self: flex-start; background: ${accent}; color: ${c1}; font-weight: 800; font-size: 40px; padding: 10px 24px;
-    border-radius: 12px; margin-bottom: 28px; text-transform: uppercase; }
-  h1 { font-size: ${size}px; font-weight: 900; line-height: 1.02; text-shadow: 0 6px 24px rgba(0,0,0,.45); max-width: 1120px; }
-  </style></head><body><div class="tag">${escapeHtml(thumb.tag)}</div><h1>${escapeHtml(thumb.hook)}</h1></body></html>`;
+  body { width: ${WIDTH}px; height: ${HEIGHT}px; overflow: hidden; font-family: 'DejaVu Sans', Arial, sans-serif; color: #fff; position: relative;
+    background: radial-gradient(circle at 75% 45%, ${c3} 0%, ${c2} 38%, ${c1} 80%); display: flex; flex-direction: column; justify-content: center; padding: 0 70px; }
+  .glyph { position: absolute; right: 40px; top: 50%; transform: translateY(-52%) rotate(8deg); font-size: 640px; font-weight: 900; line-height: 1;
+    color: ${accent}; opacity: .9; text-shadow: 0 20px 60px rgba(0,0,0,.5); }
+  .vignette { position: absolute; inset: 0; background: linear-gradient(90deg, rgba(0,0,0,.65) 0%, rgba(0,0,0,.35) 55%, rgba(0,0,0,0) 80%); }
+  .tag { position: relative; align-self: flex-start; background: ${accent}; color: #111; font-weight: 900; font-size: 38px; padding: 8px 22px;
+    border-radius: 10px; margin-bottom: 22px; text-transform: uppercase; letter-spacing: 2px; }
+  h1 { position: relative; font-size: ${size}px; font-weight: 900; line-height: .98; max-width: 860px; text-transform: uppercase;
+    -webkit-text-stroke: 4px #000; paint-order: stroke fill; text-shadow: 0 10px 30px rgba(0,0,0,.6); }
+  h1 em { font-style: normal; color: ${accent}; }
+  </style></head><body><div class="glyph">${glyph}</div><div class="vignette"></div>
+  ${thumb.tag ? `<div class="tag">${escapeHtml(thumb.tag)}</div>` : ''}
+  <h1>${words.map(word => (word.toLowerCase().replace(/[^\w']/g, '') === accentWord ? `<em>${word}</em>` : word)).join(' ')}</h1></body></html>`;
 }
 
 function startEncoder(ffmpegPath, outputPath) {
