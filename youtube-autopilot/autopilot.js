@@ -320,8 +320,9 @@ async function main() {
     // Growth steps are best effort: the main video is already live if they fail.
     const { scenes } = await api('GET', `/api/content/${productionId}`);
     try {
-      const polished = await polishVideo({ agentDir: AGENT_DIR, videoId: published.youtubeId, scenes, workDir });
-      record.title = polished.title;
+      const avoidThumbTexts = history().slice(-30).map(item => item.thumbText).filter(Boolean);
+      const polished = await polishVideo({ agentDir: AGENT_DIR, videoId: published.youtubeId, scenes, workDir, avoidThumbTexts });
+      Object.assign(record, { title: polished.title, thumbText: polished.thumbnail.text });
     } catch (error) { log(`title/thumbnail/playlist step failed: ${error.message}`); }
     if (!args.includes('--no-short')) {
       try {

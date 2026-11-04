@@ -74,6 +74,8 @@ function titleCase(text) {
   }).join(' ');
 }
 
+const normalizeText = text => String(text || '').toLowerCase().replace(/[^a-z0-9 ]/g, '').trim();
+
 const sortedScenes = scenes => [...scenes].sort((a, b) => a.position - b.position);
 const narrationOf = scenes => sortedScenes(scenes).map(s => s.scriptText || s.script_text || '').join('\n');
 
@@ -94,12 +96,14 @@ function chapters(scenes, titles) {
   return list.length >= 3 ? list.map(c => `${timestamp(c.at)} ${c.title}`).join('\n') : '';
 }
 
-async function packaging(agentDir, title, scenes) {
-  // The helper model occasionally drops fields, so check the shape and ask again.
+async function packaging(agentDir, title, scenes, avoidThumbTexts = []) {
+  // The helper model occasionally drops fields or repeats a recent thumbnail, so check and ask again.
+  const used = new Set(avoidThumbTexts.map(normalizeText));
   for (let attempt = 1; ; attempt++) {
-    const pack = await packagingOnce(agentDir, title, scenes);
+    const pack = await packagingOnce(agentDir, title, scenes, avoidThumbTexts);
     const missing = ['title', 'thumbnail.text', 'hashtags', 'tags'].filter(field =>
-      field === 'thumbnail.text' ? !pack.thumbnail.text : !(Array.isArray(pack[field]) ? pack[field].length : pack[field]));
+      field === 'thumbnail.text' ? !pack.thumbnail.text || used.has(normalizeText(pack.thumbnail.text))
+        : !(Array.isArray(pack[field]) ? pack[field].length : pack[field]));
     if (!missing.length || attempt >= 3) {
       if (missing.length) log(`packaging still missing ${missing.join(', ')}; using what we have`);
       return pack;
@@ -108,7 +112,7 @@ async function packaging(agentDir, title, scenes) {
   }
 }
 
-async function packagingOnce(agentDir, title, scenes) {
+async function packagingOnce(agentDir, title, scenes, avoidThumbTexts = []) {
   const narration = narrationOf(scenes);
   const result = await gemini(agentDir, `You package a faceless YouTube explainer video to maximise clicks and watch time without misleading anyone.
 Current title: ${stripTemplateSuffix(title)}
@@ -120,7 +124,8 @@ Return JSON:
 - title: Title Case, max 60 characters, a curiosity gap or surprising claim the video truly pays off, the main search keyword near the start,
   no ALL CAPS words, no emojis, no "Complete Guide"-style suffix.
   Never exaggerate past what the narration says: no "destroys", "ruins", "shocking", "insane" or "secret" unless literally true.
-- thumbnail.text: 2-4 punchy words that ADD to the title (do not repeat it), e.g. "YOUR BRAIN LIES". thumbnail.accent: the one word to colour.
+- thumbnail.text: 2-4 punchy words specific to THIS topic that ADD to the title (do not repeat it). It must not reuse or resemble
+  these recent thumbnails: ${JSON.stringify(avoidThumbTexts)}. Avoid generic "your brain ..." phrasing. thumbnail.accent: the one word to colour.
   thumbnail.tag: 1-2 word topic label. thumbnail.glyph: one character to show huge in the background, such as ? or ! or a digit.
 - hook: the first two lines of the description, 1-2 sentences, keyword-rich, makes people want to watch.
 - chapters: one short chapter title (max 5 words) per scene, same count and order as the scenes; specific, not "Introduction"/"Conclusion".
@@ -183,11 +188,11 @@ async function postQuestion(yt, videoId, text) {
   await yt.commentThreads.insert({ part: 'snippet', requestBody: { snippet: { videoId, topLevelComment: { snippet: { textOriginal: text } } } } });
 }
 
-async function polishVideo({ agentDir, videoId, scenes, workDir }) {
+async function polishVideo({ agentDir, videoId, scenes, workDir, avoidThumbTexts = [] }) {
   const yt = youtube(agentDir);
   const video = (await yt.videos.list({ part: 'snippet', id: videoId })).data.items?.[0];
   if (!video) throw new Error(`Video ${videoId} not found`);
-  const pack = await packaging(agentDir, video.snippet.title, scenes);
+  const pack = await packaging(agentDir, video.snippet.title, scenes, avoidThumbTexts);
 
   const chapterBlock = chapters(scenes, pack.chapters);
   const description = [
