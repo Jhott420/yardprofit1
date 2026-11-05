@@ -70,10 +70,12 @@ const SMALL_WORDS = new Set(['a', 'an', 'and', 'as', 'at', 'but', 'by', 'for', '
 
 // Gemini sometimes returns titles in all lowercase; YouTube titles read better in Title Case.
 function titleCase(text) {
-  return String(text || '').split(' ').map((word, i) => {
+  const words = String(text || '').split(' ');
+  return words.map((word, i) => {
     if (!word || /[A-Z]/.test(word.slice(1))) return word; // keep acronyms and names like "iPhone"
     const lower = word.toLowerCase();
-    return i > 0 && SMALL_WORDS.has(lower) ? lower : lower.charAt(0).toUpperCase() + lower.slice(1);
+    const startsPhrase = i === 0 || /[?:!.]$/.test(words[i - 1]); // capitalize after "?" or ":" too
+    return !startsPhrase && SMALL_WORDS.has(lower) ? lower : lower.charAt(0).toUpperCase() + lower.slice(1);
   }).join(' ');
 }
 
