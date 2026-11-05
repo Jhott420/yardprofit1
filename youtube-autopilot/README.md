@@ -46,7 +46,7 @@ The agent must already be set up, with `config/credentials.json`, `config/tokens
 | `AGENT_DIR` | `../youtube-automation-agent` | Agent install folder |
 | `STATE_DIR` | `./state` | History, logs, renders |
 | `TTS_MODELS` | `gemini-3.8-flash-tts,gemini-3.1-flash-tts-preview,gemini-2.5-flash-preview-tts,gemini-3.8-flash-lite-tts` | Voice models to fall back through |
-| `HELPER_MODEL` | `gemini-3.5-flash-lite` | Model for topic picking and on-screen text |
+| `HELPER_MODELS` | `gemini-3.5-flash-lite,gemini-3.1-flash-lite,gemini-3.5-flash,gemini-3.7-flash` | Models for topic picking and on-screen text, tried in turn when one is overloaded |
 | `AGENT_RESTART_CMD` | *(built in)* | How to restart the agent after a voice-model switch, e.g. `systemctl restart youtube-agent` |
 | `CHANNEL_LABEL` | `Explained Simply` | Watermark text on every scene |
 

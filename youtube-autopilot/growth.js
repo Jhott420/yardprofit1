@@ -9,7 +9,8 @@ const { execFileSync } = require('child_process');
 const { renderSceneClips, renderThumbnail } = require('./animate');
 
 const PLAYLIST_TITLE = process.env.PLAYLIST_TITLE || 'Explained Simply';
-const HELPER_MODEL = process.env.HELPER_MODEL || 'gemini-3.5-flash-lite';
+// Small fast models first; when one is overloaded ("high demand") the next is tried.
+const HELPER_MODELS = (process.env.HELPER_MODELS || 'gemini-3.5-flash-lite,gemini-3.1-flash-lite,gemini-3.5-flash,gemini-3.7-flash').split(',');
 // Shorts try the model that follows spoken-style directions first (the 3.x TTS models read them aloud).
 const SHORT_TTS_MODELS = (process.env.SHORT_TTS_MODELS || 'gemini-2.5-flash-preview-tts,gemini-2.5-pro-preview-tts,gemini-3.8-flash-tts,gemini-3.1-flash-tts-preview,gemini-3.8-flash-lite-tts').split(',');
 const DIRECTED_TTS_MODELS = new Set(['gemini-2.5-flash-preview-tts', 'gemini-2.5-pro-preview-tts']);
@@ -36,8 +37,10 @@ function youtube(agentDir) {
 }
 
 async function gemini(agentDir, parts, { json = true } = {}) {
-  for (let attempt = 1; attempt <= 3; attempt++) {
-    const res = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/${HELPER_MODEL}:generateContent`, {
+  const attempts = HELPER_MODELS.length * 2;
+  for (let attempt = 1; attempt <= attempts; attempt++) {
+    const model = HELPER_MODELS[(attempt - 1) % HELPER_MODELS.length];
+    const res = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent`, {
       method: 'POST',
       headers: { 'x-goog-api-key': geminiKey(agentDir), 'Content-Type': 'application/json' },
       body: JSON.stringify({
@@ -49,10 +52,10 @@ async function gemini(agentDir, parts, { json = true } = {}) {
     const body = await res.json();
     const text = body.candidates?.[0]?.content?.parts?.map(p => p.text || '').join('');
     if (res.ok && text) return json ? JSON.parse(text) : text;
-    log(`Gemini helper attempt ${attempt} failed: ${body.error?.message || 'empty response'}`);
-    await sleep(15000 * attempt);
+    log(`Gemini helper attempt ${attempt} (${model}) failed: ${body.error?.message || 'empty response'}`);
+    await sleep(Math.min(60000, 10000 * attempt));
   }
-  throw new Error('Gemini helper model did not respond');
+  throw new Error('Gemini helper models did not respond');
 }
 
 // Removes the agent's template suffixes like ": The Complete Guide" or ": Beginner to Expert Guide".

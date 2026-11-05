@@ -14,7 +14,8 @@ const { polishVideo, makeShort } = require('./growth');
 const AGENT_DIR = path.resolve(process.env.AGENT_DIR || path.join(__dirname, '..', 'youtube-automation-agent'));
 const AGENT_URL = process.env.AGENT_URL || 'http://127.0.0.1:3456';
 const STATE_DIR = path.resolve(process.env.STATE_DIR || path.join(__dirname, 'state'));
-const HELPER_MODEL = process.env.HELPER_MODEL || 'gemini-3.5-flash-lite';
+// Small fast models first; when one is overloaded ("high demand") the next is tried.
+const HELPER_MODELS = (process.env.HELPER_MODELS || 'gemini-3.5-flash-lite,gemini-3.1-flash-lite,gemini-3.5-flash,gemini-3.7-flash').split(',');
 const TTS_MODELS = (process.env.TTS_MODELS || 'gemini-3.8-flash-tts,gemini-3.1-flash-tts-preview,gemini-2.5-flash-preview-tts,gemini-3.8-flash-lite-tts').split(',');
 const CHANNEL = process.env.CHANNEL_LABEL || 'Explained Simply';
 
@@ -95,8 +96,10 @@ async function startAgent() {
 
 async function gemini(prompt) {
   const key = credentials().gemini?.apiKey;
-  for (let attempt = 1; attempt <= 3; attempt++) {
-    const res = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/${HELPER_MODEL}:generateContent`, {
+  const attempts = HELPER_MODELS.length * 2;
+  for (let attempt = 1; attempt <= attempts; attempt++) {
+    const model = HELPER_MODELS[(attempt - 1) % HELPER_MODELS.length];
+    const res = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent`, {
       method: 'POST',
       headers: { 'x-goog-api-key': key, 'Content-Type': 'application/json' },
       body: JSON.stringify({
@@ -108,10 +111,10 @@ async function gemini(prompt) {
     const json = await res.json();
     const text = json.candidates?.[0]?.content?.parts?.map(p => p.text || '').join('');
     if (res.ok && text) return JSON.parse(text);
-    log(`Gemini helper attempt ${attempt} failed: ${json.error?.message || 'empty response'}`);
-    await sleep(15000 * attempt);
+    log(`Gemini helper attempt ${attempt} (${model}) failed: ${json.error?.message || 'empty response'}`);
+    await sleep(Math.min(60000, 10000 * attempt));
   }
-  throw new Error('Gemini helper model did not respond');
+  throw new Error('Gemini helper models did not respond');
 }
 
 function history() {
