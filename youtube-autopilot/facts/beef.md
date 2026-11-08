@@ -23,11 +23,18 @@ Notes:
 - "Farmers' share" covers everyone who raised the animal: the cow-calf rancher, any stocker, and the feedlot.
 - The packer share swings month to month. Say "about" and name the month.
 
+## Carcass and retail yield
+- **Average live vs dressed weight, federally inspected cattle, Jan–Sep 2026:** 1,460 lb live → 894 lb dressed (chilled carcass), so the carcass is about **61%** of live weight. Steers alone: 976 lb dressed. September 2026: 1,451 lb live → 890 lb dressed.
+  Source: USDA ERS Livestock & Meat Domestic Data, "Meat statistics tables" → SlaughterWeights. https://www.ers.usda.gov/data-products/livestock-and-meat-domestic-data
+- **Live-to-retail conversion:** ERS says "It takes 2.40 pounds of the standard steer to produce a pound of retail beef" and 1.14 lb of wholesale beef per lb of retail. So retail beef is about **42%** of live weight; a 1,200-lb animal gives about 500 lb.
+  Source: https://www.ers.usda.gov/data-products/meat-price-spreads/documentation
+- Worked example (1,200 lb): × 0.61 ≈ 735 lb carcass; ÷ 2.4 ≈ 500 lb retail beef.
+
 ## Queue (title / hook)
 1. ~~How Much Is One Cow Really Worth?~~ (posted: -XgeGsGDQQk, vidIQ video)
 2. ~~Farmers Don't Keep All That Beef Money~~ (posted: a29wONq7hZM)
 - ~~The Cattle Ledger #1: How Much Is One Beef Cow Actually Worth?~~ (posted: nTn7vZ7wv-M, Brian voice + AI opener)
-3. How Much Meat Comes From One Cow? / "A 1,200-pound cow doesn't give you 1,200 pounds of meat."
+3. ~~How Much Meat Comes From One Cow?~~ (posted: r2LjS1V_OLc, Cattle Ledger #2)
 4. The Hidden Cost of Raising Cattle / "Cattle aren't cheap to raise."
 5. Why Is Steak So Expensive? / "There's a reason steak costs so much."
 6. How Much Does It Cost to Feed a Cow? / "This is what a cow eats in a year."
