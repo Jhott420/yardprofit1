@@ -72,3 +72,24 @@ Turning on billing for the API key's project in Google AI Studio removes these l
 - Videos go **public with no human review**. The topic rules keep content evergreen and copyright-safe, but the AI can still get a fact wrong. Check the channel now and then.
 - Uploading via the API is limited by YouTube's daily quota for your Google Cloud project; one upload a day is well within it.
 - Since your client secret and Gemini key were pasted into a chat, rotate them, then update `credentials.json`.
+
+## Shorts engine (`shorts.js`)
+
+A standalone vertical-Shorts pipeline. It doesn't need the agent server, only `AGENT_DIR` for keys, FFmpeg and Playwright.
+
+```bash
+AGENT_DIR=... node shorts.js --format gta6        # GTA 6 news/facts Short with a release countdown
+AGENT_DIR=... node shorts.js --format horror      # Science Horror Short (horror.js is the same thing)
+AGENT_DIR=... node shorts.js --format gta6 --no-publish     # build only
+AGENT_DIR=... node shorts.js --upload state/shorts/<run>    # publish a Short built earlier
+```
+
+Each run:
+1. Gemini writes a 4–6 segment script with a hook-first structure.
+2. A stronger model fact-checks it, and the writer revises using its notes. GTA 6 Shorts may only use `facts/gta6.md`; anything not on the sheet is blocked.
+3. The narration uses a direction-following voice model, and a transcript check catches models that read the direction aloud.
+4. Animated scenes render in the format's theme: `horror` (glitchy stickman in a dark void) or `neon` (Vice City synthwave).
+5. The Short uploads with the format's title pattern, tags and hashtags, plus a reply-bait comment.
+
+**Keep `facts/gta6.md` current.** GTA 6 news moves fast; refresh the sheet (it's dated) after launch and whenever big news lands.
+No publisher footage, logos or music is used; GTA Shorts carry a fan-channel disclaimer.

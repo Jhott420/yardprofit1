@@ -172,6 +172,65 @@ function horrorSceneHtml(card, { duration, index, total, channel, width, height 
   </body></html>`;
 }
 
+// Neon "Vice" theme for gaming Shorts: synthwave sun, scrolling grid, palm silhouettes, glowing
+// text. Drawn from scratch so it carries no game publisher's art or logo.
+const PALM = 'M0,0 C2,-60 6,-120 10,-170 M10,-170 C-20,-190 -55,-185 -80,-160 M10,-170 C-15,-200 -40,-215 -70,-215 M10,-170 C25,-205 50,-220 80,-215 M10,-170 C40,-190 70,-180 95,-155 M10,-170 C5,-200 0,-225 -5,-240';
+
+function neonSceneHtml(card, { duration, index, total, channel, width, height }) {
+  const words = escapeHtml(card.headline).toUpperCase().split(/\s+/).filter(Boolean);
+  const longest = Math.max(...words.map(w => w.length), 1);
+  const headlineSize = Math.min(card.headline.length > 34 ? 68 : card.headline.length > 20 ? 80 : 96, Math.floor(620 / (longest * 0.72)));
+  const points = (card.points || []).slice(0, 3);
+  return `<!doctype html><html><head><meta charset="utf-8"><style>
+  * { box-sizing: border-box; margin: 0; }
+  body { width: ${width}px; height: ${height}px; overflow: hidden; color: #fff; position: relative;
+    font-family: 'DejaVu Sans', Arial, sans-serif; background: linear-gradient(180deg, #12002b 0%, #3b0a5c 38%, #ff2e88 58%, #ff9e3d 66%, #12002b 66.2%); }
+  .sun { position: absolute; left: 50%; top: 600px; width: 380px; height: 380px; margin-left: -190px; border-radius: 50%;
+    background: linear-gradient(180deg, #ffe45c, #ff5fa2 70%);
+    -webkit-mask: repeating-linear-gradient(180deg, #000 0 26px, transparent 26px 34px); animation: rise ${duration}s ease-out forwards; }
+  .grid { position: absolute; left: -50%; right: -50%; top: 847px; height: 900px; transform-origin: 50% 0; transform: perspective(300px) rotateX(70deg);
+    background-image: linear-gradient(#ff2bd6 3px, transparent 3px), linear-gradient(90deg, #ff2bd6 3px, transparent 3px);
+    background-size: 80px 80px; box-shadow: 0 0 40px #ff2bd6 inset; animation: scroll 1.2s linear infinite; opacity: .85; }
+  .palms { position: absolute; left: 0; right: 0; top: 0; height: 100%; pointer-events: none; }
+  .palms svg { position: absolute; top: 850px; overflow: visible; }
+  .palms path { fill: none; stroke: #0a0014; stroke-width: 11; stroke-linecap: round; }
+  .p1 { left: 40px; transform: scale(1.5); transform-origin: 0 0; animation: sway 4s ease-in-out infinite alternate; }
+  .p2 { right: 70px; transform: scale(-1.2,1.2); transform-origin: 0 0; animation: sway 5s ease-in-out infinite alternate-reverse; }
+  .stage { position: absolute; left: 48px; right: 48px; top: 130px; animation: push ${duration}s linear forwards; }
+  .kicker { display: inline-block; padding: 8px 18px; border: 3px solid #00e5ff; color: #00e5ff; border-radius: 8px; font-weight: 900;
+    font-size: 30px; letter-spacing: 4px; text-transform: uppercase; box-shadow: 0 0 18px #00e5ff, inset 0 0 12px #00e5ff;
+    text-shadow: 0 0 10px #00e5ff; margin-bottom: 30px; opacity: 0; animation: pop .3s ease-out .1s forwards; }
+  h1 { font-size: ${headlineSize}px; line-height: 1.02; font-weight: 900; font-style: italic; }
+  h1 span { display: inline-block; margin-right: .2em; opacity: 0; color: #fff;
+    text-shadow: 0 0 8px #ff2bd6, 0 0 22px #ff2bd6, 0 0 44px #ff2bd6, 4px 4px 0 #2a0040; animation: pop .3s cubic-bezier(.2,1.4,.4,1) forwards; }
+  .points { margin-top: 32px; }
+  .points div { font-size: 34px; font-weight: 800; margin: 14px 0; opacity: 0; color: #fff; text-shadow: 0 0 10px #00e5ff, 2px 2px 0 #2a0040;
+    animation: slide .35s ease-out forwards; }
+  .points div::before { content: '▶ '; color: #00e5ff; }
+  .count { position: absolute; top: 56px; right: 48px; font-weight: 900; font-size: 24px; color: #ffe45c; text-shadow: 0 0 10px #ff2e88; }
+  .brand { position: absolute; top: 56px; left: 48px; font-weight: 900; font-size: 24px; letter-spacing: 3px; color: #fff; opacity: .8; text-shadow: 0 0 10px #ff2bd6; }
+  .bar { position: absolute; left: 0; bottom: 0; height: 10px; width: 0; background: linear-gradient(90deg, #00e5ff, #ff2bd6); animation: grow ${duration}s linear forwards; }
+  @keyframes rise { from { transform: translateY(40px); } to { transform: translateY(-20px); } }
+  @keyframes scroll { to { background-position: 0 80px, 0 80px; } }
+  @keyframes sway { from { transform: scale(1.5) rotate(-2deg); } to { transform: scale(1.5) rotate(2deg); } }
+  @keyframes push { from { transform: scale(1); } to { transform: scale(1.04); } }
+  @keyframes pop { 0% { opacity: 0; transform: scale(1.8) rotate(-4deg); } 100% { opacity: 1; transform: none; } }
+  @keyframes slide { from { opacity: 0; transform: translateX(-40px); } to { opacity: 1; transform: none; } }
+  @keyframes grow { to { width: 100%; } }
+  </style></head><body>
+  <div class="sun"></div><div class="grid"></div>
+  <div class="palms"><svg class="p1" width="10" height="10"><path d="${PALM}"/></svg><svg class="p2" width="10" height="10"><path d="${PALM}"/></svg></div>
+  <div class="brand">${escapeHtml(channel)}</div>
+  <div class="count">${String(index + 1).padStart(2, '0')}/${String(total).padStart(2, '0')}</div>
+  <div class="stage">
+    ${card.kicker ? `<div class="kicker">${escapeHtml(card.kicker)}</div>` : ''}
+    <h1>${words.map((w, i) => `<span style="animation-delay:${(0.25 + i * 0.14).toFixed(2)}s">${w}</span>`).join('')}</h1>
+    ${points.length ? `<div class="points">${points.map((p, i) => `<div style="animation-delay:${(0.5 + words.length * 0.14 + i * Math.max(0.7, duration / 4)).toFixed(2)}s">${escapeHtml(p)}</div>`).join('')}</div>` : ''}
+  </div>
+  <div class="bar"></div>
+  </body></html>`;
+}
+
 // High-contrast thumbnail: 2-4 huge words with one accent word in colour, a giant
 // background glyph for shape contrast, and a dark vignette so text pops at phone size.
 function thumbnailHtml(thumb, palette) {
@@ -228,7 +287,9 @@ async function renderSceneClips({ agentDir, cards, durations, outDir, seed, chan
       const duration = Math.max(2, Number(durations[index]) || 6);
       const html = theme === 'horror'
         ? horrorSceneHtml(card, { duration, index, total: cards.length, channel, ...size })
-        : sceneHtml(card, { duration, index, total: cards.length, palette, channel, ...size });
+        : theme === 'neon'
+          ? neonSceneHtml(card, { duration, index, total: cards.length, channel, ...size })
+          : sceneHtml(card, { duration, index, total: cards.length, palette, channel, ...size });
       await page.setContent(html);
       const outputPath = path.join(outDir, `scene_${String(index).padStart(2, '0')}.mp4`);
       const { encoder, done } = startEncoder(ffmpegPath, outputPath);
