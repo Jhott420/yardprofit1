@@ -26,6 +26,7 @@ Notes:
 ## Queue (title / hook)
 1. ~~How Much Is One Cow Really Worth?~~ (posted: -XgeGsGDQQk, vidIQ video)
 2. ~~Farmers Don't Keep All That Beef Money~~ (posted: a29wONq7hZM)
+- ~~The Cattle Ledger #1: How Much Is One Beef Cow Actually Worth?~~ (posted: nTn7vZ7wv-M, Brian voice + AI opener)
 3. How Much Meat Comes From One Cow? / "A 1,200-pound cow doesn't give you 1,200 pounds of meat."
 4. The Hidden Cost of Raising Cattle / "Cattle aren't cheap to raise."
 5. Why Is Steak So Expensive? / "There's a reason steak costs so much."

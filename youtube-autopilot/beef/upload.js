@@ -1,5 +1,5 @@
 // node beef-upload.js <agentDir> <video.mp4> <meta.json>
-// meta: {title, description, tags[], comment}
+// meta: {title, description, tags[], comment, synthetic (true when realistic AI footage is used)}
 const path = require('path'), fs = require('fs');
 const dir = path.resolve(process.argv[2]);
 const { google } = require(path.join(dir, 'node_modules', 'googleapis'));
@@ -14,7 +14,7 @@ const meta = JSON.parse(fs.readFileSync(process.argv[4]));
     part: 'snippet,status',
     requestBody: {
       snippet: { title: meta.title, description: meta.description, tags: meta.tags, categoryId: '27', defaultLanguage: 'en', defaultAudioLanguage: 'en' },
-      status: { privacyStatus: 'public', selfDeclaredMadeForKids: false, containsSyntheticMedia: false },
+      status: { privacyStatus: 'public', selfDeclaredMadeForKids: false, containsSyntheticMedia: !!meta.synthetic },
     },
     media: { body: fs.createReadStream(process.argv[3]) },
   });
