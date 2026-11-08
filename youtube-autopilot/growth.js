@@ -36,10 +36,10 @@ function youtube(agentDir) {
   return google.youtube({ version: 'v3', auth });
 }
 
-async function gemini(agentDir, parts, { json = true } = {}) {
-  const attempts = HELPER_MODELS.length * 2;
+async function gemini(agentDir, parts, { json = true, models = HELPER_MODELS } = {}) {
+  const attempts = models.length * 2;
   for (let attempt = 1; attempt <= attempts; attempt++) {
-    const model = HELPER_MODELS[(attempt - 1) % HELPER_MODELS.length];
+    const model = models[(attempt - 1) % models.length];
     const res = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent`, {
       method: 'POST',
       headers: { 'x-goog-api-key': geminiKey(agentDir), 'Content-Type': 'application/json' },
@@ -238,26 +238,26 @@ async function polishVideo({ agentDir, videoId, scenes, workDir, avoidThumbTexts
 const ffmpeg = agentDir => require(path.join(agentDir, 'node_modules', 'ffmpeg-static'));
 
 // Some TTS models speak a style direction aloud instead of following it; transcribe and check.
-async function spokeDirection(agentDir, wav) {
+async function spokeDirection(agentDir, wav, pattern = /narrate|storyteller|short-form|in an? [\w\s,-]*voice/i) {
   const mp3 = wav.replace(/\.wav$/, '_check.mp3');
   execFileSync(ffmpeg(agentDir), ['-y', '-loglevel', 'error', '-i', wav, '-t', '12', '-c:a', 'libmp3lame', mp3]);
   const transcript = await gemini(agentDir, [
     { inlineData: { mimeType: 'audio/mp3', data: fs.readFileSync(mp3).toString('base64') } },
     { text: 'Transcribe every word spoken, verbatim. Output only the transcript.' }
   ], { json: false });
-  return /narrate|storyteller|short-form|in an? [\w\s,-]*voice/i.test(transcript.slice(0, 160));
+  return pattern.test(transcript.slice(0, 160));
 }
 
-async function speak(agentDir, text, outWav) {
+async function speak(agentDir, text, outWav, { voice = SHORT_VOICE, direction: styleDirection = SHORT_DIRECTION, spokenCheck } = {}) {
   for (const model of SHORT_TTS_MODELS) {
-    const attempts = DIRECTED_TTS_MODELS.has(model) ? [SHORT_DIRECTION, ''] : [''];
+    const attempts = DIRECTED_TTS_MODELS.has(model) ? [styleDirection, ''] : [''];
     for (const direction of attempts) {
       const res = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent`, {
         method: 'POST',
         headers: { 'x-goog-api-key': geminiKey(agentDir), 'Content-Type': 'application/json' },
         body: JSON.stringify({
           contents: [{ parts: [{ text: direction + text }] }],
-          generationConfig: { responseModalities: ['AUDIO'], speechConfig: { voiceConfig: { prebuiltVoiceConfig: { voiceName: SHORT_VOICE } } } }
+          generationConfig: { responseModalities: ['AUDIO'], speechConfig: { voiceConfig: { prebuiltVoiceConfig: { voiceName: voice } } } }
         }),
         signal: AbortSignal.timeout(180000)
       });
@@ -271,11 +271,11 @@ async function speak(agentDir, text, outWav) {
       const pcm = path.join(path.dirname(outWav), 'short.pcm');
       fs.writeFileSync(pcm, Buffer.from(part.inlineData.data, 'base64'));
       execFileSync(ffmpeg(agentDir), ['-y', '-loglevel', 'error', '-f', 's16le', '-ar', String(rate), '-ac', '1', '-i', pcm, outWav]);
-      if (direction && await spokeDirection(agentDir, outWav)) {
+      if (direction && await spokeDirection(agentDir, outWav, spokenCheck)) {
         log(`${model} read the style direction aloud; retrying without it`);
         continue;
       }
-      log(`Short narration: ${model}, voice ${SHORT_VOICE}${direction ? ', storyteller direction' : ''}`);
+      log(`Short narration: ${model}, voice ${voice}${direction ? ', with style direction' : ''}`);
       return fs.statSync(pcm).size / 2 / rate;
     }
   }
@@ -341,7 +341,7 @@ Return JSON {"title": "<max 55 chars, curiosity hook that does not exaggerate pa
   return { id: uploaded.data.id, url: `https://youtube.com/shorts/${uploaded.data.id}`, title, seconds, file: output };
 }
 
-module.exports = { polishVideo, makeShort, stripTemplateSuffix, narrationOf, cleanAgentDescription };
+module.exports = { polishVideo, makeShort, stripTemplateSuffix, narrationOf, cleanAgentDescription, gemini, speak, youtube, ffmpeg, ensurePlaylist, addToPlaylist, postQuestion };
 
 if (require.main === module) {
   const args = process.argv.slice(2);

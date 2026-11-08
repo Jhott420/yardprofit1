@@ -89,6 +89,89 @@ function sceneHtml(card, { duration, index, total, palette, channel, width = WID
   </body></html>`;
 }
 
+// Science-horror scene: grainy black void, glitching text that types in word by word,
+// and a swaying stickman with glowing eyes. Poses vary by scene so the Short keeps moving.
+const STICKMAN_POSES = {
+  stand: 'M0,-60 L0,40 M0,-30 L-38,10 M0,-30 L38,10 M0,40 L-28,110 M0,40 L28,110',
+  reach: 'M0,-60 L0,40 M0,-30 L-44,-80 M0,-30 L44,-80 M0,40 L-28,110 M0,40 L28,110',
+  hunch: 'M0,-50 Q10,0 0,40 M0,-25 L-30,30 M0,-25 L30,30 M0,40 L-22,110 M0,40 L22,110',
+  point: 'M0,-60 L0,40 M0,-30 L-38,10 M0,-30 L70,-40 M0,40 L-28,110 M0,40 L28,110'
+};
+
+function horrorSceneHtml(card, { duration, index, total, channel, width, height }) {
+  const words = escapeHtml(card.headline).toUpperCase().split(/\s+/).filter(Boolean);
+  // Size by total length, then shrink so the longest word still fits the 620px text column.
+  const longest = Math.max(...words.map(w => w.length), 1);
+  const headlineSize = Math.min(card.headline.length > 34 ? 66 : card.headline.length > 20 ? 78 : 94, Math.floor(620 / (longest * 0.72)));
+  const pose = STICKMAN_POSES[card.pose] ? card.pose : Object.keys(STICKMAN_POSES)[index % 4];
+  const scale = card.scale === 'tiny' ? 0.6 : card.scale === 'huge' ? 1.65 : 1.4; // keeps the figure below the text block
+  const points = (card.points || []).slice(0, 2);
+  return `<!doctype html><html><head><meta charset="utf-8"><style>
+  * { box-sizing: border-box; margin: 0; }
+  body { width: ${width}px; height: ${height}px; overflow: hidden; background: #050505; color: #f4f4f4;
+    font-family: 'DejaVu Sans', Arial, sans-serif; position: relative; }
+  .void { position: absolute; inset: -10%; background: radial-gradient(ellipse at 50% 62%, #2a0507 0%, #0b0203 45%, #000 75%);
+    animation: breathe 5s ease-in-out infinite alternate; }
+  .grain { position: absolute; inset: -50%; opacity: .16;
+    background-image: radial-gradient(#fff 1px, transparent 1px), radial-gradient(#fff 1px, transparent 1px);
+    background-size: 7px 7px, 11px 11px; background-position: 0 0, 3px 5px; animation: grain .4s steps(4) infinite; }
+  .scan { position: absolute; inset: 0; background: repeating-linear-gradient(0deg, rgba(255,255,255,.035) 0 2px, transparent 2px 5px); }
+  .vignette { position: absolute; inset: 0; box-shadow: inset 0 0 220px 90px #000; }
+  .stage { position: absolute; inset: 0; animation: flicker ${Math.max(3, duration / 2).toFixed(2)}s steps(1) infinite, push ${duration}s linear forwards; }
+  .text { position: absolute; top: 150px; left: 50px; right: 50px; }
+  .kicker { font-family: 'DejaVu Sans Mono', monospace; color: #ff2a2a; font-size: 30px; letter-spacing: 6px; margin-bottom: 26px; opacity: 0;
+    text-transform: uppercase; animation: show .1s linear .1s forwards, blink 1.1s steps(1) .1s infinite; }
+  h1 { font-size: ${headlineSize}px; line-height: 1.04; font-weight: 900; letter-spacing: 1px; text-shadow: 0 0 18px rgba(255,0,0,.35); }
+  h1 span { display: inline-block; margin-right: .22em; opacity: 0; position: relative; animation: slam .18s ease-out forwards; }
+  h1 span::before, h1 span::after { content: attr(data-w); position: absolute; left: 0; top: 0; opacity: .7; }
+  h1 span::before { color: #ff1f3d; animation: glitchA 1.7s steps(1) infinite; }
+  h1 span::after { color: #18e6ff; animation: glitchB 2.3s steps(1) infinite; }
+  .points { margin-top: 30px; font-family: 'DejaVu Sans Mono', monospace; font-size: 30px; color: #d9d9d9; }
+  .points div { opacity: 0; margin: 10px 0; animation: show .1s linear forwards; }
+  .points div::before { content: '> '; color: #ff2a2a; }
+  .figure { position: absolute; left: 50%; bottom: 150px; transform: translateX(-50%) scale(${scale}); transform-origin: 50% 100%; }
+  .figure svg { overflow: visible; animation: sway 3.2s ease-in-out infinite alternate; transform-origin: 50% 100%; }
+  .eye { fill: #ff1a1a; filter: drop-shadow(0 0 8px #ff0000); animation: eyes 4s steps(1) infinite; }
+  .shadow { position: absolute; left: 50%; bottom: 136px; width: 260px; height: 26px; transform: translateX(-50%) scale(${scale});
+    background: radial-gradient(ellipse, rgba(255,0,0,.35), transparent 70%); }
+  .bar { position: absolute; left: 0; bottom: 0; height: 8px; width: 0; background: #ff1a1a; animation: grow ${duration}s linear forwards; }
+  .tag { position: absolute; bottom: 40px; left: 0; right: 0; text-align: center; font-family: 'DejaVu Sans Mono', monospace;
+    font-size: 24px; letter-spacing: 4px; color: rgba(255,255,255,.45); }
+  .count { position: absolute; top: 60px; right: 50px; font-family: 'DejaVu Sans Mono', monospace; font-size: 24px; color: rgba(255,42,42,.8); }
+  @keyframes breathe { to { transform: scale(1.08); } }
+  @keyframes grain { 0% { transform: translate(0,0); } 25% { transform: translate(-3%,2%); } 50% { transform: translate(2%,-3%); } 75% { transform: translate(-2%,-1%); } }
+  @keyframes flicker { 0%, 100% { opacity: 1; } 47% { opacity: .82; } 48% { opacity: 1; } 71% { opacity: .9; } 72% { opacity: 1; } }
+  @keyframes push { from { transform: scale(1); } to { transform: scale(1.06); } }
+  @keyframes show { to { opacity: 1; } }
+  @keyframes blink { 50% { opacity: .2; } }
+  @keyframes slam { 0% { opacity: 0; transform: scale(1.6); filter: blur(6px); } 100% { opacity: 1; transform: none; filter: none; } }
+  @keyframes glitchA { 0%, 88%, 100% { transform: translate(0,0); opacity: 0; } 89% { transform: translate(-6px,2px); opacity: .8; } 93% { transform: translate(4px,-2px); opacity: .7; } }
+  @keyframes glitchB { 0%, 90%, 100% { transform: translate(0,0); opacity: 0; } 91% { transform: translate(6px,-3px); opacity: .8; } 95% { transform: translate(-3px,1px); opacity: .6; } }
+  @keyframes sway { from { transform: rotate(-2.5deg); } to { transform: rotate(2.5deg); } }
+  @keyframes eyes { 0%, 100% { opacity: 1; } 62% { opacity: 0; } 64% { opacity: 1; } }
+  @keyframes grow { to { width: 100%; } }
+  </style></head><body>
+  <div class="void"></div>
+  <div class="stage">
+    <div class="shadow"></div>
+    <div class="figure"><svg width="200" height="300" viewBox="-100 -130 200 260">
+      <circle cx="0" cy="-88" r="30" fill="none" stroke="#f4f4f4" stroke-width="9"/>
+      <circle class="eye" cx="-11" cy="-90" r="5"/><circle class="eye" cx="11" cy="-90" r="5"/>
+      <path d="${STICKMAN_POSES[pose]}" fill="none" stroke="#f4f4f4" stroke-width="9" stroke-linecap="round"/>
+    </svg></div>
+    <div class="text">
+      ${card.kicker ? `<div class="kicker">${escapeHtml(card.kicker)}</div>` : ''}
+      <h1>${words.map((w, i) => `<span data-w="${w}" style="animation-delay:${(0.2 + i * 0.16).toFixed(2)}s">${w}</span>`).join('')}</h1>
+      ${points.length ? `<div class="points">${points.map((p, i) => `<div style="animation-delay:${(0.4 + words.length * 0.16 + i * Math.max(0.8, duration / 4)).toFixed(2)}s">${escapeHtml(p)}</div>`).join('')}</div>` : ''}
+    </div>
+  </div>
+  <div class="grain"></div><div class="scan"></div><div class="vignette"></div>
+  <div class="count">${String(index + 1).padStart(2, '0')}/${String(total).padStart(2, '0')}</div>
+  <div class="tag">${escapeHtml(channel)}</div>
+  <div class="bar"></div>
+  </body></html>`;
+}
+
 // High-contrast thumbnail: 2-4 huge words with one accent word in colour, a giant
 // background glyph for shape contrast, and a dark vignette so text pops at phone size.
 function thumbnailHtml(thumb, palette) {
@@ -132,7 +215,7 @@ async function writeFrame(stream, buffer) {
 }
 
 // cards: [{ kicker, headline, points }], durations: seconds per scene (same order).
-async function renderSceneClips({ agentDir, cards, durations, outDir, seed, channel, vertical = false }) {
+async function renderSceneClips({ agentDir, cards, durations, outDir, seed, channel, vertical = false, theme = 'explainer' }) {
   const size = vertical ? VERTICAL : { width: WIDTH, height: HEIGHT };
   const { chromium } = require(path.join(agentDir, 'node_modules', 'playwright'));
   const ffmpegPath = require(path.join(agentDir, 'node_modules', 'ffmpeg-static'));
@@ -143,7 +226,10 @@ async function renderSceneClips({ agentDir, cards, durations, outDir, seed, chan
     const page = await browser.newPage({ viewport: size });
     for (const [index, card] of cards.entries()) {
       const duration = Math.max(2, Number(durations[index]) || 6);
-      await page.setContent(sceneHtml(card, { duration, index, total: cards.length, palette, channel, ...size }));
+      const html = theme === 'horror'
+        ? horrorSceneHtml(card, { duration, index, total: cards.length, channel, ...size })
+        : sceneHtml(card, { duration, index, total: cards.length, palette, channel, ...size });
+      await page.setContent(html);
       const outputPath = path.join(outDir, `scene_${String(index).padStart(2, '0')}.mp4`);
       const { encoder, done } = startEncoder(ffmpegPath, outputPath);
       const frames = Math.ceil(duration * FPS);
