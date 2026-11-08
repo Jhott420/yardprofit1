@@ -1,0 +1,29 @@
+// node beef-upload.js <agentDir> <video.mp4> <meta.json>
+// meta: {title, description, tags[], comment}
+const path = require('path'), fs = require('fs');
+const dir = path.resolve(process.argv[2]);
+const { google } = require(path.join(dir, 'node_modules', 'googleapis'));
+const creds = JSON.parse(fs.readFileSync(path.join(dir, 'config/credentials.json')));
+const tokens = JSON.parse(fs.readFileSync(path.join(dir, 'config/tokens.json')));
+const auth = new google.auth.OAuth2(creds.youtube.client_id, creds.youtube.client_secret);
+auth.setCredentials(tokens.youtube);
+const yt = google.youtube({ version: 'v3', auth });
+const meta = JSON.parse(fs.readFileSync(process.argv[4]));
+(async () => {
+  const r = await yt.videos.insert({
+    part: 'snippet,status',
+    requestBody: {
+      snippet: { title: meta.title, description: meta.description, tags: meta.tags, categoryId: '27', defaultLanguage: 'en', defaultAudioLanguage: 'en' },
+      status: { privacyStatus: 'public', selfDeclaredMadeForKids: false, containsSyntheticMedia: false },
+    },
+    media: { body: fs.createReadStream(process.argv[3]) },
+  });
+  const id = r.data.id;
+  console.log('uploaded', id, `https://youtube.com/shorts/${id}`);
+  if (meta.comment) {
+    try {
+      await yt.commentThreads.insert({ part: 'snippet', requestBody: { snippet: { videoId: id, topLevelComment: { snippet: { textOriginal: meta.comment } } } } });
+      console.log('comment posted');
+    } catch (e) { console.log('comment failed:', e.message); }
+  }
+})().catch(e => { console.error('FAILED:', e.message); process.exit(1); });
