@@ -24,6 +24,15 @@ const log = (...parts) => console.log(new Date().toISOString(), ...parts);
 
 const CARD_SPEC = `Each segment gets an on-screen card: kicker (2-3 words), headline (max 6 words, specific), points (0-2 short lines, max 4 words each)`;
 
+// Rotating angles keep the channel varied (YouTube's monetization review rejects repetitive, mass-produced uploads).
+const HORROR_ANGLES = [
+  'WHAT IF: a science-based hypothetical ("What if the Moon disappeared?", "What if you fell into a black hole?"). The premise is imaginary; everything that follows must be real physics/biology. Make the concept the question itself, e.g. "WHAT IF THE MOON DISAPPEARED?".',
+  'SCARY TRUE FACT: one real, unsettling fact about space, the deep ocean, nature or physics, told like a horror story.',
+  'TOP 3 RANKING: the 3 most terrifying real examples of something (e.g. "3 deadliest places in the universe"), counting down to the worst.',
+  'YOUR BODY: what really happens to the human body in an extreme situation (no sleep, space without a suit, deepest dive), step by step. No medical advice.'
+];
+const horrorAngle = () => HORROR_ANGLES[history('horror').length % HORROR_ANGLES.length];
+
 const GTA6_RELEASE = '2026-11-19';
 function gtaCountdown() {
   const today = new Date().toLocaleDateString('en-CA', { timeZone: 'America/Chicago' });
@@ -36,30 +45,31 @@ function gtaCountdown() {
 
 const FORMATS = {
   horror: {
-    channel: 'SCIENCE HORROR',
+    channel: 'STICKMAN HORROR',
     theme: 'horror',
     voice: process.env.HORROR_VOICE || 'Algenib',
     direction: 'Narrate this like a chilling horror storyteller: low, slow and ominous, building dread, with dramatic pauses: ',
     spokenDirection: /narrate|horror storyteller|ominous|building dread/i,
     atmosphere: true,
-    brief: () => `You write viral "Science Horror" YouTube Shorts: one TRUE, well-established science fact told like a horror story.
-Examples of the vibe: vacuum decay, the heat death of the universe, what the deep ocean hides, a body process that sounds terrifying, a real space phenomenon.`,
+    brief: () => `You write viral "Stickman Horror" YouTube Shorts: real science told like a horror story, narrated over a creepy stickman animation.
+This Short's angle: ${horrorAngle()}`,
     rules: `- Every claim must be true and mainstream science. Say "scientists think" for anything theoretical. No made-up numbers.
 - Be dramatic in tone and pacing, never in facts: no metaphors that state something literally false.
 - Creepy, not gory. No real named people, no medical scare claims, nothing about self-harm.
 - 5 or 6 segments, 65-85 words in total (the narrator reads slowly), short punchy sentences.
 - Segment 1 is the hook: a shocking statement in under 10 words, no greeting.
-- Build dread, then end on a chilling final line followed by "Follow for more science horror."
+- Build dread, then end on a chilling final line followed by "Follow for more stickman horror."
 - ${CARD_SPEC}, pose (one of stand, reach, hunch, point), scale (tiny for cosmic size, huge for overwhelming, else normal).
   Kicker examples: "FACT 01", "SCALE", "THE CATCH".`,
     checkPrompt: script => `You are fact-checking a 40-second science Short for a general audience.
 Grade each factual claim: "true" (accurate), "simplified" (loose wording or dramatic framing a scientist would accept for a popular video),
 or "false" (wrong, invented, or states a speculative idea as certain fact). Do not grade metaphors or tone, only factual content.
+A clearly hypothetical "what if" premise is fine; grade whether what the script says would happen is real science.
 Script: ${JSON.stringify(script.segments.map(s => s.text))}
 Return JSON {"claims": [{"claim": "", "verdict": "true|simplified|false", "why": ""}]}.`,
-    title: concept => `${concept} | Science Horror #shorts`,
-    baseHashtags: ['#shorts', '#sciencehorror'],
-    tags: concept => ['science horror', 'scary facts', 'creepy science', 'stickman horror', concept.toLowerCase(), 'shorts'],
+    title: concept => `${concept} | Stickman Horror #shorts`,
+    baseHashtags: ['#shorts', '#stickman', '#horror'],
+    tags: concept => ['stickman horror', 'what if', 'scary facts', 'science horror', 'creepy science', concept.toLowerCase(), 'shorts'],
     categoryId: '24',
     footer: ''
   },
@@ -149,7 +159,7 @@ async function build(format) {
     script = null;
   }
   if (!script) throw new Error('Could not produce a script that passes the fact-check');
-  const concept = String(script.concept || script.topic).toUpperCase().replace(/[^A-Z0-9 '\-]/g, '').trim().slice(0, 40);
+  const concept = String(script.concept || script.topic).toUpperCase().replace(/[^A-Z0-9 '?!\-]/g, '').trim().slice(0, 60);
   log(`concept: ${concept} — ${script.topic}`);
 
   const workDir = path.join(STATE_DIR, 'shorts', `${format}-${Date.now()}`);
