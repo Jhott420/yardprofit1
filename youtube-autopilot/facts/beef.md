@@ -30,12 +30,37 @@ Notes:
   Source: https://www.ers.usda.gov/data-products/meat-price-spreads/documentation
 - Worked example (1,200 lb): × 0.61 ≈ 735 lb carcass; ÷ 2.4 ≈ 500 lb retail beef.
 
+## Cow-calf costs and returns (USDA ERS Commodity Costs and Returns, U.S. total, $ per beef cow per year)
+Source: https://www.ers.usda.gov/data-products/commodity-costs-and-returns (cow-calf.csv, base survey 2018)
+
+| Item | 2025 | 2024 |
+|---|---|---|
+| Total feed costs | 436.35 | 466.27 |
+| — homegrown harvested / grazed / purchased feed | 185.58 / 155.92 / 94.85 | 212.02 / 151.76 / 102.49 |
+| Veterinary and medicine | 33.23 | 32.25 |
+| Fuel, lube, electricity | 44.47 | 46.06 |
+| Repairs | 46.39 | 45.78 |
+| Interest on operating capital | 13.01 | 16.02 |
+| **Total operating costs** | **676.45** | 690.02 |
+| Capital recovery of machinery and equipment | 382.71 | 377.65 |
+| Opportunity cost of unpaid labor | 569.78 | 557.44 |
+| Hired labor | 41.24 | 40.29 |
+| **Total allocated overhead** | **1,075.99** | 1,055.62 |
+| **Total costs listed** | **1,752.44** | 1,745.64 |
+| Value of calves | 1,069.53 | 825.87 (calves +29.5% y/y) |
+| **Gross value of production** | **1,417.31** | 1,120.15 |
+| Value less operating costs | +740.86 | +430.13 |
+| **Value less total costs** | **−335.13** | −625.49 |
+
+Typical farm: 98 beef cows, 63 calves weaned, 51 calves sold (2025).
+Notes: The "loss" counts the rancher's own unpaid labor and equipment wear as costs. Cash costs alone are covered. Say "on paper" or "all in".
+
 ## Queue (title / hook)
 1. ~~How Much Is One Cow Really Worth?~~ (posted: -XgeGsGDQQk, vidIQ video)
 2. ~~Farmers Don't Keep All That Beef Money~~ (posted: a29wONq7hZM)
 - ~~The Cattle Ledger #1: How Much Is One Beef Cow Actually Worth?~~ (posted: nTn7vZ7wv-M, Brian voice + AI opener)
 3. ~~How Much Meat Comes From One Cow?~~ (posted: r2LjS1V_OLc, Cattle Ledger #2)
-4. The Hidden Cost of Raising Cattle / "Cattle aren't cheap to raise."
+4. ~~The Hidden Cost of Raising Cattle~~ (posted: IPvF40Xeh-Y, Cattle Ledger #3)
 5. Why Is Steak So Expensive? / "There's a reason steak costs so much."
 6. How Much Does It Cost to Feed a Cow? / "This is what a cow eats in a year."
 7. What Happens at a Cattle Auction? / "This is where cattle prices get real."
