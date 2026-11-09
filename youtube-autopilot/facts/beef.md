@@ -55,13 +55,29 @@ Source: https://www.ers.usda.gov/data-products/commodity-costs-and-returns (cow-
 Typical farm: 98 beef cows, 63 calves weaned, 51 calves sold (2025).
 Notes: The "loss" counts the rancher's own unpaid labor and equipment wear as costs. Cash costs alone are covered. Say "on paper" or "all in".
 
+## Retail beef cut prices (BLS via USDA ERS, $/lb)
+Source: https://www.ers.usda.gov/data-products/meat-price-spreads ("Retail prices for beef, pork, poultry cuts…" CSV)
+
+| Cut | Sept 2026 | Aug 2026 |
+|---|---|---|
+| Sirloin steak, USDA Choice, boneless | 14.106 | 14.357 |
+| Round steak, USDA Choice | 9.838 | 9.692 |
+| All uncooked beef steaks | 12.69 | 12.813 |
+| Chuck roast, Choice, boneless | 9.186 | 9.448 |
+| All uncooked beef roasts | 9.097 | 9.368 |
+| Ground beef | 6.792 | 6.923 |
+| All uncooked ground beef | 7.062 | 7.158 |
+| Ground chuck | 6.483 (Sept 2025: 5.576) | 6.774 |
+
+Steak math, Sept 2026: steer $221.05/cwt live = $2.21/lb × 2.40 lb of steer per retail lb ≈ $5.30. This equals ERS's gross farm value of 530.5¢ per retail lb.
+
 ## Queue (title / hook)
 1. ~~How Much Is One Cow Really Worth?~~ (posted: -XgeGsGDQQk, vidIQ video)
 2. ~~Farmers Don't Keep All That Beef Money~~ (posted: a29wONq7hZM)
 - ~~The Cattle Ledger #1: How Much Is One Beef Cow Actually Worth?~~ (posted: nTn7vZ7wv-M, Brian voice + AI opener)
 3. ~~How Much Meat Comes From One Cow?~~ (posted: r2LjS1V_OLc, Cattle Ledger #2)
 4. ~~The Hidden Cost of Raising Cattle~~ (posted: IPvF40Xeh-Y, Cattle Ledger #3)
-5. Why Is Steak So Expensive? / "There's a reason steak costs so much."
+5. ~~Why Is Steak So Expensive?~~ (posted: ERN64kSmfDE, Cattle Ledger #4)
 6. How Much Does It Cost to Feed a Cow? / "This is what a cow eats in a year."
 7. What Happens at a Cattle Auction? / "This is where cattle prices get real."
 8. The Most Expensive Mistake a Cattle Farmer Can Make / "One bad decision can wipe out your profit."
