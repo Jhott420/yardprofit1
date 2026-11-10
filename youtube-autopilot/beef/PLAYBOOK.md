@@ -17,7 +17,7 @@ Each Short is about 35–45 s, vertical, with real stock footage, one narrator, 
 6. **Footage.** `vidiq_generate_broll` (portrait, 1 credit per search). Only use clips whose MP4 link is `hd_720_*` or `hd_1080_*`; the `360_640` links look blurry. Pexels is blocked from the container, so pass the URLs straight to compose.
 7. **Compose.** `vidiq_compose` (vertical). Cut scenes on the voice pauses. Put the big number at the top (y≈0.14, about 80–110 px, heavy weight, black stroke), and keep a source footer for the whole video. Cost: 1 credit per 4 s.
 8. **Check.** Download the render, make a contact sheet of frames, and look at it.
-9. **Upload.** `node beef/upload.js <agentDir> short.mp4 meta.json`. Title: "<Title> | The Cattle Ledger #shorts". In the description, give the source numbers and credit the Pexels photographers. Tags must stay under 500 characters. The script posts a pinned-style question comment.
+9. **Upload.** `node beef/upload.js <agentDir> short.mp4 meta.json`. Title: "<Title> | The Cattle Ledger #shorts". In the description, give the source numbers and credit the Pexels photographers. Tags must stay under 500 characters. upload.js automatically puts `#shorts #fyp #cattle #beef #ranching #thecattleledger` first in the description hashtags, and caps them at 12. The script posts a pinned-style question comment.
 10. **Record.** Strike the item in the queue, with its video id.
 
 A 25 s Short uses about 25 vidIQ credits (≈11 voice + 7 compose + b-roll searches), plus 80 if it has an AI shot.

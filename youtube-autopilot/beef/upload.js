@@ -9,6 +9,13 @@ const auth = new google.auth.OAuth2(creds.youtube.client_id, creds.youtube.clien
 auth.setCredentials(tokens.youtube);
 const yt = google.youtube({ version: 'v3', auth });
 const meta = JSON.parse(fs.readFileSync(process.argv[4]));
+// Hashtags: always lead with #shorts #fyp + channel core tags, keep topic tags, cap at 12 (YouTube ignores all past 15).
+{
+  const CORE = ['#shorts', '#fyp', '#cattle', '#beef', '#ranching', '#thecattleledger'];
+  const own = (meta.description.match(/#[A-Za-z0-9_]+/g) || []).map(h => h.toLowerCase());
+  const body = meta.description.split('\n').filter(l => !/^\s*(#[A-Za-z0-9_]+\s*)+$/.test(l)).join('\n').trimEnd();
+  meta.description = body + '\n\n' + [...new Set([...CORE, ...own, '#farming', '#agriculture'])].slice(0, 12).join(' ');
+}
 (async () => {
   const r = await yt.videos.insert({
     part: 'snippet,status',
