@@ -20,6 +20,11 @@ const meta = JSON.parse(fs.readFileSync(process.argv[4]));
   });
   const id = r.data.id;
   console.log('uploaded', id, `https://youtube.com/shorts/${id}`);
+  const PLAYLIST = 'PLLsReRoslZUY'; // The Cattle Ledger: Beef & Cattle Economics
+  for (let i = 1; i <= 4; i++) {
+    try { await yt.playlistItems.insert({ part: 'snippet', requestBody: { snippet: { playlistId: PLAYLIST, resourceId: { kind: 'youtube#video', videoId: id } } } }); console.log('added to playlist'); break; }
+    catch (e) { if (i === 4) console.log('playlist add failed:', e.message); else await new Promise(r => setTimeout(r, 10000 * i)); }
+  }
   if (meta.comment) {
     try {
       await yt.commentThreads.insert({ part: 'snippet', requestBody: { snippet: { videoId: id, topLevelComment: { snippet: { textOriginal: meta.comment } } } } });
