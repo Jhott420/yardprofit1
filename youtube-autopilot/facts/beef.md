@@ -72,6 +72,23 @@ Source: https://www.ers.usda.gov/data-products/meat-price-spreads ("Retail price
 
 Steak math, Sept 2026: steer $221.05/cwt live = $2.21/lb × 2.40 lb of steer per retail lb ≈ $5.30. This equals ERS's gross farm value of 530.5¢ per retail lb.
 
+## Feeder and fed cattle prices (USDA ERS Livestock prices, $/cwt)
+Source: https://www.ers.usda.gov/data-products/livestock-and-meat-domestic-data ("Livestock prices" workbook, Current sheet; data from USDA NASS/AMS)
+
+| Series | Oct 2025 | Jun 2026 | Jul 2026 | Aug 2026 | Sep 2026 | Oct 2026 est. |
+|---|---|---|---|---|---|---|
+| Oklahoma City feeder steers M&L #1, 500–550 lb | 456.45 | 477.95 | 454.77 | 416.53 | 394.01 | 432.25 |
+| OKC feeder steers, 600–650 lb | 395.67 | 432.94 | 422.86 | 395.72 | 372.43 | 373.25 |
+| OKC feeder steers, 750–800 lb | 376.02 | 376.05 | 362.54 | 346.69 | 347.69 | 351.75 |
+| OKC feeder heifers, 450–500 lb | 404.79 | 442.14 | 440.87 | 389.00 | 381.35 | 395.25 |
+| OKC feeder heifers, 700–750 lb | 348.43 | 349.01 | 331.40 | 331.22 | 329.59 | 334.75 |
+| Nebraska direct slaughter steers, all grades | 228.73 | 226.57 | 220.29 | 235.13 | 221.67 | 223.50 |
+| Alfalfa hay, U.S. avg ($/ton; Aug 2025 → Aug 2026) | 171 → 206 | | | | | |
+| Grass hay, U.S. avg ($/ton; Aug 2025 → Aug 2026) | 136 → 152 | | | | | |
+
+Per-head math, Sep 2026: 525 lb × $3.9401 ≈ $2,069; 775 lb × $3.4769 ≈ $2,695.
+Lighter calves bring more per cwt (the price slide), because buyers pay for the weight gain still ahead.
+
 ## Queue (title / hook)
 1. ~~How Much Is One Cow Really Worth?~~ (posted: -XgeGsGDQQk, vidIQ video)
 2. ~~Farmers Don't Keep All That Beef Money~~ (posted: a29wONq7hZM)
@@ -80,7 +97,7 @@ Steak math, Sept 2026: steer $221.05/cwt live = $2.21/lb × 2.40 lb of steer per
 4. ~~The Hidden Cost of Raising Cattle~~ (posted: IPvF40Xeh-Y, Cattle Ledger #3)
 5. ~~Why Is Steak So Expensive?~~ (posted: ERN64kSmfDE, Cattle Ledger #4)
 6. ~~How Much Does It Cost to Feed a Cow?~~ (posted: LaDukJ0SZpg, Cattle Ledger #5)
-7. What Happens at a Cattle Auction? / "This is where cattle prices get real."
+7. ~~What Happens at a Cattle Auction?~~ (posted: MfKgrRyPYm0, Cattle Ledger #6)
 8. The Most Expensive Mistake a Cattle Farmer Can Make / "One bad decision can wipe out your profit."
 9. Beef Prices Explained / "Why does beef cost so much more than you think?"
 10. Is Raising Beef Cattle Profitable? / "Can you actually make money raising cattle?"
