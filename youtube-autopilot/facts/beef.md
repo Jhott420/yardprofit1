@@ -98,6 +98,17 @@ Lighter calves bring more per cwt (the price slide), because buyers pay for the 
 5. ~~Why Is Steak So Expensive?~~ (posted: ERN64kSmfDE, Cattle Ledger #4)
 6. ~~How Much Does It Cost to Feed a Cow?~~ (posted: LaDukJ0SZpg, Cattle Ledger #5)
 7. ~~What Happens at a Cattle Auction?~~ (posted: MfKgrRyPYm0, Cattle Ledger #6)
+## NEXT UP (reprioritized Nov 10 from vidIQ outlier research, consumer price-shock first)
+Titles: a dollar amount or a curiosity gap, phrased as a question, plus 1–2 emojis (the pattern of 500K–1.8M-view beef Shorts).
+A. How much is a 1,450-lb steer worth right now? 💰 / hook: "This steer is worth about three thousand two hundred dollars." (Nebraska fed steers $221.67/cwt × 1,451 lb avg FI live weight, Sept 2026 ≈ $3,216)
+B. Why is ground beef almost $7 a pound? 😳 / hook: "Ground beef is six seventy-nine a pound." (BLS Sept 2026 $6.792; ground chuck $6.483 vs $5.576 Sept 2025 = +16%)
+C. How much of your beef dollar does the rancher get? 🤠 / hook: "Out of every dollar you spend on beef, the rancher gets about forty-nine cents."
+D. Hay just jumped 20% 😬 / hook: "Alfalfa hay is up twenty percent in a year." (ERS: $171/ton Aug 2025 → $206 Aug 2026; grass hay $136 → $152)
+E. Why did calf prices just drop? 📉 / hook: "Calf prices fell about sixty dollars in two months." (OKC 500–550 lb steers $454.77 Jul → $394.01 Sep 2026; fed steers $235.13 Aug → $221.67 Sep). Only state a CAUSE if a reputable news source (AP, Reuters, USDA) confirms it, and add that source to this sheet.
+F. Is raising beef cattle profitable? 🐄💸 / hook: "Ranchers lost about three hundred thirty-five dollars per cow on paper last year." (ERS cow-calf 2025)
+G. Why ranchers sell calves instead of keeping them 🤔 / hook: "A five-hundred-pound calf brings more per pound than a finished steer." (OKC $394/cwt vs Nebraska fed $222/cwt, Sept 2026)
+
+## Original list (after NEXT UP)
 8. The Most Expensive Mistake a Cattle Farmer Can Make / "One bad decision can wipe out your profit."
 9. Beef Prices Explained / "Why does beef cost so much more than you think?"
 10. Is Raising Beef Cattle Profitable? / "Can you actually make money raising cattle?"

@@ -2,7 +2,7 @@
 
 Each Short is about 35–45 s, vertical, with real stock footage, one narrator, and big number overlays.
 
-1. **Topic.** Take the next unposted line from `facts/beef.md` → Queue. When the queue is empty, pick a new cattle-economics question.
+1. **Topic.** Take the next unposted line from `facts/beef.md`: the NEXT UP list first, then the Queue. When the queue is empty, pick a new cattle-economics question.
 2. **Facts.** Use only numbers in `facts/beef.md`. If a topic needs a new number (carcass yield, feed cost, auction fees), find it on a primary source (USDA ERS/AMS, university extension), add it to the sheet with its link, then use it. Round honestly and say "about".
 3. **Script (SHORT FORMAT, from Nov 10).** The target is **20–30 seconds of audio, about 280–380 characters.**
    - **The first sentence is the single most surprising number, said plainly.** For example: "This 525-pound calf sold for two thousand dollars." No windup.
@@ -23,3 +23,10 @@ Each Short is about 35–45 s, vertical, with real stock footage, one narrator, 
 A 25 s Short uses about 25 vidIQ credits (≈11 voice + 7 compose + b-roll searches), plus 80 if it has an AI shot.
 
 9b. Also write a production package (script, scene table, captions, CapCut iPhone steps, title, description, hashtags) to `beef/ledger/NN-slug.md`, like `01-one-cow-worth.md`.
+
+## What works in this niche (vidIQ outliers, Nov 10 2026)
+- **Consumer price shock with a $ in the title.** "$219 for a ribeye?" got 1.1M views; "Is Costco's $120 Steak Worth It?" 735K; "Would you still buy Walmart beef⁉️" 740K.
+- **Ranch money, told as curiosity.** Pirtle Farms (13K subs): "How farmers make money raising calves‼️🤯" got 62K; "How one bull can make CRAZY money 💰😱" 26K (96× its channel average); "Why so many ranchers don't eat their own beef 😳" 52K.
+- **Cattle-market news.** Beef import and cattle-price news Shorts from Aug–Sep 2026 got 355K–1.5M views. Only cover news when a reputable source is cited.
+- **Real people and real footage beat stock.** Most top Shorts are first-person farm footage. Use the user's own clips whenever they send them.
+- **Titles:** a dollar amount or curiosity gap + a question + 1–2 emojis. Keep the title under about 60 characters, and put " | The Cattle Ledger" only if it still fits.
