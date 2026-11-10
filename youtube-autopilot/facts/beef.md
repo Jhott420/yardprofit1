@@ -100,7 +100,7 @@ Lighter calves bring more per cwt (the price slide), because buyers pay for the 
 7. ~~What Happens at a Cattle Auction?~~ (posted: MfKgrRyPYm0, Cattle Ledger #6)
 ## NEXT UP (reprioritized Nov 10 from vidIQ outlier research, consumer price-shock first)
 Titles: a dollar amount or a curiosity gap, phrased as a question, plus 1–2 emojis (the pattern of 500K–1.8M-view beef Shorts).
-A. How much is a 1,450-lb steer worth right now? 💰 / hook: "This steer is worth about three thousand two hundred dollars." (Nebraska fed steers $221.67/cwt × 1,451 lb avg FI live weight, Sept 2026 ≈ $3,216)
+A. ~~How much is a 1,450-lb steer worth right now? 💰~~ (posted: rgJyYDVl-HM, #7) / hook: "This steer is worth about three thousand two hundred dollars." (Nebraska fed steers $221.67/cwt × 1,451 lb avg FI live weight, Sept 2026 ≈ $3,216)
 B. Why is ground beef almost $7 a pound? 😳 / hook: "Ground beef is six seventy-nine a pound." (BLS Sept 2026 $6.792; ground chuck $6.483 vs $5.576 Sept 2025 = +16%)
 C. How much of your beef dollar does the rancher get? 🤠 / hook: "Out of every dollar you spend on beef, the rancher gets about forty-nine cents."
 D. Hay just jumped 20% 😬 / hook: "Alfalfa hay is up twenty percent in a year." (ERS: $171/ton Aug 2025 → $206 Aug 2026; grass hay $136 → $152)

@@ -20,7 +20,7 @@ Each Short is about 35–45 s, vertical, with real stock footage, one narrator, 
 9. **Upload.** `node beef/upload.js <agentDir> short.mp4 meta.json`. Title: "<Title> | The Cattle Ledger #shorts". In the description, give the source numbers and credit the Pexels photographers. Tags must stay under 500 characters. upload.js automatically puts `#shorts #fyp #cattle #beef #ranching #thecattleledger` first in the description hashtags, and caps them at 12. The script posts a pinned-style question comment.
 10. **Record.** Strike the item in the queue, with its video id.
 
-A 25 s Short uses about 25 vidIQ credits (≈11 voice + 7 compose + b-roll searches), plus 80 if it has an AI shot.
+A 25 s Short uses about 35 vidIQ credits (voice has a 28-credit minimum, plus ~6 compose and any b-roll searches), plus 80 if it has an AI shot.
 
 9b. Also write a production package (script, scene table, captions, CapCut iPhone steps, title, description, hashtags) to `beef/ledger/NN-slug.md`, like `01-one-cow-worth.md`.
 
