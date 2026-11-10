@@ -52,6 +52,7 @@ Source: https://www.ers.usda.gov/data-products/commodity-costs-and-returns (cow-
 | Value less operating costs | +740.86 | +430.13 |
 | **Value less total costs** | **−335.13** | −625.49 |
 
+Feed per day (2025): 436.35 / 365 ≈ $1.20 per cow per day. Feed share of operating costs: 436.35 / 676.45 = 64.5% (nearly two-thirds). Feed is the largest operating-cost line.
 Typical farm: 98 beef cows, 63 calves weaned, 51 calves sold (2025).
 Notes: The "loss" counts the rancher's own unpaid labor and equipment wear as costs. Cash costs alone are covered. Say "on paper" or "all in".
 
@@ -78,7 +79,7 @@ Steak math, Sept 2026: steer $221.05/cwt live = $2.21/lb × 2.40 lb of steer per
 3. ~~How Much Meat Comes From One Cow?~~ (posted: r2LjS1V_OLc, Cattle Ledger #2)
 4. ~~The Hidden Cost of Raising Cattle~~ (posted: IPvF40Xeh-Y, Cattle Ledger #3)
 5. ~~Why Is Steak So Expensive?~~ (posted: ERN64kSmfDE, Cattle Ledger #4)
-6. How Much Does It Cost to Feed a Cow? / "This is what a cow eats in a year."
+6. ~~How Much Does It Cost to Feed a Cow?~~ (posted: LaDukJ0SZpg, Cattle Ledger #5)
 7. What Happens at a Cattle Auction? / "This is where cattle prices get real."
 8. The Most Expensive Mistake a Cattle Farmer Can Make / "One bad decision can wipe out your profit."
 9. Beef Prices Explained / "Why does beef cost so much more than you think?"
