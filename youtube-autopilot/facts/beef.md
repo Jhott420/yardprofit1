@@ -106,7 +106,7 @@ B. ~~Why is ground beef almost $7 a pound? 😳~~ (posted: -JmAi_-9UzI, #8) / ho
 C. ~~How much of your beef dollar does the rancher get? 🤠~~ (posted: 81Krq1ddTrA, #9) / hook: "Out of every dollar you spend on beef, the rancher gets about forty-nine cents."
 D. ~~Hay just jumped 20% 😬~~ (posted: 34qFbg-aF5I, #10) / hook: "Alfalfa hay is up twenty percent in a year." (ERS: $171/ton Aug 2025 → $206 Aug 2026; grass hay $136 → $152)
 E. ~~Why did calf prices just drop? 📉~~ (posted as "Calf Prices Just Dropped $300 a Head": JSlVJ_34OJc, #11) / hook: "Calf prices fell about sixty dollars in two months." (OKC 500–550 lb steers $454.77 Jul → $394.01 Sep 2026; fed steers $235.13 Aug → $221.67 Sep). Only state a CAUSE if a reputable news source (AP, Reuters, USDA) confirms it, and add that source to this sheet.
-F. Is raising beef cattle profitable? 🐄💸 / hook: "Ranchers lost about three hundred thirty-five dollars per cow on paper last year." (ERS cow-calf 2025)
+F. ~~Is raising beef cattle profitable? 🐄💸~~ (posted: U82-Iky2wDo, #12) / hook: "Ranchers lost about three hundred thirty-five dollars per cow on paper last year." (ERS cow-calf 2025)
 G. Why ranchers sell calves instead of keeping them 🤔 / hook: "A five-hundred-pound calf brings more per pound than a finished steer." (OKC $394/cwt vs Nebraska fed $222/cwt, Sept 2026)
 
 ## Original list (after NEXT UP)
