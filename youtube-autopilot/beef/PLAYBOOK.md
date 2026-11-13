@@ -4,21 +4,21 @@ Each Short is about 35–45 s, vertical, with real stock footage, one narrator, 
 
 1. **Topic.** Take the next unposted line from `facts/beef.md`: the NEXT UP list first, then the Queue. When the queue is empty, pick a new cattle-economics question.
 2. **Facts.** Use only numbers in `facts/beef.md`. If a topic needs a new number (carcass yield, feed cost, auction fees), find it on a primary source (USDA ERS/AMS, university extension), add it to the sheet with its link, then use it. Round honestly and say "about".
-3. **Script (SHORT FORMAT, from Nov 10).** The target is **20–30 seconds of audio, about 280–380 characters.**
-   - **The first sentence is the single most surprising number, said plainly.** For example: "This 525-pound calf sold for two thousand dollars." No windup.
-   - Then give 1–2 supporting beats.
-   - Then one line of payoff or insight.
-   - Then end with "Follow The Cattle Ledger." Use the short sign-off to save time.
+3. **Script (FORMAT, from Nov 13, based on the views data).** The target is **35–45 seconds of audio, about 500–650 characters.** From Nov 10–12, the 20–30 s Shorts got 0–3 views each, while the 40–50 s ones got 7–17. Almost all views came from YouTube search (73) and related videos (22). Shorts-feed traffic was 0.
+   - Open with the surprising number in the first sentence, and show it on the first frame.
+   - Then 3–4 beats that fully answer the question a searcher typed.
+   - Then one payoff line, then "Follow The Cattle Ledger."
    - Write numbers as spoken words where TTS could misread them.
-   - The video's first frame must already show the big number on screen.
-   - Cut every 1.5–3 s.
+   - Cut every 2–3 s.
+   - **Title = a plain search question** people type ("How Much Does It Cost to Raise a Cow?"), under about 60 characters, 1 emoji at the end, then #shorts. No number-only headlines (e.g., "Hay Just Jumped 20%" got 0 views). Repeat the question as the first line of the description.
+   - **Schedule:** 2 Shorts a day (11:56 AM and 5:56 PM Central).
 4. **Voice.** Use a professional documentary narrator: `vidiq_voiceover_generate` with voice "Brian – Deep, Resonant" (`nPczCjzI2devNBz1zQrb`). End every script with "Follow The Cattle Ledger for the truth behind the beef business." Cost: 28 credits per 1,000 characters. Download the MP3 and transcribe it (`bin/transcribe.js`) to check every number is spoken correctly. Avoid symbols such as ≠ and most emoji (📉 renders as a box; 😳 renders fine) in captions. Use `ffmpeg silencedetect` to get the beat timings.
 5. **Stock footage note (Nov 11):** vidIQ renamed `vidiq_generate_broll` to `vidiq_find_broll`. Use whichever exists. If neither does, reuse the HD clip URLs from earlier packages in beef/ledger/.
 5b. **AI shot (optional).** For a strong opening, `vidiq_generate_video` (minimax-h3, 768p, 9:16, 6 s) costs **80 credits**. Use at most one per Short, and only when the credit balance is over 800. Otherwise use only stock footage. When an AI shot is used, set `"synthetic": true` in meta.json so YouTube shows its AI-content label.
 6. **Footage.** `vidiq_generate_broll` (portrait, 1 credit per search). Only use clips whose MP4 link is `hd_720_*` or `hd_1080_*`; the `360_640` links look blurry. Pexels is blocked from the container, so pass the URLs straight to compose.
 7. **Compose.** `vidiq_compose` (vertical). Cut scenes on the voice pauses. Put the big number at the top (y≈0.14, about 80–110 px, heavy weight, black stroke), and keep a source footer for the whole video. Cost: 1 credit per 4 s.
 8. **Check.** Download the render, make a contact sheet of frames, and look at it.
-9. **Upload.** `node beef/upload.js <agentDir> short.mp4 meta.json`. Title: "<Title> | The Cattle Ledger #shorts". In the description, give the source numbers and credit the Pexels photographers. Tags must stay under 500 characters. upload.js automatically puts `#shorts #fyp #cattle #beef #ranching #thecattleledger` first in the description hashtags, and caps them at 12. The script posts a pinned-style question comment.
+9. **Upload.** `node beef/upload.js <agentDir> short.mp4 meta.json`. Title: "<Search question> <emoji> #shorts" (see step 3). In the description, give the source numbers and credit the Pexels photographers. Tags must stay under 500 characters. upload.js automatically puts `#shorts #fyp #cattle #beef #ranching #thecattleledger` first in the description hashtags, and caps them at 12. The script posts a pinned-style question comment.
 10. **Record.** Strike the item in the queue, with its video id.
 
 A 25 s Short uses about 35 vidIQ credits (voice has a 28-credit minimum, plus ~6 compose and any b-roll searches), plus 80 if it has an AI shot.
@@ -31,3 +31,6 @@ A 25 s Short uses about 35 vidIQ credits (voice has a 28-credit minimum, plus ~6
 - **Cattle-market news.** Beef import and cattle-price news Shorts from Aug–Sep 2026 got 355K–1.5M views. Only cover news when a reputable source is cited.
 - **Real people and real footage beat stock.** Most top Shorts are first-person farm footage. Use the user's own clips whenever they send them.
 - **Titles:** a dollar amount or curiosity gap + a question + 1–2 emojis. Keep the title under about 60 characters, and put " | The Cattle Ledger" only if it still fits.
+
+## Change log
+- **Nov 13:** Moved to 35–45 s, search-question titles and 2 Shorts a day. Retitled Shorts #7–#14 as search questions (beef/retitle.js). Views check moved to Nov 17.
