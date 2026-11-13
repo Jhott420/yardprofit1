@@ -109,6 +109,10 @@ E. ~~Why did calf prices just drop? 📉~~ (posted as "Calf Prices Just Dropped 
 F. ~~Is raising beef cattle profitable? 🐄💸~~ (posted: U82-Iky2wDo, #12) / hook: "Ranchers lost about three hundred thirty-five dollars per cow on paper last year." (ERS cow-calf 2025)
 G. ~~Why ranchers sell calves instead of keeping them 🤔~~ (posted as "Why a Calf Is Worth More Per Pound Than a Steer": VNRQe2PwiCg, #13) / hook: "A five-hundred-pound calf brings more per pound than a finished steer." (OKC $394/cwt vs Nebraska fed $222/cwt, Sept 2026)
 
+H. ~~How Much Does a Cow Cost? 🐄~~ (posted: lIqTWbrZYoQ, #15) / price ladder, Sept 2026: 525-lb calf ≈ $2,069 (OKC $394.01/cwt); 775-lb feeder ≈ $2,695 (OKC $347.69); finished 1,451 lb ≈ $3,216 (Nebraska $221.67)
+I. (next) How Much Does It Cost to Raise a Cow Per Year? / all-in $1,752 vs cash operating $676, feed $436 ≈ $1.20/day (ERS cow-calf 2025)
+J. (next) How Much Is a Heifer Calf Worth vs a Steer Calf? / OKC Sept 2026: heifers 450–500 lb $381.35/cwt vs steers 500–550 lb $394.01
+
 ## Original list (after NEXT UP)
 Queue is nearly empty. Next runs should add new sourced topics to NEXT UP (e.g., hay vs. feed cost per day, heifer vs. steer calf prices, beef retail value up 6% vs. the 2025 average).
 8. The Most Expensive Mistake a Cattle Farmer Can Make / "One bad decision can wipe out your profit." (DEFERRED: no sourced number for a specific "mistake" yet. Add a USDA/extension source before making this one.)
