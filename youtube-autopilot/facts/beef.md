@@ -110,6 +110,7 @@ F. ~~Is raising beef cattle profitable? 🐄💸~~ (posted: U82-Iky2wDo, #12) / 
 G. ~~Why ranchers sell calves instead of keeping them 🤔~~ (posted as "Why a Calf Is Worth More Per Pound Than a Steer": VNRQe2PwiCg, #13) / hook: "A five-hundred-pound calf brings more per pound than a finished steer." (OKC $394/cwt vs Nebraska fed $222/cwt, Sept 2026)
 
 ## Original list (after NEXT UP)
-8. The Most Expensive Mistake a Cattle Farmer Can Make / "One bad decision can wipe out your profit."
-9. Beef Prices Explained / "Why does beef cost so much more than you think?"
-10. Is Raising Beef Cattle Profitable? / "Can you actually make money raising cattle?"
+Queue is nearly empty. Next runs should add new sourced topics to NEXT UP (e.g., hay vs. feed cost per day, heifer vs. steer calf prices, beef retail value up 6% vs. the 2025 average).
+8. The Most Expensive Mistake a Cattle Farmer Can Make / "One bad decision can wipe out your profit." (DEFERRED: no sourced number for a specific "mistake" yet. Add a USDA/extension source before making this one.)
+9. ~~Beef Prices Explained~~ (posted as "Where Your $9.94 Pound of Beef Goes": sOClXhXLdS8, #14) / "Why does beef cost so much more than you think?" (Sept 2026 Choice retail 994.4¢: net farm 490.7¢, farm-to-wholesale 70.9¢, wholesale-to-retail 432.8¢)
+10. ~~Is Raising Beef Cattle Profitable?~~ (covered by #12, U82-Iky2wDo) / "Can you actually make money raising cattle?"
