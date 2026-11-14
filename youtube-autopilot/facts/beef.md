@@ -111,7 +111,9 @@ G. ~~Why ranchers sell calves instead of keeping them 🤔~~ (posted as "Why a C
 
 H. ~~How Much Does a Cow Cost? 🐄~~ (posted: lIqTWbrZYoQ, #15) / price ladder, Sept 2026: 525-lb calf ≈ $2,069 (OKC $394.01/cwt); 775-lb feeder ≈ $2,695 (OKC $347.69); finished 1,451 lb ≈ $3,216 (Nebraska $221.67)
 I. ~~How Much Does It Cost to Raise a Cow?~~ (posted: yXqbUp0fi5I, #16) / all-in $1,752 vs cash operating $676, feed $436 ≈ $1.20/day (ERS cow-calf 2025)
-J. (next) How Much Is a Heifer Calf Worth vs a Steer Calf? / OKC Sept 2026: heifers 450–500 lb $381.35/cwt vs steers 500–550 lb $394.01
+J. ~~How Much Is a Heifer Worth?~~ (posted: QsYhAo1KS2s, #17) / OKC Sept 2026: heifers 450–500 lb $381.35/cwt vs steers 500–550 lb $394.01
+K. (next) How Much Hay Does a Cow Eat / Cost? / needs a sourced lb/day figure first (e.g., a university extension page) before use; hay $/ton is already on the sheet
+L. (next) How Much Beef Do You Get From a Cow? / 1,200 lb live → ~735 lb carcass → ~500 lb retail (ERS conversion factors, already on the sheet); with Sept 2026 retail ground beef $6.79/lb
 
 ## Original list (after NEXT UP)
 Queue is nearly empty. Next runs should add new sourced topics to NEXT UP (e.g., hay vs. feed cost per day, heifer vs. steer calf prices, beef retail value up 6% vs. the 2025 average).
