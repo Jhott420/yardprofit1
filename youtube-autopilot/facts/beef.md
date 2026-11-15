@@ -115,7 +115,9 @@ J. ~~How Much Is a Heifer Worth?~~ (posted: QsYhAo1KS2s, #17) / OKC Sept 2026: h
 K. (next) How Much Hay Does a Cow Eat / Cost? / needs a sourced lb/day figure first (e.g., a university extension page) before use; hay $/ton is already on the sheet
 L. ~~How Much Beef Do You Get From a Cow?~~ (posted: _tVv1AWN6Xs, #18) / 1,451 lb ÷ 2.40 ≈ 605 lb retail × $9.944 (Choice retail value, Sept 2026) ≈ $6,000; steer ≈ $3,216 / 1,200 lb live → ~735 lb carcass → ~500 lb retail (ERS conversion factors, already on the sheet); with Sept 2026 retail ground beef $6.79/lb
 M. ~~How Much Is Steak Per Pound?~~ (posted: teHMbYCZe2k, #19, live Nov 15 6 PM CT) / BLS via ERS Sept 2026: sirloin $14.11, all steaks $12.69, round $9.84, chuck roast $9.19; ground beef $6.79
-N. (next) How Much Do Cattle Prices Change in a Year? / OKC 500–550 lb steers: $456.45 (Oct 2025) → $432.25 (Oct 2026 est.); 750–800 lb: $376.02 → $351.75
+N. ~~Are Cattle Prices Going Up or Down?~~ (posted: -uHC70HymW0, #20, live Nov 15 6 PM CT) / Oct→Oct: 500–550 −5.3% (≈ −$127/head at 525 lb), 750–800 −6.5%, Nebraska fed −2.3%; June 2026 peak 477.95 / OKC 500–550 lb steers: $456.45 (Oct 2025) → $432.25 (Oct 2026 est.); 750–800 lb: $376.02 → $351.75
+O. (next) How Much Does a Bull Cost? / needs a sourced bull price first (USDA AMS auction report or a university extension sale summary). Don't make it without one.
+P. (next) How Much Does Ground Beef Cost Now vs Last Year? / ground chuck $6.483 (Sept 2026) vs $5.576 (Sept 2025) = +16%; ground beef $6.792
 
 ## Original list (after NEXT UP)
 Queue is nearly empty. Next runs should add new sourced topics to NEXT UP (e.g., hay vs. feed cost per day, heifer vs. steer calf prices, beef retail value up 6% vs. the 2025 average).
