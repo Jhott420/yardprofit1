@@ -11,7 +11,7 @@ Each Short is about 35–45 s, vertical, with real stock footage, one narrator, 
    - Write numbers as spoken words where TTS could misread them.
    - Cut every 2–3 s.
    - **Title = a plain search question** people type ("How Much Does It Cost to Raise a Cow?"), under about 60 characters, 1 emoji at the end, then #shorts. No number-only headlines (e.g., "Hay Just Jumped 20%" got 0 views). Repeat the question as the first line of the description.
-   - **Schedule:** 2 Shorts a day (11:56 AM and 5:56 PM Central).
+   - **Schedule (from Nov 15, user's request):** both daily Shorts are made earlier (1:56 PM and 3:56 PM Central) and go live together at **6:00 PM Central**. upload.js uploads them private with `publishAt` set to the next 6 PM Central, and queues the question comment until the video is public. Set `"publishNow": true` in meta.json only to post immediately.
 4. **Voice.** Use a professional documentary narrator: `vidiq_voiceover_generate` with voice "Brian – Deep, Resonant" (`nPczCjzI2devNBz1zQrb`). End every script with "Follow The Cattle Ledger for the truth behind the beef business." Cost: 28 credits per 1,000 characters. Download the MP3 and transcribe it (`bin/transcribe.js`) to check every number is spoken correctly. Avoid symbols such as ≠ and most emoji (📉 renders as a box; 😳 renders fine) in captions. Use `ffmpeg silencedetect` to get the beat timings.
 5. **Stock footage note (Nov 11):** vidIQ renamed `vidiq_generate_broll` to `vidiq_find_broll`. Use whichever exists. If neither does, reuse the HD clip URLs from earlier packages in beef/ledger/.
 5b. **AI shot (optional).** For a strong opening, `vidiq_generate_video` (minimax-h3, 768p, 9:16, 6 s) costs **80 credits**. Use at most one per Short, and only when the credit balance is over 800. Otherwise use only stock footage. When an AI shot is used, set `"synthetic": true` in meta.json so YouTube shows its AI-content label.
@@ -33,4 +33,5 @@ A 25 s Short uses about 35 vidIQ credits (voice has a 28-credit minimum, plus ~6
 - **Titles:** a dollar amount or curiosity gap + a question + 1–2 emojis. Keep the title under about 60 characters, and put " | The Cattle Ledger" only if it still fits.
 
 ## Change log
+- **Nov 15:** All Shorts are scheduled to publish at 6:00 PM Central (upload.js publishAt). Production runs moved to 1:56 PM and 3:56 PM Central.
 - **Nov 13:** Moved to 35–45 s, search-question titles and 2 Shorts a day. Retitled Shorts #7–#14 as search questions (beef/retitle.js). Views check moved to Nov 17.
