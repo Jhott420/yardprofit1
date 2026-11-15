@@ -32,6 +32,10 @@ A 25 s Short uses about 35 vidIQ credits (voice has a 28-credit minimum, plus ~6
 - **Real people and real footage beat stock.** Most top Shorts are first-person farm footage. Use the user's own clips whenever they send them.
 - **Titles:** a dollar amount or curiosity gap + a question + 1–2 emojis. Keep the title under about 60 characters, and put " | The Cattle Ledger" only if it still fits.
 
+## Weekly long video (from Nov 15, user's request)
+Every Sunday at 4:26 PM Central, a scheduled task runs beef/weekly.js. It stitches that week's Shorts into one 16:9 "Cattle Ledger Weekly" video and uploads it scheduled for 6:00 PM Central. Each Short is centered on a blurred background with its chapter number and title beside it, and the video gets a 4 s intro card, YouTube chapters, a thumbnail and a sources list. It costs **0 vidIQ credits**. The user asked for a daily long video, but a 6–8 min original costs about 250–300 credits, far more than the plan allows, so they chose the free weekly compilation. Used Shorts are tracked in <agentDir>/state/weekly-used.json.
+
 ## Change log
+- **Nov 15:** Added the weekly long video (beef/weekly.js). Weekly #1 compiles Shorts #4–#18 (#1, #2, #3 and #7 skipped as duplicate topics).
 - **Nov 15:** All Shorts are scheduled to publish at 6:00 PM Central (upload.js publishAt). Production runs moved to 1:56 PM and 3:56 PM Central.
 - **Nov 13:** Moved to 35–45 s, search-question titles and 2 Shorts a day. Retitled Shorts #7–#14 as search questions (beef/retitle.js). Views check moved to Nov 17.
