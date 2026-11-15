@@ -114,7 +114,7 @@ I. ~~How Much Does It Cost to Raise a Cow?~~ (posted: yXqbUp0fi5I, #16) / all-in
 J. ~~How Much Is a Heifer Worth?~~ (posted: QsYhAo1KS2s, #17) / OKC Sept 2026: heifers 450–500 lb $381.35/cwt vs steers 500–550 lb $394.01
 K. (next) How Much Hay Does a Cow Eat / Cost? / needs a sourced lb/day figure first (e.g., a university extension page) before use; hay $/ton is already on the sheet
 L. ~~How Much Beef Do You Get From a Cow?~~ (posted: _tVv1AWN6Xs, #18) / 1,451 lb ÷ 2.40 ≈ 605 lb retail × $9.944 (Choice retail value, Sept 2026) ≈ $6,000; steer ≈ $3,216 / 1,200 lb live → ~735 lb carcass → ~500 lb retail (ERS conversion factors, already on the sheet); with Sept 2026 retail ground beef $6.79/lb
-M. (next) How Much Is a Pound of Steak Right Now? / BLS via ERS Sept 2026: sirloin $14.11, all steaks $12.69, round $9.84, chuck roast $9.19; ground beef $6.79
+M. ~~How Much Is Steak Per Pound?~~ (posted: teHMbYCZe2k, #19, live Nov 15 6 PM CT) / BLS via ERS Sept 2026: sirloin $14.11, all steaks $12.69, round $9.84, chuck roast $9.19; ground beef $6.79
 N. (next) How Much Do Cattle Prices Change in a Year? / OKC 500–550 lb steers: $456.45 (Oct 2025) → $432.25 (Oct 2026 est.); 750–800 lb: $376.02 → $351.75
 
 ## Original list (after NEXT UP)
