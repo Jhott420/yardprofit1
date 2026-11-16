@@ -119,7 +119,7 @@ N. ~~Are Cattle Prices Going Up or Down?~~ (posted: -uHC70HymW0, #20, live Nov 1
 O. (next) How Much Does a Bull Cost? / needs a sourced bull price first (USDA AMS auction report or a university extension sale summary). Don't make it without one.
 P. ~~Are Beef Prices Going Up?~~ (posted: 84PS0sa8N8s, #21, live Nov 16 6 PM CT) / Choice retail 994.4¢ (Sept 2026) vs 938.0¢ (2025 avg) +6.0%; net farm 501.6¢ → 490.7¢; share 53.5% → 49.3%; ground chuck $6.483 (Sept 2026) vs $5.576 (Sept 2025) = +16%; ground beef $6.792
 Q. (next) How Much Does It Cost to Feed a Cow Per Day? (refresh of #5 in the new format: $1.20/day, $436/yr; homegrown $186 / grazed $156 / bought $95; hay $206/ton alfalfa Aug 2026)
-R. (next) How Much Do Ranchers Actually Make? (ERS 2025 per cow: $1,417 value; $741 over cash costs; −$335 all-in; 2024 −$625)
+R. ~~How Much Do Ranchers Actually Make?~~ (posted: kvIvzM2FGN8, #22, live Nov 16 6 PM CT; 98 cows × $740.86 ≈ $72,600 over cash costs; ERS 2025 per cow: $1,417 value; $741 over cash costs; −$335 all-in; 2024 −$625)
 
 ## Original list (after NEXT UP)
 Queue is nearly empty. Next runs should add new sourced topics to NEXT UP (e.g., hay vs. feed cost per day, heifer vs. steer calf prices, beef retail value up 6% vs. the 2025 average).
