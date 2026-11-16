@@ -117,7 +117,9 @@ L. ~~How Much Beef Do You Get From a Cow?~~ (posted: _tVv1AWN6Xs, #18) / 1,451 l
 M. ~~How Much Is Steak Per Pound?~~ (posted: teHMbYCZe2k, #19, live Nov 15 6 PM CT) / BLS via ERS Sept 2026: sirloin $14.11, all steaks $12.69, round $9.84, chuck roast $9.19; ground beef $6.79
 N. ~~Are Cattle Prices Going Up or Down?~~ (posted: -uHC70HymW0, #20, live Nov 15 6 PM CT) / Oct→Oct: 500–550 −5.3% (≈ −$127/head at 525 lb), 750–800 −6.5%, Nebraska fed −2.3%; June 2026 peak 477.95 / OKC 500–550 lb steers: $456.45 (Oct 2025) → $432.25 (Oct 2026 est.); 750–800 lb: $376.02 → $351.75
 O. (next) How Much Does a Bull Cost? / needs a sourced bull price first (USDA AMS auction report or a university extension sale summary). Don't make it without one.
-P. (next) How Much Does Ground Beef Cost Now vs Last Year? / ground chuck $6.483 (Sept 2026) vs $5.576 (Sept 2025) = +16%; ground beef $6.792
+P. ~~Are Beef Prices Going Up?~~ (posted: 84PS0sa8N8s, #21, live Nov 16 6 PM CT) / Choice retail 994.4¢ (Sept 2026) vs 938.0¢ (2025 avg) +6.0%; net farm 501.6¢ → 490.7¢; share 53.5% → 49.3%; ground chuck $6.483 (Sept 2026) vs $5.576 (Sept 2025) = +16%; ground beef $6.792
+Q. (next) How Much Does It Cost to Feed a Cow Per Day? (refresh of #5 in the new format: $1.20/day, $436/yr; homegrown $186 / grazed $156 / bought $95; hay $206/ton alfalfa Aug 2026)
+R. (next) How Much Do Ranchers Actually Make? (ERS 2025 per cow: $1,417 value; $741 over cash costs; −$335 all-in; 2024 −$625)
 
 ## Original list (after NEXT UP)
 Queue is nearly empty. Next runs should add new sourced topics to NEXT UP (e.g., hay vs. feed cost per day, heifer vs. steer calf prices, beef retail value up 6% vs. the 2025 average).
