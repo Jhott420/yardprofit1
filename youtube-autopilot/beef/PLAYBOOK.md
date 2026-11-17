@@ -43,6 +43,7 @@ A scheduled task at 7:41 PM Central (odd-numbered days) runs `beef/seo.js report
 Every change is logged to <agentDir>/state/seo-log.json, and plans are saved in beef/seo/.
 
 ## Change log
+- **Nov 17:** Views check. The 6 new-format Shorts from Nov 13–15 average about 1,200 views each (1,271–1,497, except "Are Cattle Prices Going Up or Down?" at 194). The Nov 10–12 short-format ones average about 350, and most are under 20. The channel is at 11.4K total views and 21 subscribers. No format change. Next check is Nov 21.
 - **Nov 15:** First SEO pass. Channel keywords now use the questions people search; the description mentions 6 PM daily Shorts and the Sunday weekly video. Retitled #3 ("What Does It Really Cost to Raise Cattle?"), the old "Farmers Don't Keep All That Beef Money" ("How Much Do Ranchers Make From Beef?") and #4 ("Why Is Steak So Expensive? 🥩"). Added question first lines to 8 older Shorts.
 - **Nov 15:** Added the weekly long video (beef/weekly.js). Weekly #1 compiles Shorts #4–#18 (#1, #2, #3 and #7 skipped as duplicate topics).
 - **Nov 15:** All Shorts are scheduled to publish at 6:00 PM Central (upload.js publishAt). Production runs moved to 1:56 PM and 3:56 PM Central.
