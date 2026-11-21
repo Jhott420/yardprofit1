@@ -32,6 +32,9 @@ A 25 s Short uses about 35 vidIQ credits (voice has a 28-credit minimum, plus ~6
 - **Real people and real footage beat stock.** Most top Shorts are first-person farm footage. Use the user's own clips whenever they send them.
 - **Titles:** a dollar amount or curiosity gap + a question + 1–2 emojis. Keep the title under about 60 characters, and put " | The Cattle Ledger" only if it still fits.
 
+## Topic rule (Nov 21 views check)
+"How much is/does <a specific thing> cost/weigh/sell for" Shorts got 1,270–1,500 views each: cow cost, raise a cow, heifer, beef from a cow, steak per lb. Trend questions got 63–227: "Are cattle prices going up or down?", "Are beef prices going up?", "How much do ranchers make?". Pick price-of-a-thing topics first, and use trend topics only once nothing else is queued.
+
 ## Weekly long video (from Nov 15, user's request)
 Every Sunday at 4:26 PM Central, a scheduled task runs beef/weekly.js. It stitches that week's Shorts into one 16:9 "Cattle Ledger Weekly" video and uploads it scheduled for 6:00 PM Central. Each Short is centered on a blurred background with its chapter number and title beside it, and the video gets a 4 s intro card, YouTube chapters, a thumbnail and a sources list. It costs **0 vidIQ credits**. The user asked for a daily long video, but a 6–8 min original costs about 250–300 credits, far more than the plan allows, so they chose the free weekly compilation. Used Shorts are tracked in <agentDir>/state/weekly-used.json.
 
@@ -52,6 +55,7 @@ About 10,000 views brought about 10 subscribers (about 1 per 1,000). Viewers get
 6. **Real footage:** if the user sends their own cattle or sale-barn clips, use them as the first shot.
 
 ## Change log
+- **Nov 21:** Views check. 12,075 views and 21 subscribers. Daily views went 5,121 (Nov 13) → 2,415 → 2,126 → 521 → 241 → 69 (Nov 18), mostly from the Shorts feed (9,283 views Nov 13–15, 639 Nov 16–21) plus the 4-day upload gap. Retention is fine (66–121%). Added the topic rule above.
 - **Nov 21:** YouTube login restored with a fresh sign-in (`node beef/signin.js <agentDir> url`, then `code <localhost URL>`). Shorts and SEO tasks turned back on. Posted the missed question comments on #21 and #22.
 - **Nov 19:** Added the subscriber plan (promise endings, series parts, comment replies). Queue reordered as series follow-ups (Q → S → T).
 - **Nov 17:** Views check. The 6 new-format Shorts from Nov 13–15 average about 1,200 views each (1,271–1,497, except "Are Cattle Prices Going Up or Down?" at 194). The Nov 10–12 short-format ones average about 350, and most are under 20. The channel is at 11.4K total views and 21 subscribers. No format change. Next check is Nov 21.
