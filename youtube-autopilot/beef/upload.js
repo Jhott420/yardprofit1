@@ -44,10 +44,11 @@ async function flushPending() {
 }
 // Hashtags: always lead with #shorts #fyp + channel core tags, keep topic tags, cap at 12 (YouTube ignores all past 15).
 {
-  const CORE = ['#shorts', '#fyp', '#cattle', '#beef', '#ranching', '#thecattleledger'];
+  // meta.coreTags / meta.extraTags override the defaults (Fact Goblin, from Nov 22).
+  const CORE = meta.coreTags || ['#shorts', '#fyp', '#cattle', '#beef', '#ranching', '#thecattleledger'];
   const own = (meta.description.match(/#[A-Za-z0-9_]+/g) || []).map(h => h.toLowerCase());
   const body = meta.description.split('\n').filter(l => !/^\s*(#[A-Za-z0-9_]+\s*)+$/.test(l)).join('\n').trimEnd();
-  meta.description = body + '\n\n' + [...new Set([...CORE, ...own, '#farming', '#agriculture'])].slice(0, 12).join(' ');
+  meta.description = body + '\n\n' + [...new Set([...CORE, ...own, ...(meta.extraTags || ['#farming', '#agriculture'])])].slice(0, 12).join(' ');
 }
 (async () => {
   await flushPending();
@@ -55,7 +56,7 @@ async function flushPending() {
   const r = await yt.videos.insert({
     part: 'snippet,status',
     requestBody: {
-      snippet: { title: meta.title, description: meta.description, tags: meta.tags, categoryId: '27', defaultLanguage: 'en', defaultAudioLanguage: 'en' },
+      snippet: { title: meta.title, description: meta.description, tags: meta.tags, categoryId: meta.categoryId || '27', defaultLanguage: 'en', defaultAudioLanguage: 'en' },
       status: publishAt
         ? { privacyStatus: 'private', publishAt, selfDeclaredMadeForKids: false, containsSyntheticMedia: !!meta.synthetic }
         : { privacyStatus: 'public', selfDeclaredMadeForKids: false, containsSyntheticMedia: !!meta.synthetic },
@@ -64,8 +65,8 @@ async function flushPending() {
   });
   const id = r.data.id;
   console.log('uploaded', id, `https://youtube.com/shorts/${id}`, publishAt ? `(scheduled for ${publishAt})` : '(public now)');
-  const PLAYLIST = 'PLLsReRoslZUY'; // The Cattle Ledger: Beef & Cattle Economics
-  for (let i = 1; i <= 4; i++) {
+  const PLAYLIST = meta.playlist === undefined ? 'PLLsReRoslZUY' : meta.playlist; // default: The Cattle Ledger playlist; null skips
+  for (let i = 1; PLAYLIST && i <= 4; i++) {
     try { await yt.playlistItems.insert({ part: 'snippet', requestBody: { snippet: { playlistId: PLAYLIST, resourceId: { kind: 'youtube#video', videoId: id } } } }); console.log('added to playlist'); break; }
     catch (e) { if (i === 4) console.log('playlist add failed:', e.message); else await new Promise(r => setTimeout(r, 10000 * i)); }
   }
