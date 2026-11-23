@@ -1,3 +1,5 @@
+> **Retired Nov 23**: the user switched back to farm/cattle money (The Farm Ledger). Kept for reference only.
+
 # Fact Goblin: brain rot Shorts playbook (from Nov 22, user's request)
 
 On Nov 22 the user switched the channel (formerly The Cattle Ledger, channel UC6ojBCuR8pYyC7PcmvPLIvQ) to brain rot. They chose the "unhinged facts" style and the name **Fact Goblin** (handle @factgoblin, which the user changes in YouTube Studio). The 24 cattle Shorts stay public.

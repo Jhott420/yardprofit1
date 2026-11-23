@@ -1,4 +1,4 @@
-# The Cattle Ledger — Shorts playbook (vidIQ real-footage format)
+# The Farm Ledger (formerly The Cattle Ledger) — Shorts playbook (vidIQ real-footage format)
 
 Each Short is about 35–45 s, vertical, with real stock footage, one narrator, and big number overlays.
 
@@ -45,6 +45,13 @@ A scheduled task at 7:41 PM Central (odd-numbered days) runs `beef/seo.js report
 - question first lines are added above the description, never replacing the sourced facts
 - personal and unlisted videos are never touched
 Every change is logged to <agentDir>/state/seo-log.json, and plans are saved in beef/seo/.
+
+## The Farm Ledger (from Nov 23, user's request)
+On Nov 22 the channel briefly became "Fact Goblin" (brain rot facts). No Fact Goblin Short was ever made. On Nov 23 the user switched back after a competition scan showed brain rot facts are saturated (the typical top-25 Short has 700K–1.5M views), while farm-money questions have big demand and weak competition (see facts/farm.md). The channel becomes **The Farm Ledger**: the same format and rules as the cattle Shorts, with a wider topic list (goats, horses, chickens, eggs, bees, farmer income).
+- Each day, make one cattle Short (facts/beef.md queue) and one new-animal Short (facts/farm.md).
+- meta.json for every Short: `"coreTags": ["#shorts","#fyp","#farming","#homestead","#thefarmledger"]`, `"extraTags": ["#ranching","#agriculture"]`. Playlist PLLsReRoslZUY, now renamed "The Farm Ledger: Farm & Ranch Money, Explained", is the default.
+- Subscribe ending: "Subscribe to The Farm Ledger. Next: <next topic>."
+- Every number still comes from USDA or university extension data, recorded with its link before use.
 
 ## Subscriber plan (from Nov 19, user's request: "do all the above")
 About 10,000 views brought about 10 subscribers (about 1 per 1,000). Viewers get their answer and leave, so every Short now gives them a reason to come back:
