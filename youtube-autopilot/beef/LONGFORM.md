@@ -24,7 +24,7 @@ Never use a number that isn't in facts/beef.md or facts/farm.md with its source 
 - Write numbers as spoken words where TTS could misread them. Brian voice (nPczCjzI2devNBz1zQrb).
 
 ## Production (vidiq_compose renders at most 240 s per call)
-1. **Voice:** split the script into 2–3 parts of at most about 230 s each, at sentence or chapter boundaries. Generate one voiceover per part (28 credits per 1,000 characters) and transcribe each with ElevenLabs creative_transcribe_audio (flow BYI7TpRgG3nQeE0a4kGI). Every number must be spoken correctly.
+1. **Voice:** split the script into 2–3 parts of at most about 230 s each, at sentence or chapter boundaries. Generate one voiceover per part **with ElevenLabs** (`creative_generate_speech`, Brian `nPczCjzI2devNBz1zQrb`, eleven_v4, generations_count 1; see PLAYBOOK step 4: download the MP3 right away, because the link expires in about 2–3 h), and transcribe each on the same flow with `creative_transcribe_audio`. About 1¢ per 100 characters, so ≈50¢ a video, and 0 vidIQ credits. Every number must be spoken correctly.
 2. **Footage:** vidiq_find_broll, landscape, 8–12 searches (1 credit each). Reuse the landscape clips in beef/ledger/clips-landscape.md, and add new ones there. Change shots every 4–5 s (at most 50 scenes per part).
 3. **Compose** each part with vidiq_compose, format "landscape", using that part's voiceover (1 credit per 4 s). vidIQ adds its own captions, so overlays are only numbers and labels, plus a chapter title card at each chapter start (e.g. "CHAPTER 2 · FEED COSTS") and a small source footer. Check each part's contact sheet for dark frames and dropped overlays. **Don't add a source footer overlay**: vidIQ enlarges small text and it gets clipped at the top edge (long #1). Put the source line in the join step instead (below). Before trimming into a clip, check its length: vidIQ refuses a scene that runs past the end of its clip.
 4. **Join** the parts locally with one re-encode that also adds the brand band (see beef/ledger/long-01-cost-to-raise-a-cow.md):
@@ -46,4 +46,4 @@ Never use a number that isn't in facts/beef.md or facts/farm.md with its source 
    Also post a comment pointing to the gear links, with the disclosure. The user pins it in Studio, because the API can't pin.
 7. **Record:** write beef/ledger/long-NN-slug.md (script, chapters, sources, credits used, link), then commit and push.
 
-Budget: voice about 200 + compose about 110 + b-roll about 10 ≈ 320 credits. Skip and tell the user if the balance is under 400 (to keep the daily Shorts going).
+Budget (from Nov 23, with ElevenLabs voice): compose about 80 + b-roll about 10 + title scores about 15 ≈ 105 vidIQ credits. Skip and tell the user if the balance is under 150 (to keep the daily Shorts going).
