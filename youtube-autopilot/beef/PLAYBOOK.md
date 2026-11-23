@@ -53,6 +53,9 @@ On Nov 22 the channel briefly became "Fact Goblin" (brain rot facts). No Fact Go
 - Subscribe ending: "Subscribe to The Farm Ledger. Next: <next topic>."
 - Every number still comes from USDA or university extension data, recorded with its link before use.
 
+## Titles get #fyp (Nov 23, user's request)
+Every title ends with "#shorts #fyp" (long videos end with "#fyp"). upload.js adds it automatically. All existing public videos were retitled on Nov 23, and the changes are logged in <agentDir>/state/seo-log.json.
+
 ## Thumbnails (from Nov 23, user's request)
 Every Short gets a branded custom thumbnail, made for 0 vidIQ credits:
 `node farm/thumbs.js spec.json outDir`, where spec.json is `[{"id":"thumb","big":"$1,752","sub":"TO KEEP 1 COW FOR A YEAR","q":"<title question>","emoji":"🐄"}]`. Use the hook number from the first caption and the title question; for a negative number, add `"color":"#FF6B5B"`. Look at the image, then put `"thumbnail": "<outDir>/thumb.jpg"` in meta.json so upload.js sets it. The style is a dark-green field, a yellow "THE FARM LEDGER" tag, a huge yellow number with a black outline, a white label box, a big emoji and the question in white. The thumbnails for the existing Shorts are in farm/thumbs/.

@@ -50,6 +50,8 @@ async function flushPending() {
   const body = meta.description.split('\n').filter(l => !/^\s*(#[A-Za-z0-9_]+\s*)+$/.test(l)).join('\n').trimEnd();
   meta.description = body + '\n\n' + [...new Set([...CORE, ...own, ...(meta.extraTags || ['#farming', '#agriculture'])])].slice(0, 12).join(' ');
 }
+// Titles end with "#shorts #fyp" (user's request, Nov 23).
+if (!/#fyp/i.test(meta.title)) meta.title = /#shorts\s*$/i.test(meta.title) ? meta.title.replace(/\s*#shorts\s*$/i, ' #shorts #fyp') : meta.title + ' #fyp';
 (async () => {
   await flushPending();
   const publishAt = meta.publishNow ? null : (meta.publishAt || next6pmCentral());
