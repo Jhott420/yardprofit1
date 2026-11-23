@@ -36,7 +36,10 @@ A 25 s Short uses about 35 vidIQ credits (voice has a 28-credit minimum, plus ~6
 ## Topic rule (Nov 21 views check)
 "How much is/does <a specific thing> cost/weigh/sell for" Shorts got 1,270–1,500 views each: cow cost, raise a cow, heifer, beef from a cow, steak per lb. Trend questions got 63–227: "Are cattle prices going up or down?", "Are beef prices going up?", "How much do ranchers make?". Pick price-of-a-thing topics first, and use trend topics only once nothing else is queued.
 
-## Weekly long video (from Nov 15, user's request)
+## Weekly long video: now an original 6–8 min explainer (from Nov 23)
+See beef/LONGFORM.md. It replaces the free compilation described below, which is kept only for reference.
+
+## (old) Weekly compilation (from Nov 15, user's request)
 Every Sunday at 4:26 PM Central, a scheduled task runs beef/weekly.js. It stitches that week's Shorts into one 16:9 "Cattle Ledger Weekly" video and uploads it scheduled for 6:00 PM Central. Each Short is centered on a blurred background with its chapter number and title beside it, and the video gets a 4 s intro card, YouTube chapters, a thumbnail and a sources list. It costs **0 vidIQ credits**. The user asked for a daily long video, but a 6–8 min original costs about 250–300 credits, far more than the plan allows, so they chose the free weekly compilation. Used Shorts are tracked in <agentDir>/state/weekly-used.json.
 
 ## SEO pass (every 2 days, from Nov 15, user's request)
