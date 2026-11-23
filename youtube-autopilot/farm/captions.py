@@ -47,10 +47,11 @@ def ts(t):
 esc = lambda s: s.replace('\\', '\\\\').replace('{', '(').replace('}', ')')
 YEL, WHT = '&H003FD2FF&', '&H00FFFFFF&'   # ASS colours are BGR
 lines = []
-for c in chunks:
+for ci, c in enumerate(chunks):
+    nxt_start = chunks[ci + 1][0]['start'] if ci + 1 < len(chunks) else 1e9
     for j, w in enumerate(c):
         start = w['start']
-        end = c[j + 1]['start'] if j + 1 < len(c) else w['end'] + 0.15
+        end = c[j + 1]['start'] if j + 1 < len(c) else min(w['end'] + 0.15, nxt_start)
         txt = ' '.join((r'{\c' + YEL + '}' + esc(x['text']) + r'{\c' + WHT + '}') if k == j else esc(x['text'])
                        for k, x in enumerate(c))
         lines.append(f'Dialogue: 0,{ts(start)},{ts(end)},Cap,,0,0,0,,{txt}')
