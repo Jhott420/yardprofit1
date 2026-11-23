@@ -65,6 +65,10 @@ async function flushPending() {
   });
   const id = r.data.id;
   console.log('uploaded', id, `https://youtube.com/shorts/${id}`, publishAt ? `(scheduled for ${publishAt})` : '(public now)');
+  if (meta.thumbnail) { // custom thumbnail made with farm/thumbs.js (from Nov 23)
+    try { await yt.thumbnails.set({ videoId: id, media: { mimeType: 'image/jpeg', body: fs.createReadStream(meta.thumbnail) } }); console.log('thumbnail set'); }
+    catch (e) { console.log('thumbnail not set:', e.message); }
+  }
   const PLAYLIST = meta.playlist === undefined ? 'PLLsReRoslZUY' : meta.playlist; // default: The Cattle Ledger playlist; null skips
   for (let i = 1; PLAYLIST && i <= 4; i++) {
     try { await yt.playlistItems.insert({ part: 'snippet', requestBody: { snippet: { playlistId: PLAYLIST, resourceId: { kind: 'youtube#video', videoId: id } } } }); console.log('added to playlist'); break; }
