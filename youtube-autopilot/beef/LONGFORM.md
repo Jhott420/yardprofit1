@@ -31,6 +31,12 @@ Never use a number that isn't in facts/beef.md or facts/farm.md with its source 
    - description: a 2-line summary, then chapters (the first at 0:00, at least 3, each ≥ 10 s), then every number with its source link, then the Pexels credits
 
    It is scheduled for the next 6 PM Central.
+6b. **Money links (from Nov 23):** right after the 2-line summary in the description, add:
+   - a "🛒 GEAR FOR …" list of 3–6 Amazon search links that fit the topic, in the form `https://www.amazon.com/s?k=<words+with+plus>&tag=thecattleledger-20`. Only list items that really fit the video; never claim we use or tested a product.
+   - the disclosure line "As an Amazon Associate I earn from qualifying purchases."
+   - when the user sends the Gumroad link, also "🐄 Run your own numbers: Cattle Cost Calculator → <link>". It's not set up yet.
+
+   Also post a comment pointing to the gear links, with the disclosure. The user pins it in Studio, because the API can't pin.
 7. **Record:** write beef/ledger/long-NN-slug.md (script, chapters, sources, credits used, link), then commit and push.
 
 Budget: voice about 200 + compose about 110 + b-roll about 10 ≈ 320 credits. Skip and tell the user if the balance is under 400 (to keep the daily Shorts going).
