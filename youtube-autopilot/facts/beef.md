@@ -121,6 +121,7 @@ P. ~~Are Beef Prices Going Up?~~ (posted: 84PS0sa8N8s, #21, live Nov 16 6 PM CT)
 Q. ~~How Much Does It Cost to Feed a Cow Per Day?~~ (posted: tt7jksI1xU4, #23, live Nov 21 6 PM CT; Part 2 of yXqbUp0fi5I) (refresh of #5 in the new format: $1.20/day, $436/yr; homegrown $186 / grazed $156 / bought $95; hay $206/ton alfalfa Aug 2026)
 S. ~~How Much Is Ground Beef Per Pound?~~ (posted: GY5EDyOSkJg, #24, live Nov 21 6 PM CT; Part 2 of teHMbYCZe2k) / BLS Sept 2026 ground beef $6.792/lb; ground chuck $6.483 vs $5.576 Sept 2025 (+16%); compare all steaks $12.69, chuck roast $9.19 (all already on this sheet)
 T. ~~How Much Is a Feeder Calf Worth?~~ (posted: vajXa2U1bu8, #25, live Nov 23 6 PM CT; Part 2 of "How Much Does a Cow Cost?" lIqTWbrZYoQ) / OKC Sept 2026: 775-lb feeder ≈ $2,695 ($347.69/cwt) vs 525-lb calf ≈ $2,069 ($394.01/cwt); Oct→Oct 750–800 lb −6.5% ($376.02 → $351.75) (all already on this sheet)
+U. ~~Are Calf Prices Going Back Up? 📈~~ (posted: tQ6yskB_MGc, #26, live Nov 23 6 PM CT; Part 2 of JSlVJ_34OJc) / OKC 500–550 lb steers Sep 2026 $394.01 → Oct 2026 est. $432.25 (+$38.24/cwt × 525 lb ≈ +$201); Jul $454.77; Oct 2025 $456.45 (−$24.20/cwt y/y). Made as the 3:56 PM fallback because goat sources were blocked.
 R. ~~How Much Do Ranchers Actually Make?~~ (posted: kvIvzM2FGN8, #22, live Nov 16 6 PM CT; 98 cows × $740.86 ≈ $72,600 over cash costs; ERS 2025 per cow: $1,417 value; $741 over cash costs; −$335 all-in; 2024 −$625)
 
 ## Original list (after NEXT UP)
