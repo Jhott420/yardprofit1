@@ -5,6 +5,9 @@ Replies must cite only numbers from facts/beef.md. Keep them friendly and 1–2 
 ## Posted
 - **Nov 21**, _tVv1AWN6Xs, reply to @DesLogan-n1e (600 lb question), user-approved: https://www.youtube.com/watch?v=_tVv1AWN6Xs&lc=UgwJg28mCU09efy69Fh4AaABAg
 
+## Skipped
+- **Nov 24**, vajXa2U1bu8, @angusmurray3767: "i have never heard anything more boring." No question, so no reply (don't feed negative comments).
+
 ## Drafts (Nov 19)
 - **_tVv1AWN6Xs** (How Much Beef Do You Get From a Cow?), @DesLogan-n1e asks how a 1,460-lb animal gives ~600 lb:
   Draft: "Great question! We used USDA averages for fed cattle: the carcass is about 61% of live weight (1,451 lb live → 890 lb dressed, Sept 2026), and USDA's conversion is 2.4 lb of live steer per lb of retail beef, which counts bone-in retail cuts too. Boneless home-processed beef, especially from lighter or grass-fed animals, comes out lower, much like your 17 butchers found."
