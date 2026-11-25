@@ -99,6 +99,13 @@ Lighter calves bring more per cwt (the price slide), because buyers pay for the 
 5. ~~Why Is Steak So Expensive?~~ (posted: ERN64kSmfDE, Cattle Ledger #4)
 6. ~~How Much Does It Cost to Feed a Cow?~~ (posted: LaDukJ0SZpg, Cattle Ledger #5)
 7. ~~What Happens at a Cattle Auction?~~ (posted: MfKgrRyPYm0, Cattle Ledger #6)
+## ERS Food Price Outlook (updated 11/24/2026)
+Source: https://www.ers.usda.gov/data-products/food-price-outlook/summary-findings
+- Retail beef & veal: +0.6% Sept→Oct 2026 (after −1.3% Aug→Sept); forecast **+9.0% in 2026** (interval 8.2–9.8). ERS: federally inspected beef production was lower in most months of 2026 than 2025 and is expected to stay below year-ago levels through the end of 2026.
+- Farm-level cattle prices: higher Jan–Jul 2026 than 2025, then **down 5 months in a row**: −1.4% Sept→Oct, **−8.3% Oct 2026 vs Oct 2025**. Still forecast +5.4% for 2026 (interval 4.1–6.9).
+- Wholesale beef: +0.7% Sept→Oct; +6.0% vs Oct 2025; forecast +8.9% in 2026 (6.3–12.0).
+- Pork: forecast +0.9% in 2026. Poultry +1.2%. Food at home +2.4% (2026).
+
 ## NEXT UP (reprioritized Nov 10 from vidIQ outlier research, consumer price-shock first)
 Titles: a dollar amount or a curiosity gap, phrased as a question, plus 1–2 emojis (the pattern of 500K–1.8M-view beef Shorts).
 A. ~~How much is a 1,450-lb steer worth right now? 💰~~ (posted: rgJyYDVl-HM, #7) / hook: "This steer is worth about three thousand two hundred dollars." (Nebraska fed steers $221.67/cwt × 1,451 lb avg FI live weight, Sept 2026 ≈ $3,216)
@@ -125,6 +132,7 @@ U. ~~Are Calf Prices Going Back Up? 📈~~ (posted: tQ6yskB_MGc, #26, live Nov 2
 V. ~~How Much Is Sirloin Steak Per Pound? 🥩~~ (posted: 2E_G7ZjckXA, #27, live Nov 24 6 PM CT; Part 2 of teHMbYCZe2k) / BLS via ERS Sept 2026: sirloin $14.106 (Aug $14.357), round $9.838, all steaks $12.69, ground beef $6.792; gross farm value 530.5¢ per retail lb
 W. ~~Is Beef Getting Cheaper?~~ (posted: EVleM7iVnJ4, #28, live Nov 24 6 PM CT; Part 2 of 84PS0sa8N8s) / Choice retail value 1,022.9¢ (Aug 2026) → 994.4¢ (Sept), −2.8% in a month, but +6.0% vs the 2025 average 938.0¢; all-fresh 966.3 → 946.8¢ (−2.0%), vs 884.2¢ in 2025 (+7.1%); ground beef $6.923 → $6.792. All on this sheet; no cause sourced, so don't state one.
 X. ~~How Much of Your Beef Dollar Goes to the Rancher?~~ (posted: q-w8JcM7xU8, #29, live Nov 25 6 PM CT; Part 2 of 81Krq1ddTrA) / farmers' share 49.3% (Sept 2026) vs 49.4% (Aug) and 53.5% (2025); wholesale-to-retail 43.5%, packer 7.1%; net farm value 490.7¢ of a 994.4¢ retail lb. Refresh of 81Krq1ddTrA (9 views). All on this sheet.
+Y. (next, promised in egg Short #30) Will Beef Prices Keep Going Up? / ERS FPO: retail beef forecast +9.0% in 2026, beef production below year-ago; but cattle prices down 5 straight months, −8.3% vs Oct 2025. State only ERS's own reasons.
 R. ~~How Much Do Ranchers Actually Make?~~ (posted: kvIvzM2FGN8, #22, live Nov 16 6 PM CT; 98 cows × $740.86 ≈ $72,600 over cash costs; ERS 2025 per cow: $1,417 value; $741 over cash costs; −$335 all-in; 2024 −$625)
 
 ## Original list (after NEXT UP)

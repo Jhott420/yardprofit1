@@ -69,6 +69,9 @@ Every title ends with "#shorts #fyp" (long videos end with "#fyp"). upload.js ad
 Every Short gets a branded custom thumbnail, made for 0 vidIQ credits:
 `node farm/thumbs.js spec.json outDir`, where spec.json is `[{"id":"thumb","big":"$1,752","sub":"TO KEEP 1 COW FOR A YEAR","q":"<title question>","emoji":"🐄"}]`. Use the hook number from the first caption and the title question; for a negative number, add `"color":"#FF6B5B"`. Look at the image, then put `"thumbnail": "<outDir>/thumb.jpg"` in meta.json so upload.js sets it. The style is a dark-green field, a yellow "THE FARM LEDGER" tag, a huge yellow number with a black outline, a white label box, a big emoji and the question in white. The thumbnails for the existing Shorts are in farm/thumbs/.
 
+## Sources reachable from this environment (Nov 25)
+Only www.ers.usda.gov works (USDA AMS, MyMarketNews, ESMIS and university extension sites are blocked by the network proxy). For new topics, use ERS: Meat Price Spreads, Livestock & Meat Domestic Data, Commodity Costs and Returns, and the **Food Price Outlook** summary (eggs, beef, pork, poultry, dairy, farm-level prices; updated monthly). Fetch the page with curl and record each number with its link in facts/*.md before scripting. If a sentence on the page looks garbled (e.g. mismatched months), don't use it.
+
 ## Subscriber plan (from Nov 19, user's request: "do all the above")
 About 10,000 views brought about 10 subscribers (about 1 per 1,000). Viewers get their answer and leave, so every Short now gives them a reason to come back:
 1. **Ending = a promise.** Replace "Follow The Cattle Ledger for the truth behind the beef business." with "Subscribe. Next: <next topic as a question>." The next topic is the next "(next)" item in facts/beef.md NEXT UP, so the promise is kept by the next run. Show the same line as the last caption ("SUBSCRIBE / NEXT: ..."). If the next topic is blocked (no source yet), name the first item after it that isn't blocked.
