@@ -23,7 +23,7 @@ Source: https://www.ers.usda.gov/data-products/food-price-outlook/summary-findin
 - Farm-level milk: +10.8% Sept→Oct 2026, but −0.4% Oct 2026 vs Oct 2025; forecast **−5.3% in 2026** (interval −7.4 to −2.7).
 - Retail dairy: +0.6% Sept→Oct 2026; forecast −0.1% in 2026 (interval −0.4 to +0.1).
 - ERS: USDA projects milk production up in 2026 over 2025, driven by a larger dairy herd and more milk per cow; higher milk output is expected to put downward pressure on cheese and butter prices despite strong domestic and export demand.
-- (next, promised in #31) Are Milk Prices Going Down?
+- posted: CYpw57lHTWc, #32, live Nov 26 6 PM CT ("Are Milk Prices Going Down?")
 
 ### Poultry (same source): retail +0.4% Sept→Oct 2026; forecast +1.2% in 2026.
 
