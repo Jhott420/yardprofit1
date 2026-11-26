@@ -18,6 +18,15 @@ Interleave these with the cattle queue in facts/beef.md (T: feeder calf worth is
 
 ## Sourced numbers (add as found)
 
+### Dairy / milk (USDA ERS Food Price Outlook, Summary Findings, updated 11/24/2026)
+Source: https://www.ers.usda.gov/data-products/food-price-outlook/summary-findings
+- Farm-level milk: +10.8% Sept→Oct 2026, but −0.4% Oct 2026 vs Oct 2025; forecast **−5.3% in 2026** (interval −7.4 to −2.7).
+- Retail dairy: +0.6% Sept→Oct 2026; forecast −0.1% in 2026 (interval −0.4 to +0.1).
+- ERS: USDA projects milk production up in 2026 over 2025, driven by a larger dairy herd and more milk per cow; higher milk output is expected to put downward pressure on cheese and butter prices despite strong domestic and export demand.
+- (next, promised in #31) Are Milk Prices Going Down?
+
+### Poultry (same source): retail +0.4% Sept→Oct 2026; forecast +1.2% in 2026.
+
 ### Eggs (USDA ERS Food Price Outlook, Summary Findings, updated 11/24/2026)
 Source: https://www.ers.usda.gov/data-products/food-price-outlook/summary-findings (fetched Nov 25, 2026; ERS is reachable from this environment)
 - Retail egg prices: −0.1% Sept→Oct 2026. Forecast for 2026: **−29.5%** (interval −30.8 to −28.0).
