@@ -1,0 +1,23 @@
+{
+ "channel": {
+  "description": "How much does a goat cost? What does it cost to keep a horse? How much do farmers really make?\n\nThe Farm Ledger answers the money questions behind farming and ranching in short, fact-checked videos: what animals cost to buy and raise, feed and hay prices, egg and beef prices, and what ends up in the farmer's pocket. Numbers come from USDA (ERS, NASS, AMS) and university extension data, with sources in every description.\n\nNew Shorts every day at 6 PM Central, plus a longer explainer video every week.\n\n🛒 Cattle gear we talk about (Amazon): https://www.amazon.com/s?k=cattle+supplies+ranch&tag=thecattleledger-20\nAs an Amazon Associate I earn from qualifying purchases."
+ },
+ "videos": [
+  {
+   "id": "AMeLGMipCvc",
+   "firstLine": "Are egg prices going down in 2026?"
+  },
+  {
+   "id": "q-w8JcM7xU8",
+   "firstLine": "How much of your beef dollar goes to the rancher?"
+  },
+  {
+   "id": "EVleM7iVnJ4",
+   "firstLine": "Is beef getting cheaper?"
+  },
+  {
+   "id": "2E_G7ZjckXA",
+   "firstLine": "How much is sirloin steak per pound right now?"
+  }
+ ]
+}
