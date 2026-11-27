@@ -8,7 +8,7 @@ Picked from the Nov 23 competition scan (YouTube Shorts from the last 6 months, 
 |---|---|---|---|
 | How much does a goat cost? | 6.2K | 7.1M | (next) BLOCKED Nov 23: no primary source reachable |
 | How much does it cost to own a horse per month? | 6.6K | 2.5M | (next) |
-| How much do farmers actually make? | 5.0K | 4.3M | (next) |
+| How much do farmers actually make? | 5.0K | 4.3M | posted: p8coaFoyghQ, #33, live Nov 27 6 PM CT (ERS farm income forecast) |
 | Why are eggs so expensive? / price of eggs | 3.6K | 4.4M | posted: AMeLGMipCvc, #30, live Nov 25 6 PM CT ("Are Egg Prices Going Down?") |
 | How much does it cost to raise chickens? | 940 | 1.1M | (next) |
 | How much does a beehive cost? | 320 | 8.1M | (next) |
@@ -17,6 +17,15 @@ Picked from the Nov 23 competition scan (YouTube Shorts from the last 6 months, 
 Interleave these with the cattle queue in facts/beef.md (T: feeder calf worth is next there). Alternate one cattle Short and one new-animal Short each day.
 
 ## Sourced numbers (add as found)
+
+### Farm income (USDA ERS, Highlights from the Farm Income Forecast, updated 9/3/2026)
+Source: https://www.ers.usda.gov/topics/farm-economy/farm-sector-income-finances/highlights-from-the-farm-income-forecast (fetched Nov 27, 2026; check for the early-December update before reusing)
+- Net farm income 2026 forecast: **$158.4 billion**, −$4.3B (−2.6%) vs 2025 nominal; −5.5% inflation-adjusted; still above the 2006–25 average (inflation-adjusted).
+- Net cash farm income 2026: $176.4B, +0.4% nominal (−2.5% inflation-adjusted).
+- **Average net cash farm income for farm businesses: $121,700 per farm in 2026, +7.1% vs 2025** (nominal). Farm businesses = gross cash farm income ≥ $350,000, or < $350,000 with farming as the operator's primary occupation.
+- 6 of 9 ERS Farm Resource Regions are expected to see average net cash farm income rise; the Northern Great Plains has the largest increase.
+- Crop-specialized farm businesses: higher average net cash farm income in 2026, except specialty crops. **All animal/animal-product specializations: lower average net farm income** (as printed).
+- Farm sector equity: forecast +$102.9B (nominal) in 2026.
 
 ### Dairy / milk (USDA ERS Food Price Outlook, Summary Findings, updated 11/24/2026)
 Source: https://www.ers.usda.gov/data-products/food-price-outlook/summary-findings
