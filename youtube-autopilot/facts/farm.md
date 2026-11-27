@@ -27,6 +27,13 @@ Source: https://www.ers.usda.gov/topics/farm-economy/farm-sector-income-finances
 - Crop-specialized farm businesses: higher average net cash farm income in 2026, except specialty crops. **All animal/animal-product specializations: lower average net farm income** (as printed).
 - Farm sector equity: forecast +$102.9B (nominal) in 2026.
 
+### Wheat (USDA ERS Food Price Outlook, Summary Findings, updated 11/24/2026)
+Source: https://www.ers.usda.gov/data-products/food-price-outlook/summary-findings
+- Farm-level wheat: −9.5% Sept→Oct 2026, but **+38.5% Oct 2026 vs Oct 2025**; forecast **+19.3% in 2026** (interval 16.3–22.8).
+- ERS: farm-level wheat prices are higher this year because of decreased U.S. production (ERS Wheat Outlook); drought across wheat-producing areas reduced the 2026/27 crop and could complicate planting the 2027/28 crop.
+- Also: farm-level fresh vegetables +36.0% Oct vs Oct, forecast +26.6% in 2026; farm-level fruit forecast −2.6%.
+- posted: hJV4ymFOmSA, #34, live Nov 27 6 PM CT ("Why Are Wheat Prices Going Up?")
+
 ### Dairy / milk (USDA ERS Food Price Outlook, Summary Findings, updated 11/24/2026)
 Source: https://www.ers.usda.gov/data-products/food-price-outlook/summary-findings
 - Farm-level milk: +10.8% Sept→Oct 2026, but −0.4% Oct 2026 vs Oct 2025; forecast **−5.3% in 2026** (interval −7.4 to −2.7).
